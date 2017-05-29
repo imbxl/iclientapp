@@ -16,7 +16,6 @@ $$(document).on('deviceready', function() {
         console.log('calling push init');
         var push = PushNotification.init({
             "android": {
-                "senderID": "1089320506180"
             },
             "browser": {},
             "ios": {
