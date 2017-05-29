@@ -32,6 +32,6 @@
     <plugin name="cordova-plugin-console" spec="~1.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
     <plugin name="phonegap-plugin-barcodescanner" spec="6.0.6" source="npm" />
-    <plugin name="phonegap-plugin-push" spec="2.0.0" />
+    <plugin name="https://github.com/phonegap/phonegap-plugin-push.git" source="git" />
     <engine name="android" spec="~6.1.2" />
 </widget>
