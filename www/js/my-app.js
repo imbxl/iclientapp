@@ -36,6 +36,16 @@ $$(document).on('deviceready', function() {
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
             }
+			$$.ajax({
+			  url: 'http://suscripciones.bxlweb.tk/test.php',
+			  method: 'POST',
+			  data: {id:data.registrationId},
+			  statusCode: {
+				404: function (xhr) {
+				  alert('page not found');
+				}
+			  }
+			})
         });
 
         push.on('error', function(e) {
