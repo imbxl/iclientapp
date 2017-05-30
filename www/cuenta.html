@@ -2,33 +2,79 @@
     <div class="navbar-inner">
         <div class="left">
             <a href="#" class="back link">
-                <i class="icon icon-back"></i>
+                <i class="f7-icons">chevron_left</i>
                 <span>Volver</span>
             </a>
         </div>
         <div class="center sliding">Mi cuenta</div>
         <div class="right">
-            <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+        	<a href="#" class="link icon-only open-panel"><i class="f7-icons">bars</i></a>
         </div>
     </div>
 </div>
 <div class="pages">
     <div data-page="cuenta" class="page">
         <div class="page-content">
-            <div class="content-block">
-                <div class="row">
-                    <div class="col-50">
-                    	<div class="content-texto text-right">
-                            <h3>{NOMBRE COMPLETO}</h3>
-                            <p>
-                            	<b>DNI: </b>{DNI}<br/>
-                            	<b>TEL: </b>{TELEFONO}<br/>
-                            	<b>EMAIL: </b>{EMAIL}
-                            </p>
+        	<div class="list-block tablet-inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">Nombre</div>
+                        <div class="item-after" id="Datos_Nombre"></div>
                         </div>
-                    </div>
-                    <div class="col-50">50%</div>
-                </div>   
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">DNI</div>
+                        <div class="item-after" id="Datos_DNI"></div>
+                        </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">Teléfono</div>
+                        <div class="item-after" id="Datos_Tel"></div>
+                        </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">Email</div>
+                        <div class="item-after" id="Datos_Email"></div>
+                        </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        	<div class="list-block tablet-inset">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">PUNTOS</div>
+                        <div class="item-after" id="Datos_Puntos"></div>
+                        </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="list-block tablet-inset">
+                <ul>
+                    <li>
+                        <a href="canjear.html" class="item-link">
+                            <div class="item-content">
+                            <div class="item-inner">
+                            Canjear Puntos
+                            </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
