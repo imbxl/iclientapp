@@ -15,14 +15,6 @@ var mainView = myApp.addView('.view-main', {
 
 $$(document).on('deviceready', function() {
 	testLogin();
-	$$.getJSON('http://iclient.com.ar/datos.php?tipo=empresas', function (json) {
-		var html = '';
-		$$.each(json, function (index, row) {
-		console.log(json);
-			if(row.URL != '') html += '<div class="col-50 tablet-25"><img src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" /></div>';
-		});
-		$('#MarcasContainerIMG').html(html);
-	});
 });
 
 myApp.onPageInit('cuenta', function (page) {
@@ -45,7 +37,20 @@ myApp.onPageAfterAnimation('index', function (page){
 	mainView.showToolbar(true);
 })
 
-$$(document).on('pageInit', function (e) {
+var XAP_init = false;
+$$(document).on('pageInit', function (e) {	
+	if(!init){
+		$$.getJSON('http://iclient.com.ar/datos.php?tipo=empresas', function (json) {
+			var html = '';
+			$$.each(json, function (index, row) {
+			console.log(json);
+				if(row.URL != '') html += '<div class="col-50 tablet-25"><img src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" /></div>';
+			});
+			$('#MarcasContainerIMG').html(html);
+		});
+		XAP_init = true;
+	}
+	
     var page = e.detail.page;
 	
 	//console.log(e);
