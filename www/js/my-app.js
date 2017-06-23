@@ -39,14 +39,15 @@ myApp.onPageAfterAnimation('index', function (page){
 
 var XAP_init = false;
 $$(document).on('pageInit', function (e) {	
-	if(!init){
+	if(!XAP_init){
 		$$.getJSON('http://iclient.com.ar/datos.php?tipo=empresas', function (json) {
-			var html = '';
+			var html = '<div class="row">';
 			$$.each(json, function (index, row) {
-			console.log(json);
-				if(row.URL != '') html += '<div class="col-50 tablet-25"><img src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" /></div>';
+				if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /></div>';
 			});
-			$('#MarcasContainerIMG').html(html);
+			html += '</div>';
+			console.log(html);
+			$$('.MarcasContainer').html(html);
 		});
 		XAP_init = true;
 	}
