@@ -38,15 +38,18 @@ myApp.onPageAfterAnimation('index', function (page){
 })
 
 var XAP_init = false;
+var Empresas = [];
 $$(document).on('pageInit', function (e) {	
 	if(!XAP_init){
 		$$.getJSON('http://iclient.com.ar/datos.php?tipo=empresas', function (json) {
 			var html = '<div class="row">';
+			Empresas = [];
 			$$.each(json, function (index, row) {
+				Empresas.push(row);
 				if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /></div>';
 			});
 			html += '</div>';
-			console.log(html);
+			//console.log(html);
 			$$('.MarcasContainer').html(html);
 		});
 		XAP_init = true;
@@ -59,6 +62,12 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'index') {
 		testLogin();
 		mainView.showToolbar(true);
+		var html = '<div class="row">';
+		$$.each(Empresas, function (index, row) {
+			if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /></div>';
+		});
+		html += '</div>';
+		$$('.MarcasContainer').html(html);
 	}else{
 		mainView.hideToolbar(true);
 	}
@@ -214,12 +223,22 @@ function Escanear(){
    );
 }
 
+function FiltrarPorEmpresa(){
+	var empresa = $$('#FiltroEmpresa').val();
+	if(empresa == 'todas'){
+		$$('.producto_item').show();
+	}else{
+		$$('.producto_item').hide();
+		$$('.prod_empresa_'+empresa).show();
+	}
+}
+
 function GetProductos(){
 	$$.getJSON('http://iclient.com.ar/datos.php?tipo=productos', function (json) {
 		//console.log(json);
 		var html = '';
 		$$.each(json, function (index, row) {
-			html += '<div id="prod_'+row.id+'">\
+			html += '<div id="prod_'+row.id+'" class="producto_item prod_empresa_'+row.empresa_id+'">\
 				<div class="card">\
                 <div class="card-header">';
 			if(row.URL != ''){
@@ -243,6 +262,14 @@ function GetProductos(){
 			</div>';			
 		}); 
 		$$('.productos_lista').html(html);
+		
+		var empresas_html = '<option value="todas" selected>Todas</option>';
+		$$.each(Empresas, function (index, row) {
+			if($$('.prod_empresa_'+row.id).length > 0){
+				empresas_html += '<option value="'+row.id+'">'+row.Nombre+'</option>';
+			}
+		});
+		$$('#FiltroEmpresa').html(empresas_html);
 	});
 }
 function ProductoVerMas(id){
