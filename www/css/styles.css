@@ -2,7 +2,7 @@
     background: #000000;
 }
 .panel, .navbar{
-	background: #00b4d7;
+	background: #5b7a93;
 }
 .navbar a.link{
 	color:#DDD;
@@ -189,4 +189,7 @@
 }
 .open-panel{
 	min-width:28px;
+}
+.toolbar a{
+	color:#555;
 }
