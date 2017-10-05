@@ -193,38 +193,20 @@ function ConfigPush(){
 }
 
 function Escanear(){
-	QRScanner.scan(displayContents);
- 
-	function displayContents(err, text){
-	  if(err){
-	  } else {
-		$$.get(text, function (data) {
-			if(data == 'OK'){
-				navigator.notification.alert("¡Puntos agregados correctamente!",function(){},'Iclient');
-			}else{
-				navigator.notification.alert(data,function(){},'Iclient');
-			}
-		});
-	  }
-	}
-	 
-	// Make the webview transparent so the video preview is visible behind it. 
-	QRScanner.show();
-	/*
 	cordova.plugins.barcodeScanner.scan(
 	  function (result) {
 		  if(!result.cancelled){
 			$$.get(result.text, function (data) {
 				if(data == 'OK'){
-		  			alert("¡Puntos agregados correctamente!");
+					navigator.notification.alert("¡Puntos agregados correctamente!",function(){},'Registro');
 				}else{
-		  			alert(data);
+					navigator.notification.alert(data,function(){},'Registro');
 				}
 			});
 		  }
 	  },
 	  function (error) {
-		  alert("Error al leer el ticket");
+			navigator.notification.alert("Error al leer el ticket",function(){},'Registro');
 	  },
 	  {
 		  preferFrontCamera : false, // iOS and Android
@@ -239,7 +221,6 @@ function Escanear(){
 		  disableSuccessBeep: true // iOS
 	  }
    );
-   */
 }
 
 function FiltrarPorEmpresa(){
