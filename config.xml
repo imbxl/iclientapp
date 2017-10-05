@@ -43,9 +43,10 @@
 		<resource-file src="GoogleService-Info.plist" />
     </platform>
     <preference name="DisallowOverscroll" value="true" />
-    <gap:config-file platform="ios" parent="NSCameraUsageDescription" overwrite="true">
-       <string>We are using the Camera for something..</string>
-    </gap:config-file>
+    <plugin name="cordova-plugin-camera">
+        <param name="CAMERA_USAGE_DESCRIPTION" value="We are using the Camera for something..." />
+        <param name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="We are using the Photo Library for something..." />
+    </plugin>
     <plugin name="cordova-plugin-whitelist" spec="~1.2.0" />
     <plugin name="cordova-plugin-console" spec="~1.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
