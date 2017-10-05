@@ -104,10 +104,10 @@ function Registrarme() {
 		},
 		function( data ) {
         	if (data == 'OK') {
-				alert('¡Se registró con exito en iClient!');
+				navigator.notification.alert('¡Se registró con exito en iClient!',function(){},'Registro');
 				login(document.getElementById('formreg_mail').value, document.getElementById('formreg_pass').value);
 			}else{
-				alert(data);
+				navigator.notification.alert(data,function(){},'Registro');
 			}
 		}
 	);
@@ -193,6 +193,24 @@ function ConfigPush(){
 }
 
 function Escanear(){
+	QRScanner.scan(displayContents);
+ 
+	function displayContents(err, text){
+	  if(err){
+	  } else {
+		$$.get(text, function (data) {
+			if(data == 'OK'){
+				navigator.notification.alert("¡Puntos agregados correctamente!",function(){},'Iclient');
+			}else{
+				navigator.notification.alert(data,function(){},'Iclient');
+			}
+		});
+	  }
+	}
+	 
+	// Make the webview transparent so the video preview is visible behind it. 
+	QRScanner.show();
+	/*
 	cordova.plugins.barcodeScanner.scan(
 	  function (result) {
 		  if(!result.cancelled){
@@ -221,6 +239,7 @@ function Escanear(){
 		  disableSuccessBeep: true // iOS
 	  }
    );
+   */
 }
 
 function FiltrarPorEmpresa(){
@@ -283,7 +302,7 @@ function ProductoVerMas(id){
 function ProductoCanjear(id){
 	$$.getJSON('http://iclient.com.ar/datos.php?tipo=canje&id='+id, function (json) {
 		if(json != 'OK'){
-			alert(json['msg']);
+			navigator.notification.alert(json['msg'],function(){},'Iclient');
 			return;
 		}
 		
@@ -300,10 +319,10 @@ function ProductoCanjear(id){
 				onClick: function () {
 				  $$.getJSON('http://iclient.com.ar/datos.php?tipo=do_canje&id='+id, function (json) {
 					if(json != 'OK'){
-						alert(json['msg']);
+						navigator.notification.alert(json['msg'],function(){},'Iclient');
 						return;
 					}
-					alert('Canje realizado correctamente');
+					navigator.notification.alert('Canje realizado correctamente',function(){},'Iclient');
 					mainView.router.load({url:'historial.html', reload: true});
 				  });
 				}
