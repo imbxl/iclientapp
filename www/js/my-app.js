@@ -174,7 +174,7 @@ function ConfigPush(){
 				sound: 'true'
 			}
 		});
-		push.on('registratioCn', function(data) {
+		push.on('registration', function(data) {
 			var oldRegId = localStorage.getItem('registrationId');
 			if (oldRegId !== data.registrationId) {
 				// Save new registration ID
