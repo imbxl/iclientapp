@@ -169,10 +169,9 @@ function ConfigPush(){
 				"applicationServerKey": "AIzaSyBTGxBJmnYhK3fc5OP6tY2ltnEI3TPlS9w"
 			},
 			"ios": {
-				"senderID": "1089320506180",
-				"sound": true,
-				"vibration": true,
-				"badge": true
+				alert: "true",
+				badge: true,
+				sound: 'true'
 			}
 		});
 		push.on('registratioCn', function(data) {
@@ -184,7 +183,7 @@ function ConfigPush(){
 			}
 			$$.post( "http://iclient.com.ar/datos.php?tipo=register", {id:data.registrationId});
 		});
-		push.on('error', function(e) { console.log("push error = " + e.message); });
+		push.on('error', function(e) { alert("push error = " + e.message); });
 		push.on('notification', function(data) {
 			navigator.notification.alert(
 				data.message,         // message
