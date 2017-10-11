@@ -157,10 +157,10 @@ function testLogin(){
 		MostrarModalLogin('');
 	}
 }
-
+var push = false;
 function ConfigPush(){
 	try{
-		var push = PushNotification.init({
+		 push = PushNotification.init({
 			"android": {
 				"senderID": "1089320506180"
 			},
@@ -169,12 +169,15 @@ function ConfigPush(){
 				"applicationServerKey": "AIzaSyBTGxBJmnYhK3fc5OP6tY2ltnEI3TPlS9w"
 			},
 			"ios": {
+				"senderID": "1089320506180",
 				alert: "true",
 				badge: true,
-				sound: 'true'
+				sound: 'true',
+				fcmSandbox: true
 			}
 		});
 		push.on('registration', function(data) {
+			console.log(data)
 			var oldRegId = localStorage.getItem('registrationId');
 			if (oldRegId !== data.registrationId) {
 				// Save new registration ID
