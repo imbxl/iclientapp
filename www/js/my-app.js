@@ -159,37 +159,45 @@ function testLogin(){
 }
 
 function ConfigPush(){
-	var push = PushNotification.init({
-		"android": {
-			"senderID": "1089320506180"
-		},
-		"ios": {
-			"senderID": "1089320506180",
-			"sound": true,
-			"vibration": true,
-			"badge": true
-		}
-	});
-	push.on('registration', function(data) {
-		var oldRegId = localStorage.getItem('registrationId');
-		if (oldRegId !== data.registrationId) {
-			// Save new registration ID
-			localStorage.setItem('registrationId', data.registrationId);
-			// Post registrationId to your app server as the value has changed
-		}
-		$$.post( "http://iclient.com.ar/datos.php?tipo=register", {id:data.registrationId});
-	});
-	push.on('error', function(e) { console.log("push error = " + e.message); });
-	push.on('notification', function(data) {
-		navigator.notification.alert(
-			data.message,         // message
-			function(){
-				mainView.router.load({url:'cuenta.html', reload: true});
-			},                 // callback
-			data.title,           // title
-			'Ok'                  // buttonName
-		);
-   });
+	try{
+		var push = PushNotification.init({
+			"android": {
+				"senderID": "1089320506180"
+			},
+			"browser": {
+				"pushServiceURL": 'https://fcm.googleapis.com/fcm/send',
+				"applicationServerKey": "AIzaSyBTGxBJmnYhK3fc5OP6tY2ltnEI3TPlS9w"
+			},
+			"ios": {
+				"senderID": "1089320506180",
+				"sound": true,
+				"vibration": true,
+				"badge": true
+			}
+		});
+		push.on('registratioCn', function(data) {
+			var oldRegId = localStorage.getItem('registrationId');
+			if (oldRegId !== data.registrationId) {
+				// Save new registration ID
+				localStorage.setItem('registrationId', data.registrationId);
+				// Post registrationId to your app server as the value has changed
+			}
+			$$.post( "http://iclient.com.ar/datos.php?tipo=register", {id:data.registrationId});
+		});
+		push.on('error', function(e) { console.log("push error = " + e.message); });
+		push.on('notification', function(data) {
+			navigator.notification.alert(
+				data.message,         // message
+				function(){
+					mainView.router.load({url:'cuenta.html', reload: true});
+				},                 // callback
+				data.title,           // title
+				'Ok'                  // buttonName
+			);
+	   });
+	}
+	catch(err) {
+	}
 }
 
 function Escanear(){
