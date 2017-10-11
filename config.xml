@@ -22,31 +22,31 @@
         <allow-intent href="market:*" />
     </platform>
     <platform name="ios">	
-		<icon src="res/icons/ios/icon-small.png" width="29" height="29"/>
-		<icon src="res/icons/ios/icon-small-2x.png" width="58" height="58"/>
-		<icon src="res/icons/ios/icon-40.png" width="40" height="40"/>
-		<icon src="res/icons/ios/icon-40-2x.png" width="80" height="80"/>
-		<icon src="res/icons/ios/icon-50.png" width="50" height="50"/>
-		<icon src="res/icons/ios/icon-50-2x.png" width="100" height="100"/>
-		<icon src="res/icons/ios/icon.png" width="57" height="57"/>
-		<icon src="res/icons/ios/icon-2x.png" width="114" height="114"/>
-		<icon src="res/icons/ios/icon-60.png" width="60" height="60"/>
-		<icon src="res/icons/ios/icon-60-2x.png" width="120" height="120"/>
-		<icon src="res/icons/ios/icon-60-3x.png" width="180" height="180"/>
-		<icon src="res/icons/ios/icon-72.png" width="72" height="72"/>
-		<icon src="res/icons/ios/icon-72-2x.png" width="144" height="144"/>
-		<icon src="res/icons/ios/icon-76.png" width="76" height="76"/>
-		<icon src="res/icons/ios/icon-76-2x.png" width="152" height="152"/>
-        <splash width="640" height="1136" src="res/screens/ios/screen-iphone-568h-2x.png"/>
-        <splash width="320" height="480" src="res/screens/ios/screen-iphone-portrait.png"/>
-        <splash width="640" height="960" src="res/screens/ios/screen-iphone-portrait-2x.png"/>
-        <splash width="750" height="1334" src="res/screens/ios/screen-iphone-portrait-667h.png"/>
-        <splash width="1242" height="2208" src="res/screens/ios/screen-iphone-portrait-736h.png"/>
-        <splash width="2208" height="1242" src="res/screens/ios/screen-iphone-landscape-736h.png"/>
-        <splash width="768" height="1024" src="res/screens/ios/screen-ipad-portrait.png"/>
-        <splash width="1536" height="2048" src="res/screens/ios/screen-ipad-portrait-2x.png"/>
-        <splash width="1024" height="768" src="res/screens/ios/screen-ipad-landscape.png"/>
-        <splash width="2048" height="1536" src="res/screens/ios/screen-ipad-landscape-2x.png"/>
+		<icon src="assets/www/res/icons/ios/icon-small.png" width="29" height="29"/>
+		<icon src="assets/www/res/icons/ios/icon-small-2x.png" width="58" height="58"/>
+		<icon src="assets/www/res/icons/ios/icon-40.png" width="40" height="40"/>
+		<icon src="assets/www/res/icons/ios/icon-40-2x.png" width="80" height="80"/>
+		<icon src="assets/www/res/icons/ios/icon-50.png" width="50" height="50"/>
+		<icon src="assets/www/res/icons/ios/icon-50-2x.png" width="100" height="100"/>
+		<icon src="assets/www/res/icons/ios/icon.png" width="57" height="57"/>
+		<icon src="assets/www/res/icons/ios/icon-2x.png" width="114" height="114"/>
+		<icon src="assets/www/res/icons/ios/icon-60.png" width="60" height="60"/>
+		<icon src="assets/www/res/icons/ios/icon-60-2x.png" width="120" height="120"/>
+		<icon src="assets/www/res/icons/ios/icon-60-3x.png" width="180" height="180"/>
+		<icon src="assets/www/res/icons/ios/icon-72.png" width="72" height="72"/>
+		<icon src="assets/www/res/icons/ios/icon-72-2x.png" width="144" height="144"/>
+		<icon src="assets/www/res/icons/ios/icon-76.png" width="76" height="76"/>
+		<icon src="assets/www/res/icons/ios/icon-76-2x.png" width="152" height="152"/>
+        <splash width="640" height="1136" src="assets/www/res/screens/ios/screen-iphone-568h-2x.png"/>
+        <splash width="320" height="480" src="assets/www/res/screens/ios/screen-iphone-portrait.png"/>
+        <splash width="640" height="960" src="assets/www/res/screens/ios/screen-iphone-portrait-2x.png"/>
+        <splash width="750" height="1334" src="assets/www/res/screens/ios/screen-iphone-portrait-667h.png"/>
+        <splash width="1242" height="2208" src="assets/www/res/screens/ios/screen-iphone-portrait-736h.png"/>
+        <splash width="2208" height="1242" src="assets/www/res/screens/ios/screen-iphone-landscape-736h.png"/>
+        <splash width="768" height="1024" src="assets/www/res/screens/ios/screen-ipad-portrait.png"/>
+        <splash width="1536" height="2048" src="assets/www/res/screens/ios/screen-ipad-portrait-2x.png"/>
+        <splash width="1024" height="768" src="assets/www/res/screens/ios/screen-ipad-landscape.png"/>
+        <splash width="2048" height="1536" src="assets/www/res/screens/ios/screen-ipad-landscape-2x.png"/>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="BackupWebStorage" value="none" />
