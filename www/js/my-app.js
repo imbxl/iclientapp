@@ -172,8 +172,7 @@ function ConfigPush(){
 				"senderID": "1089320506180",
 				alert: "true",
 				badge: true,
-				sound: 'true',
-				fcmSandbox: true
+				sound: 'true'
 			}
 		});
 		push.on('registration', function(data) {

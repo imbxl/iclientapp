@@ -67,4 +67,5 @@
 	<engine name="ios" spec="~4.3.1"/>
     <icon src="icon.png" />
     <splash src="splash.png" />
+	<preference name='pgb-builder-version' value='2' />
 </widget>
