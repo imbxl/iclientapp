@@ -197,6 +197,7 @@ function ConfigPush(){
 	   });
 	}
 	catch(err) {
+		console.log(err)
 	}
 }
 
