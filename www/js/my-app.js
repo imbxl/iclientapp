@@ -145,6 +145,18 @@ function MostrarModalLogin(salida){
 	}, function(){ MostrarModalLogin(salida); });
 }
 
+function IngresarCodigo(){
+	myApp.prompt('Ingrese el Código de su ticket', function (value) {		
+		$$.get("http://iclient.com.ar/datos.php?tipo=code&code="+value, function (data) {
+			if(data == 'OK'){
+				navigator.notification.alert("¡Puntos agregados correctamente!",function(){},'Registro');
+			}else{
+				navigator.notification.alert(data,function(){},'Registro');
+			}
+		});
+    });
+}
+
 function testLogin(){
 	if(IniciadoSesion) return;
 	var estru = window.localStorage.getItem("estru");
