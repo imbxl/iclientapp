@@ -146,7 +146,7 @@ function MostrarModalLogin(salida){
 }
 
 function IngresarCodigo(){
-	myApp.prompt('Ingrese el Código de su ticket', function (value) {		
+	myApp.prompt('Ingrese el Código de su ticket', 'Ingresar Código', function (value) {		
 		$$.get("http://iclient.com.ar/datos.php?tipo=code&code="+value, function (data) {
 			if(data == 'OK'){
 				navigator.notification.alert("¡Puntos agregados correctamente!",function(){},'Registro');
