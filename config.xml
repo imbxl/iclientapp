@@ -73,7 +73,7 @@
     <plugin name="phonegap-plugin-push" spec="~2.2.3">
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
-    <plugin name="cordova-plugin-geolocation" spec="4.0.1" source="npm" />
+    <plugin name="cordova-plugin-geolocation-ios11" spec="4.0.1" source="npm" />
     <icon src="icon.png" />
     <splash src="splash.png" />
 </widget>
