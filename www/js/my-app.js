@@ -476,4 +476,27 @@ function LocationConfigure(){
       BackgroundGeolocation.start(); //triggers start on start event
     }
   });
+  
+  var BackgroundFetch = window.BackgroundFetch;
+
+  // Your background-fetch handler.
+  var fetchCallback = function() {
+    console.log('[js] BackgroundFetch event received');
+
+    // Required: Signal completion of your task to native code
+    // If you fail to do this, the OS can terminate your app
+    // or assign battery-blame for consuming too much background-time
+    BackgroundFetch.finish();
+  };
+
+  var failureCallback = function(error) {
+    console.log('- BackgroundFetch failed', error);
+  };
+
+  BackgroundFetch.configure(fetchCallback, failureCallback, {
+    minimumFetchInterval: 15, // <-- default is 15
+    stopOnTerminate: false,   // <-- Android only
+    startOnBoot: true,        // <-- Android only
+    forceReload: true         // <-- Android only
+  });
 }

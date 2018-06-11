@@ -73,6 +73,7 @@
 	  <variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
 	  <variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
 	</plugin>
+	<plugin name="cordova-plugin-background-fetch" spec="5.4.1" />
     <icon src="icon.png" />
     <splash src="splash.png" />
 </widget>
