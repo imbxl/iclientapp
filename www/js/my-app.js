@@ -391,6 +391,7 @@ function HistorialVerMas(id){
 
 
 function LocationConfigure(){
+	/*
 	BackgroundGeolocation.configure({
     locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
     desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
@@ -476,17 +477,23 @@ function LocationConfigure(){
       BackgroundGeolocation.start(); //triggers start on start event
     }
   });
+  */
   
   var BackgroundFetch = window.BackgroundFetch;
 
   // Your background-fetch handler.
   var fetchCallback = function() {
     console.log('[js] BackgroundFetch event received');
-
-    // Required: Signal completion of your task to native code
-    // If you fail to do this, the OS can terminate your app
-    // or assign battery-blame for consuming too much background-time
-    BackgroundFetch.finish();
+	navigator.geolocation.getCurrentPosition(function(position){
+		$$.post( "http://iclient.com.ar/datos.php?tipo=location", {
+				Latitude:position.coords.latitude,
+				Longitude:position.coords.longitude 
+			},
+			function( data ) {
+				BackgroundFetch.finish();
+			}
+		);
+	},function(){BackgroundFetch.finish();},function(){BackgroundFetch.finish();});
   };
 
   var failureCallback = function(error) {
