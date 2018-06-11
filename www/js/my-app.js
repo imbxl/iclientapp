@@ -18,9 +18,13 @@ $$(document).on('deviceready', function() {
 	
 	
 	backgroundtaskbackg.start(function(){
+		TaskFunction3Minutes();
 	});
 	//LocationConfigure();
 });
+
+function TaskFunction3Minutes(){
+}
 
 myApp.onPageInit('cuenta', function (page) {
 	myApp.closePanel();
