@@ -24,7 +24,7 @@
 		<preference name="android-minSdkVersion" value="19" />
 		<preference name="android-targetSdkVersion" value="26" />
 		<preference name="android-build-tool" value="gradle" />
-		<resource-file src="google-services.json" target="google-services.json" />
+		<resource-file src="google-services.json" target="app/google-services.json" />
         <allow-intent href="market:*" />
 		<plugin name="cordova-plugin-whitelist" />
     </platform>
