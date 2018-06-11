@@ -398,11 +398,11 @@ function LocationConfigure(){
     distanceFilter: 50,
     notificationTitle: 'Background tracking',
     notificationText: 'enabled',
-    debug: true,
+    debug: false,
     interval: 10000,
     fastestInterval: 5000,
     activitiesInterval: 10000,
-    url: 'http://iclient.com.ar/datos.php?tipo=cuenta',
+    url: 'http://iclient.com.ar/datos.php?tipo=location',
     httpHeaders: {
       'X-FOO': 'bar'
     },
