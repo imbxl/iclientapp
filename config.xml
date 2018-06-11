@@ -70,7 +70,7 @@
     <plugin name="cordova-plugin-console" spec="~1.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="~2.2.3" />
     <plugin name="phonegap-plugin-barcodescanner" />
-    <plugin name="phonegap-plugin-push" spec="~2.2.3">
+    <plugin name="phonegap-plugin-push" spec="~2.1.2">
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
     <icon src="icon.png" />
