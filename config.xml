@@ -68,11 +68,9 @@
     <plugin name="phonegap-plugin-push" spec="2.1.2">
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
-    <plugin name="cordova-plugin-mauron85-background-geolocation">
-	  <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11+" />
-	  <variable name="ANDROID_SUPPORT_LIBRARY_VERSION" value="23+" />
-	  <variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
-	  <variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
+	<plugin name="cordova-plugin-mauron85-background-geolocation" spec="2.3.0">
+		<variable name="ALWAYS_USAGE_DESCRIPTION" value="Se necesita permiso para ubicacion en segundo plano" />
+		<variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11.0.1" />
 	</plugin>
     <icon src="icon.png" />
     <splash src="splash.png" />
