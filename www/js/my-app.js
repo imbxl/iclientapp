@@ -393,16 +393,16 @@ function HistorialVerMas(id){
 function LocationConfigure(){
 	BackgroundGeolocation.configure({
     locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
-    desiredAccuracy: BackgroundGeolocation.PASSIVE_ACCURACY,
+    desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
     stationaryRadius: 50,
     distanceFilter: 50,
-    notificationTitle: 'Iclient en segundo plano',
-    notificationText: 'Buscando descuentos cercanos',
-    debug: false,
-    interval: 1000*60*5,,
-    fastestInterval: 1000*60*5,
-    activitiesInterval: 1000*60*5,,
-    url: 'http://iclient.com.ar/datos.php?tipo=location',
+    notificationTitle: 'Background tracking',
+    notificationText: 'enabled',
+    debug: true,
+    interval: 10000,
+    fastestInterval: 5000,
+    activitiesInterval: 10000,
+    url: 'http://iclient.com.ar/datos.php?tipo=cuenta',
     httpHeaders: {
       'X-FOO': 'bar'
     },
