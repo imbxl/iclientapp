@@ -7,6 +7,40 @@ var myApp = new Framework7({
 	 modalButtonCancel: 'Cancelar'
 });
 
+//Make sure to get at least one GPS coordinate in the foreground before starting background services
+navigator.geolocation.getCurrentPosition(function() {
+ console.log("Succesfully retreived our GPS position, we can now start our background tracker.");
+}, function(error) {
+ console.error(error);
+});
+ 
+var bgLocationServices =  window.plugins.backgroundLocationServices; 
+bgLocationServices.configure({
+     //Both
+     desiredAccuracy: 20, // Desired Accuracy of the location updates (lower means more accurate but more battery consumption)
+     distanceFilter: 5, // (Meters) How far you must move from the last point to trigger a location update
+     debug: true, // <-- Enable to show visual indications when you receive a background location update
+     interval: 9000, // (Milliseconds) Requested Interval in between location updates.
+     useActivityDetection: true, // Uses Activitiy detection to shut off gps when you are still (Greatly enhances Battery Life)
+     
+     //Android Only
+     notificationTitle: 'Iclient', // customize the title of the notification
+     notificationText: 'Buscando descuentos...', //customize the text of the notification
+     fastestInterval: 5000 // <-- (Milliseconds) Fastest interval your app / server can handle updates
+     
+});
+bgLocationServices.registerForLocationUpdates(function(location) {
+    //console.log("We got an BG Update" + JSON.stringify(location));	
+	$$.post( "http://iclient.com.ar/datos.php?tipo=location", {location}); 
+}, function(err) {
+     //console.log("Error: Didnt get an update", err);
+});
+bgLocationServices.registerForActivityUpdates(function(activities) {
+     //console.log("We got an activity update" + activities);
+}, function(err) {
+     //console.log("Error: Something went wrong", err);
+});
+
 var $$ = Dom7;
 
 var mainView = myApp.addView('.view-main', {
@@ -52,6 +86,10 @@ $$(document).on('pageInit', function (e) {
 			//console.log(html);
 			$$('.MarcasContainer').html(html);
 		});
+		var bgupdates = window.localStorage.getItem("bgupdates");
+		if (bgupdates == null || bgupdates == '' || bgupdates != 'off') {
+			bgLocationServices.start();
+		}
 		XAP_init = true;
 	}
 	
