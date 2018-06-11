@@ -77,7 +77,6 @@
     <plugin name="cordova-plugin-statusbar" spec="~2.2.3" />
     <plugin name="phonegap-plugin-barcodescanner" />
 	<plugin name="cordova-plugin-mauron85-background-geolocation">
-	  <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11+" />
 	  <variable name="ANDROID_SUPPORT_LIBRARY_VERSION" value="23+" />
 	  <variable name="ALWAYS_USAGE_DESCRIPTION" value="Se necesita acceso a la ubicacion" />
 	  <variable name="MOTION_USAGE_DESCRIPTION" value="Se necesita acceso a los sensores" />
