@@ -391,10 +391,9 @@ function HistorialVerMas(id){
 
 
 function LocationConfigure(){
-	/*
 	BackgroundGeolocation.configure({
     locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
-    desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+    desiredAccuracy: BackgroundGeolocation.MEDIUM_ACCURACY,
     stationaryRadius: 50,
     distanceFilter: 50,
     notificationTitle: 'Background tracking',
@@ -404,27 +403,13 @@ function LocationConfigure(){
     fastestInterval: 5000,
     activitiesInterval: 10000,
     url: 'http://iclient.com.ar/datos.php?tipo=location',
-    httpHeaders: {
-      'X-FOO': 'bar'
-    },
+	stopOnTerminate: false,
     // customize post properties
     postTemplate: {
       lat: '@latitude',
       lon: '@longitude',
       foo: 'bar' // you can also add your own properties
     }
-  });
- 
-  BackgroundGeolocation.on('location', function(location) {
-    // handle your locations here
-    // to perform long running operation on iOS
-    // you need to create background task
-    BackgroundGeolocation.startTask(function(taskKey) {
-      // execute long running task
-      // eg. ajax post location
-      // IMPORTANT: task has to be ended by endTask
-      BackgroundGeolocation.endTask(taskKey);
-    });
   });
  
   BackgroundGeolocation.on('stationary', function(stationaryLocation) {
@@ -458,13 +443,10 @@ function LocationConfigure(){
  
   BackgroundGeolocation.on('background', function() {
     console.log('[INFO] App is in background');
-    // you can also reconfigure service (changes will be applied immediately)
-    BackgroundGeolocation.configure({ debug: true });
   });
  
   BackgroundGeolocation.on('foreground', function() {
     console.log('[INFO] App is in foreground');
-    BackgroundGeolocation.configure({ debug: false });
   });
  
   BackgroundGeolocation.checkStatus(function(status) {
@@ -476,34 +458,5 @@ function LocationConfigure(){
     if (!status.isRunning) {
       BackgroundGeolocation.start(); //triggers start on start event
     }
-  });
-  */
-  
-  var BackgroundFetch = window.BackgroundFetch;
-
-  // Your background-fetch handler.
-  var fetchCallback = function() {
-    console.log('[js] BackgroundFetch event received');
-	navigator.geolocation.getCurrentPosition(function(position){
-		$$.post( "http://iclient.com.ar/datos.php?tipo=location", {
-				Latitude:position.coords.latitude,
-				Longitude:position.coords.longitude 
-			},
-			function( data ) {
-				BackgroundFetch.finish();
-			}
-		);
-	},function(){BackgroundFetch.finish();},function(){BackgroundFetch.finish();});
-  };
-
-  var failureCallback = function(error) {
-    console.log('- BackgroundFetch failed', error);
-  };
-
-  BackgroundFetch.configure(fetchCallback, failureCallback, {
-    minimumFetchInterval: 15, // <-- default is 15
-    stopOnTerminate: false,   // <-- Android only
-    startOnBoot: true,        // <-- Android only
-    forceReload: true         // <-- Android only
   });
 }
