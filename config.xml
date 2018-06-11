@@ -67,10 +67,10 @@
     </platform>
     <preference name="DisallowOverscroll" value="true" />
     <plugin name="cordova-plugin-dialogs" />
-    <plugin name="cordova-plugin-console" />
+    <plugin name="cordova-plugin-console" spec="1.0.7" />
     <plugin name="cordova-plugin-statusbar" />
     <plugin name="phonegap-plugin-barcodescanner" />
-    <plugin name="phonegap-plugin-push" spec="2.1.2" >
+    <plugin name="phonegap-plugin-push" spec="2.1.0" >
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
 	<plugin name="cordova-plugin-mauron85-background-geolocation">
