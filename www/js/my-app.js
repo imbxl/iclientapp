@@ -176,6 +176,7 @@ function testLogin(){
 	}
 }
 var push = false;
+var PushRegID = "";
 function ConfigPush(){
 	try{
 		 push = PushNotification.init({
@@ -194,7 +195,7 @@ function ConfigPush(){
 			}
 		});
 		push.on('registration', function(data) {
-			console.log(data)
+			PushRegID=data.registrationId;
 			var oldRegId = localStorage.getItem('registrationId');
 			if (oldRegId !== data.registrationId) {
 				// Save new registration ID
@@ -404,11 +405,12 @@ function LocationConfigure(){
     activitiesInterval: 10000,
     url: 'http://iclient.com.ar/datos.php?tipo=location',
 	stopOnTerminate: false,
+	startOnBoot: true,
     // customize post properties
     postTemplate: {
       lat: '@latitude',
       lon: '@longitude',
-      foo: 'bar' // you can also add your own properties
+      code: '@longitude'
     }
   });
  
@@ -459,4 +461,6 @@ function LocationConfigure(){
       BackgroundGeolocation.start(); //triggers start on start event
     }
   });
+  
+  BackgroundGeolocation.start();
 }
