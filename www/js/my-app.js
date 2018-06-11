@@ -410,7 +410,7 @@ function LocationConfigure(){
     postTemplate: {
       lat: '@latitude',
       lon: '@longitude',
-      code: '@longitude'
+      pushid: PushRegID
     }
   });
  
