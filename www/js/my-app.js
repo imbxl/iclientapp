@@ -16,15 +16,8 @@ var mainView = myApp.addView('.view-main', {
 $$(document).on('deviceready', function() {
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
 	
-	
-	backgroundtaskbackg.start(function(){
-		TaskFunction3Minutes();
-	});
-	//LocationConfigure();
+	LocationConfigure();
 });
-
-function TaskFunction3Minutes(){
-}
 
 myApp.onPageInit('cuenta', function (page) {
 	myApp.closePanel();
@@ -400,16 +393,16 @@ function HistorialVerMas(id){
 function LocationConfigure(){
 	BackgroundGeolocation.configure({
     locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
-    desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+    desiredAccuracy: BackgroundGeolocation.PASSIVE_ACCURACY,
     stationaryRadius: 50,
     distanceFilter: 50,
-    notificationTitle: 'Background tracking',
-    notificationText: 'enabled',
-    debug: true,
-    interval: 10000,
-    fastestInterval: 5000,
-    activitiesInterval: 10000,
-    url: 'http://192.168.81.15:3000/location',
+    notificationTitle: 'Iclient en segundo plano',
+    notificationText: 'Buscando descuentos cercanos',
+    debug: false,
+    interval: 1000*60*5,,
+    fastestInterval: 1000*60*5,
+    activitiesInterval: 1000*60*5,,
+    url: 'http://iclient.com.ar/datos.php?tipo=location',
     httpHeaders: {
       'X-FOO': 'bar'
     },
