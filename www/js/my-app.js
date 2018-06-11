@@ -16,7 +16,10 @@ var mainView = myApp.addView('.view-main', {
 $$(document).on('deviceready', function() {
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
 	
-	LocationConfigure();
+	
+	backgroundtaskbackg.start(function(){
+	});
+	//LocationConfigure();
 });
 
 myApp.onPageInit('cuenta', function (page) {
