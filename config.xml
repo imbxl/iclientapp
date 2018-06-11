@@ -73,6 +73,8 @@
 	  <variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
 	  <variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
 	</plugin>
+	<plugin name="cordova-plugin-background-mode"/>
+	<plugin name="cordova-plugin-autostart"/>
     <icon src="icon.png" />
     <splash src="splash.png" />
 </widget>
