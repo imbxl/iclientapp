@@ -412,10 +412,6 @@ function LocationConfigure(){
     }
   });
  
-  BackgroundGeolocation.on('stationary', function(stationaryLocation) {
-    // handle stationary locations here
-  });
- 
   BackgroundGeolocation.on('error', function(error) {
     console.log('[ERROR] BackgroundGeolocation error:', error.code, error.message);
   });
@@ -433,7 +429,7 @@ function LocationConfigure(){
     if (status !== BackgroundGeolocation.AUTHORIZED) {
       // we need to set delay or otherwise alert may not be shown
       setTimeout(function() {
-        var showSettings = confirm('App requires location tracking permission. Would you like to open app settings?');
+        var showSettings = confirm('Esta aplicacion requiere permisos de ubicacion.');
         if (showSetting) {
           return BackgroundGeolocation.showAppSettings();
         }
