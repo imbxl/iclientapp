@@ -15,8 +15,6 @@ var mainView = myApp.addView('.view-main', {
 
 $$(document).on('deviceready', function() {
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
-	
-	LocationConfigure();
 });
 
 myApp.onPageInit('cuenta', function (page) {
@@ -202,6 +200,7 @@ function ConfigPush(){
 				localStorage.setItem('registrationId', data.registrationId);
 				// Post registrationId to your app server as the value has changed
 			}
+			LocationConfigure();
 			$$.post( "http://iclient.com.ar/datos.php?tipo=register", {id:data.registrationId});
 		});
 		push.on('error', function(e) { alert("push error = " + e.message); });
