@@ -392,12 +392,12 @@ function HistorialVerMas(id){
 
 function LocationConfigure(){
 	BackgroundGeolocation.configure({
-    locationProvider: BackgroundGeolocation.ACTIVITY_PROVIDER,
+    locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
     desiredAccuracy: BackgroundGeolocation.MEDIUM_ACCURACY,
     stationaryRadius: 50,
     distanceFilter: 50,
-    notificationTitle: 'Background tracking',
-    notificationText: 'enabled',
+    notificationTitle: 'Iclient tracking',
+    notificationText: 'Iclient en segundo plano',
     debug: false,
     interval: 10000,
     fastestInterval: 5000,
