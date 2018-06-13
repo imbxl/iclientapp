@@ -252,14 +252,21 @@ function ConfigPush(){
 		});
 		push.on('error', function(e) { alert("push error = " + e.message); });
 		push.on('notification', function(data) {
-			navigator.notification.alert(
-				data.message,         // message
-				function(){
+			if(typeof data.data !== 'undefined' && typeof data.data.tipo !== 'undefined'){
+				if(data.data.tipo == 'PRODUCTO'){
 					mainView.router.load({url:'cuenta.html', reload: true});
-				},                 // callback
-				data.title,           // title
-				'Ok'                  // buttonName
-			);
+					ProductoVerMas(data.data.id);
+				}
+			}else{
+				navigator.notification.alert(
+					data.message,         // message
+					function(){
+						mainView.router.load({url:'cuenta.html', reload: true});
+					},                 // callback
+					data.title,           // title
+					'Ok'                  // buttonName
+				);
+			}
 	   });
 	}
 	catch(err) {
