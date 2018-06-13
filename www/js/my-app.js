@@ -78,7 +78,7 @@ $$(document).on('pageInit', function (e) {
 	
     if (page.name === 'cuenta') {
 		$$.getJSON('http://iclient.com.ar/datos.php?tipo=cuenta', function (json) {
-			console.log(json);
+			//console.log(json);
 			$$('#Datos_Nombre').html(json['Nombre']);
 			$$('#Datos_DNI').html(json['DNI']);
 			$$('#Datos_Email').html(json['Email']);
@@ -167,7 +167,9 @@ function login(strU, strP) {
 				window.localStorage.setItem("estrp", estrP);
 				IniciadoSesion = true;
 				if(data == 'DATOS'){
-					navigator.notification.alert('Se necesitan completar datos personales',function(){},'Mis datos');
+					setTimeout(function(){
+						navigator.notification.alert('Se necesitan completar datos personales',function(){},'Mis datos');
+					}, 3000);
 					mainView.router.load({url:'cuenta.html', reload: true});
 				}else{ mainView.router.load({url:'index.html'}); }
 				ConfigPush();
