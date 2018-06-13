@@ -23,7 +23,6 @@
 		<preference name="android-build-tool" value="gradle" />
 		<resource-file src="google-services.json" target="google-services.json" />
         <allow-intent href="market:*" />
-		<plugin name="cordova-plugin-whitelist" spec="~1.2.0" />
     </platform>
     <platform name="ios">			
 		<icon src="www/assets/icons/ios/icon-small.png" width="29" height="29"/>
@@ -55,26 +54,8 @@
         <allow-intent href="itms-apps:*" />
         <preference name="BackupWebStorage" value="none" />
 		<resource-file src="GoogleService-Info.plist" />
-		<preference name="webviewbounce" value="false" />
-		<preference name="UIWebViewBounce" value="false" />
     </platform>
     <preference name="DisallowOverscroll" value="true" />
-    <plugin name="cordova-plugin-dialogs" spec="~1.3.3" />
-    <plugin name="cordova-plugin-console" spec="~1.0.1" />
-    <plugin name="cordova-plugin-statusbar" spec="~2.2.3" />
-    <plugin name="phonegap-plugin-barcodescanner">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Scan QR-Codes" />
-    </plugin>
-    <plugin name="phonegap-plugin-push" spec="2.1.3">
-		<variable name="FCM_VERSION" value="11.6.2" />
-        <variable name="SENDER_ID" value="1089320506180" />
-    </plugin>
-	<plugin name="cordova-plugin-mauron85-background-geolocation">
-	  <variable name="FCM_VERSION" value="11.6.2" />
-	  <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11.6.2" />
-	  <variable name="ANDROID_SUPPORT_LIBRARY_VERSION" value="23+" />
-	  <variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
-	  <variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
 	</plugin>
     <icon src="icon.png" />
     <splash src="splash.png" />
