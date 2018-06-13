@@ -56,7 +56,6 @@
 		<resource-file src="GoogleService-Info.plist" />
     </platform>
     <preference name="DisallowOverscroll" value="true" />
-	</plugin>
     <icon src="icon.png" />
     <splash src="splash.png" />
 </widget>
