@@ -55,7 +55,7 @@
         <preference name="BackupWebStorage" value="none" />
 		<resource-file src="GoogleService-Info.plist" />
     </platform>
-    <plugin name="cordova-plugin-dialogs" spec="~1.3.3" />
+    <plugin name="cordova-plugin-dialogs" />
 	<plugin name="cordova-plugin-console" />
 	<plugin name="cordova-plugin-statusbar" />
     <preference name="DisallowOverscroll" value="true" />
