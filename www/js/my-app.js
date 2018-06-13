@@ -78,7 +78,7 @@ $$(document).on('pageInit', function (e) {
 	
     if (page.name === 'cuenta') {
 		$$.getJSON('http://iclient.com.ar/datos.php?tipo=cuenta', function (json) {
-			//console.log(json);
+			console.log(json);
 			$$('#Datos_Nombre').html(json['Nombre']);
 			$$('#Datos_DNI').html(json['DNI']);
 			$$('#Datos_Email').html(json['Email']);
@@ -86,10 +86,10 @@ $$(document).on('pageInit', function (e) {
 			$$('#Datos_Tel').val(json['Telefono']);
 			$$('#Datos_Genero').val(json['Genero']);
 			$$('#Datos_Provincia').val(json['Provincia']);
-			$$('#calendar-nacimiento-cuenta').val(json['Nacimiento']);			
+			if(json['Nacimiento'] != '0000-00-00') $$('#calendar-nacimiento-cuenta').val(json['Nacimiento']);			
+			else $$('#calendar-nacimiento-cuenta').val('');	
 			myApp.calendar({
-				input: '#calendar-nacimiento-cuenta',
-				value: json['Nacimiento']
+				input: '#calendar-nacimiento-cuenta'
 			});   
 		});
 	}
@@ -127,12 +127,20 @@ function Registrarme() {
 	);
 }
 function GuardarDatos() {
+	if(document.getElementById('Datos_Genero').value == ''){
+		navigator.notification.alert("Debe ingresar su Género.",function(){},'Mis datos');
+		return;
+	}
 	if(document.getElementById('calendar-nacimiento-cuenta').value == ''){
 		navigator.notification.alert("Debe ingresar su Fecha de Nacimiento.",function(){},'Mis datos');
 		return;
 	}
+	if(document.getElementById('Datos_Provincia').value == ''){
+		navigator.notification.alert("Debe ingresar su Provincia.",function(){},'Mis datos');
+		return;
+	}
 	if(document.getElementById('Datos_Tel').value == ''){
-		navigator.notification.alert("Debe ingresar su Telefono.",function(){},'Mis datos');
+		navigator.notification.alert("Debe ingresar su Teléfono.",function(){},'Mis datos');
 		return;
 	}
 	$$.post( "http://iclient.com.ar/datos.php?tipo=update_datos", {
