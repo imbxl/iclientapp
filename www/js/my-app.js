@@ -254,6 +254,7 @@ function ConfigPush(){
 		});
 		push.on('error', function(e) { alert("push error = " + e.message); });
 		push.on('notification', function(data) {
+			console.log('Callback PUSH');
 			console.log(data);
 			if(typeof data.tipo !== 'undefined'){
 				if(data.tipo == 'PRODUCTO'){
