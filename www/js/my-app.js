@@ -226,7 +226,8 @@ function ConfigPush(){
 	try{
 		 push = PushNotification.init({
 			"android": {
-				"senderID": "1089320506180"
+				"senderID": "1089320506180",
+				"forceShow": true
 			},
 			"browser": {
 				"pushServiceURL": 'https://fcm.googleapis.com/fcm/send',
@@ -236,7 +237,8 @@ function ConfigPush(){
 				"senderID": "1089320506180",
 				alert: "true",
 				badge: true,
-				sound: 'true'
+				sound: 'true',
+				"forceShow": true
 			}
 		});
 		push.on('registration', function(data) {
