@@ -24,6 +24,8 @@
 		<resource-file src="google-services.json" target="google-services.json" />
         <allow-intent href="market:*" />
 		<plugin name="cordova-plugin-whitelist" spec="~1.2.0" />
+		<icon src="icon.png" />
+		<splash src="splash.png" />
     </platform>
     <platform name="ios">			
 		<icon src="www/assets/icons/ios/icon-small.png" width="29" height="29"/>
@@ -80,6 +82,4 @@
 	  <variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
 	  <variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
 	</plugin>
-    <icon src="icon.png" />
-    <splash src="splash.png" />
 </widget>
