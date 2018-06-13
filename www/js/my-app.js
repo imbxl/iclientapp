@@ -101,6 +101,8 @@ function Registrarme() {
     //verificamos conexion y servidores
 	$$.post( "http://iclient.com.ar/registro_usuario.php", {
 			Nombre:document.getElementById('formreg_name').value,
+			Genero:document.getElementById('formreg_genero').value,
+			Provincia:document.getElementById('formreg_provincia').value,
 			Tel:document.getElementById('formreg_tel').value,
 			DNI:document.getElementById('formreg_dni').value,
 			Email:document.getElementById('formreg_mail').value,
