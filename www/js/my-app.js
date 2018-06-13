@@ -167,9 +167,7 @@ function login(strU, strP) {
 				window.localStorage.setItem("estrp", estrP);
 				IniciadoSesion = true;
 				if(data == 'DATOS'){
-					setTimeout(function(){
-						navigator.notification.alert('Se necesitan completar datos personales',function(){},'Mis datos');
-					}, 3000);
+					navigator.notification.alert('Se necesitan completar datos personales',function(){},'Mis datos');
 					mainView.router.load({url:'cuenta.html', reload: true});
 				}else{ mainView.router.load({url:'index.html'}); }
 				ConfigPush();
