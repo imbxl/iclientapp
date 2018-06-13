@@ -256,20 +256,21 @@ function ConfigPush(){
 		push.on('notification', function(data) {
 			console.log('Callback PUSH');
 			console.log(data);
-			if(typeof data.tipo !== 'undefined'){
-				if(data.tipo == 'PRODUCTO'){
-					mainView.router.load({url:'canjear.html', reload: true});
-					ProductoVerMas(data.prodid);
+			if(typeof data.additionalData !== 'undefined' && typeof data.additionalData.tipo !== 'undefined'){
+				if(data.additionalData.tipo == 'PUNTOS'){
+					navigator.notification.alert(
+						data.message,         // message
+						function(){
+							mainView.router.load({url:'cuenta.html', reload: true});
+						},                 // callback
+						data.title,           // title
+						'Ok'                  // buttonName
+					);
 				}
-			}else{
-				navigator.notification.alert(
-					data.message,         // message
-					function(){
-						mainView.router.load({url:'cuenta.html', reload: true});
-					},                 // callback
-					data.title,           // title
-					'Ok'                  // buttonName
-				);
+				if(data.additionalData.tipo == 'PRODUCTO'){
+					mainView.router.load({url:'canjear.html', reload: true});
+					ProductoVerMas(data.additionalData.prodid);
+				}
 			}
 	   });
 	}
