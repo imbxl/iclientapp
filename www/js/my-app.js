@@ -256,8 +256,14 @@ function ConfigPush(){
 		push.on('notification', function(data) {
 			console.log('Callback PUSH');
 			console.log(data);
-			if(typeof data.additionalData !== 'undefined' && typeof data.additionalData.tipo !== 'undefined'){
-				if(data.additionalData.tipo == 'PUNTOS'){
+			if(typeof data.additionalData !== 'undefined'){
+				var tipo = '';
+				var prodid = '';
+				if(typeof data.additionalData.tipo !== 'undefined') tipo = data.additionalData.tipo;
+				if(typeof data.additionalData['gcm.notification.tipo'] !== 'undefined') tipo = data.additionalData['gcm.notification.tipo'];
+				if(typeof data.additionalData.prodid !== 'undefined') prodid = data.additionalData.prodid;
+				if(typeof data.additionalData['gcm.notification.prodid'] !== 'undefined') prodid = data.additionalData['gcm.notification.prodid'];
+				if(tipo == 'PUNTOS'){
 					navigator.notification.alert(
 						data.message,         // message
 						function(){
@@ -267,9 +273,9 @@ function ConfigPush(){
 						'Ok'                  // buttonName
 					);
 				}
-				if(data.additionalData.tipo == 'PRODUCTO'){
+				if(tipo == 'PRODUCTO'){
 					mainView.router.load({url:'canjear.html', reload: true});
-					GetProductos(data.additionalData.prodid);
+					GetProductos(prodid);
 				}
 			}
 	   });
