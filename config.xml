@@ -23,6 +23,9 @@
 		<preference name="android-build-tool" value="gradle" />
 		<resource-file src="google-services.json" target="google-services.json" />
         <allow-intent href="market:*" />
+		<plugin name="cordova-plugin-dialogs" spec="~1.3.3" />
+		<plugin name="cordova-plugin-console" spec="~1.0.1" />
+		<plugin name="cordova-plugin-statusbar" spec="~2.2.3" />
     </platform>
     <platform name="ios">			
 		<icon src="www/assets/icons/ios/icon-small.png" width="29" height="29"/>
@@ -54,11 +57,11 @@
         <allow-intent href="itms-apps:*" />
         <preference name="BackupWebStorage" value="none" />
 		<resource-file src="GoogleService-Info.plist" />
+		<plugin name="cordova-plugin-dialogs" />
+		<plugin name="cordova-plugin-console" />
+		<plugin name="cordova-plugin-statusbar" />
     </platform>
     <preference name="DisallowOverscroll" value="true" />
-    <plugin name="cordova-plugin-dialogs" />
-    <plugin name="cordova-plugin-console" />
-    <plugin name="cordova-plugin-statusbar" />
     <plugin name="phonegap-plugin-barcodescanner">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Scan QR-Codes" />
     </plugin>
