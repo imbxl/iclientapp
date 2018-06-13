@@ -83,13 +83,14 @@ $$(document).on('pageInit', function (e) {
 			$$('#Datos_DNI').html(json['DNI']);
 			$$('#Datos_Email').html(json['Email']);
 			$$('#Datos_Puntos').html(parseInt(json['Puntos'])-parseInt(json['Canjes']));			
-			var calendarDefault = app.calendar.create({
-			  inputEl: '#calendar-nacimiento-cuenta',
-			});
 			$$('#Datos_Tel').val(json['Telefono']);
 			$$('#Datos_Genero').val(json['Genero']);
 			$$('#Datos_Provincia').val(json['Provincia']);
-			$$('#calendar-nacimiento-cuenta').val(json['Email']);
+			$$('#calendar-nacimiento-cuenta').val(json['Nacimiento']);			
+			myApp.calendar({
+				input: '#calendar-nacimiento-cuenta',
+				value: json['Nacimiento']
+			});   
 		});
 	}
 	
@@ -180,10 +181,10 @@ function MostrarModalLogin(salida){
 		login(username, password);
 	}, function(){ MostrarModalLogin(salida); });
 }
-function RegistroForm(){
-	var calendarDefault = app.calendar.create({
-	  inputEl: '#calendar-nacimiento',
-	});
+function RegistroForm(){	
+	myApp.calendar({
+		input: '#calendar-nacimiento'
+	});   
 	myApp.closeModal(LoginModal);
 }
 
