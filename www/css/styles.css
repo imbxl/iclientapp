@@ -193,3 +193,5 @@
 .toolbar a{
 	color:#555;
 }
+select.rightselect { text-align-last: right; text-align: right; direction: rtl;}
+select.rightselect option { direction: rtl; }

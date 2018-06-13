@@ -32,12 +32,71 @@
                         <div class="item-after" id="Datos_DNI"></div>
                         </div>
                         </div>
+                    </li>     
+                    <li>
+                        <div class="item-content item-input item-input-with-value">
+                        <div class="item-inner">
+                        <div class="item-title label">Género</div>
+                        <div class="item-input-wrap">
+                            <select id="Datos_Genero" placeholder="Género" class="input-with-value rightselect">
+                                <option value="1">Masculino</option>
+                                <option value="1">Femenino</option>
+                            </select>
+                        </div>
+                        </div>
+                        </div>
+                    </li>             
+                    <li>
+                      <div class="item-content item-input item-input-with-value">
+                        <div class="item-inner">
+                          <div class="item-title label">Nacimiento</div>
+                          <div class="item-input-wrap">
+                            <input type="text" placeholder="Fecha de Nacimiento" readonly="readonly" id="calendar-nacimiento-cuenta" class="input-with-value" style="text-align:right"/>
+                          </div>
+                        </div>
+                      </div>
                     </li>
                     <li>
-                        <div class="item-content">
+                        <div class="item-content item-input item-input-with-value">
+                        <div class="item-inner">
+                        <div class="item-title label">Provincia</div>
+                        <div class="item-input-wrap">
+                                <select id="Datos_Provincia" placeholder="Provincia" class="input-with-value rightselect">
+                                	<option value="1">Buenos Aires</option>
+                                    <option value="2">Catamarca</option>
+                                    <option value="3">Chaco</option>
+                                    <option value="4">Chubut</option>
+                                    <option value="5">Córdoba</option>
+                                    <option value="6">Corrientes</option>
+                                    <option value="7">Entre Ríos</option>
+                                    <option value="8">Formosa</option>
+                                    <option value="9">Jujuy</option>
+                                    <option value="10">La Pampa</option>
+                                    <option value="11">La Rioja</option>
+                                    <option value="12">Mendoza</option>
+                                    <option value="13">Misiones</option>
+                                    <option value="14">Neuquén</option>
+                                    <option value="15">Río Negro</option>
+                                    <option value="16">Salta</option>
+                                    <option value="17">San Juan</option>
+                                    <option value="18">San Luis</option>
+                                    <option value="19">Santa Cruz</option>
+                                    <option value="20">Santa Fe</option>
+                                    <option value="21">Santiago del Estero</option>
+                                    <option value="22">Tierra del Fuego</option>
+                                    <option value="23">Tucumán</option>
+                                </select>
+                        </div>
+                        </div>
+                        </div>
+                    </li> 
+                    <li>
+                        <div class="item-content item-input item-input-with-value">
                         <div class="item-inner">
                         <div class="item-title label">Teléfono</div>
-                        <div class="item-after" id="Datos_Tel"></div>
+                        <div class="item-input-wrap">
+                                <input type="text" id="Datos_Tel" placeholder="Teléfono" class="input-with-value" style="text-align:right">
+                        </div>
                         </div>
                         </div>
                     </li>
@@ -63,18 +122,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="list-block tablet-inset">
-                <ul>
-                    <li>
-                        <a href="canjear.html" class="item-link">
-                            <div class="item-content">
-                            <div class="item-inner">
-                            Canjear Puntos
-                            </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
+            <div style="text-align:center">
+            	<button onClick="GuardarDatos();" class="col button button-fill" style="margin: auto;">Guardar</button>
             </div>
         </div>
     </div>

@@ -81,9 +81,15 @@ $$(document).on('pageInit', function (e) {
 			//console.log(json);
 			$$('#Datos_Nombre').html(json['Nombre']);
 			$$('#Datos_DNI').html(json['DNI']);
-			$$('#Datos_Tel').html(json['Telefono']);
 			$$('#Datos_Email').html(json['Email']);
-			$$('#Datos_Puntos').html(parseInt(json['Puntos'])-parseInt(json['Canjes']));
+			$$('#Datos_Puntos').html(parseInt(json['Puntos'])-parseInt(json['Canjes']));			
+			var calendarDefault = app.calendar.create({
+			  inputEl: '#calendar-nacimiento-cuenta',
+			});
+			$$('#Datos_Tel').val(json['Telefono']);
+			$$('#Datos_Genero').val(json['Genero']);
+			$$('#Datos_Provincia').val(json['Provincia']);
+			$$('#calendar-nacimiento-cuenta').val(json['Email']);
 		});
 	}
 	
@@ -103,6 +109,7 @@ function Registrarme() {
 			Nombre:document.getElementById('formreg_name').value,
 			Genero:document.getElementById('formreg_genero').value,
 			Provincia:document.getElementById('formreg_provincia').value,
+			Nacimiento:document.getElementById('calendar-nacimiento').value,
 			Tel:document.getElementById('formreg_tel').value,
 			DNI:document.getElementById('formreg_dni').value,
 			Email:document.getElementById('formreg_mail').value,
@@ -118,19 +125,42 @@ function Registrarme() {
 		}
 	);
 }
+function GuardarDatos() {
+	if(document.getElementById('calendar-nacimiento-cuenta').value == ''){
+		navigator.notification.alert("Debe ingresar su Fecha de Nacimiento.",function(){},'Mis datos');
+		return;
+	}
+	if(document.getElementById('Datos_Tel').value == ''){
+		navigator.notification.alert("Debe ingresar su Telefono.",function(){},'Mis datos');
+		return;
+	}
+	$$.post( "http://iclient.com.ar/datos.php?tipo=update_datos", {
+			Genero:document.getElementById('Datos_Genero').value,
+			Provincia:document.getElementById('Datos_Provincia').value,
+			Nacimiento:document.getElementById('calendar-nacimiento-cuenta').value,
+			Tel:document.getElementById('Datos_Tel').value
+		},
+		function( data ) {
+			mainView.router.load({url:'index.html', reload: true});
+		}
+	);
+}
 
 var IniciadoSesion = false;
 function login(strU, strP) {
     //verificamos conexion y servidores
 	$$.post( "http://iclient.com.ar/login.php", {Email:strU, Clave:strP},
 		function( data ) {
-        	if (data == 'OK') {
+        	if (data == 'OK' || data == 'DATOS') {
 				var estrU = CryptoJS.AES.encrypt(strU, "strU");
 				var estrP = CryptoJS.AES.encrypt(strP, "strP");
 				window.localStorage.setItem("estru", estrU);
 				window.localStorage.setItem("estrp", estrP);
 				IniciadoSesion = true;
-				mainView.router.load({url:'index.html'});
+				if(data == 'DATOS'){
+					navigator.notification.alert('Se necesitan completar datos personales',function(){},'Mis datos');
+					mainView.router.load({url:'cuenta.html', reload: true});
+				}else{ mainView.router.load({url:'index.html'}); }
 				ConfigPush();
 			}else{
 				MostrarModalLogin('Los datos no son correctos.<br/>');
@@ -146,9 +176,15 @@ function LogOut() {
 
 var LoginModal;
 function MostrarModalLogin(salida){
-	myApp.modalLogin(salida+'Si no está registrado puede registrarse haciendo click <a href="registro.html" onclick="myApp.closeModal(LoginModal)">AQUÍ</a>', 'Iniciar sesión', function (username, password) {
+	myApp.modalLogin(salida+'Si no está registrado puede registrarse haciendo click <a href="registro.html" onclick="RegistroForm();">AQUÍ</a>', 'Iniciar sesión', function (username, password) {
 		login(username, password);
 	}, function(){ MostrarModalLogin(salida); });
+}
+function RegistroForm(){
+	var calendarDefault = app.calendar.create({
+	  inputEl: '#calendar-nacimiento',
+	});
+	myApp.closeModal(LoginModal);
 }
 
 function IngresarCodigo(){
