@@ -254,10 +254,11 @@ function ConfigPush(){
 		});
 		push.on('error', function(e) { alert("push error = " + e.message); });
 		push.on('notification', function(data) {
-			if(typeof data.data !== 'undefined' && typeof data.data.tipo !== 'undefined'){
-				if(data.data.tipo == 'PRODUCTO'){
-					mainView.router.load({url:'cuenta.html', reload: true});
-					ProductoVerMas(data.data.id);
+			console.log(data);
+			if(typeof data.tipo !== 'undefined'){
+				if(data.tipo == 'PRODUCTO'){
+					mainView.router.load({url:'canjear.html', reload: true});
+					ProductoVerMas(data.prodid);
 				}
 			}else{
 				navigator.notification.alert(
