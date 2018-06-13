@@ -269,7 +269,7 @@ function ConfigPush(){
 				}
 				if(data.additionalData.tipo == 'PRODUCTO'){
 					mainView.router.load({url:'canjear.html', reload: true});
-					ProductoVerMas(data.additionalData.prodid);
+					GetProductos(data.additionalData.prodid);
 				}
 			}
 	   });
@@ -320,7 +320,8 @@ function FiltrarPorEmpresa(){
 	}
 }
 
-function GetProductos(){
+function GetProductos(id){
+  	id = typeof id !== 'undefined' ? id : 0;
 	$$.getJSON('http://iclient.com.ar/datos.php?tipo=productos', function (json) {
 		//console.log(json);
 		var html = '';
@@ -357,6 +358,9 @@ function GetProductos(){
 			}
 		});
 		$$('#FiltroEmpresa').html(empresas_html);
+		if(id != 0){
+			ProductoVerMas(id);
+		}
 	});
 }
 function ProductoVerMas(id){
