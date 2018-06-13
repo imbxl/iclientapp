@@ -18,15 +18,15 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+		<config-file platform="android" parent="/manifest/application" mode="merge">
+			<activity android:launchMode="singleTop" />
+		</config-file>
     <platform name="android">
         <preference name="android-minSdkVersion" value="21" />
 		<preference name="android-build-tool" value="gradle" />
 		<resource-file src="google-services.json" target="google-services.json" />
         <allow-intent href="market:*" />
 		<plugin name="cordova-plugin-whitelist" spec="~1.2.0" />
-		<config-file platform="android" parent="/manifest/application" mode="merge">
-			<activity android:launchMode="singleTop" />
-		</config-file>
     </platform>
     <platform name="ios">			
 		<icon src="www/assets/icons/ios/icon-small.png" width="29" height="29"/>
