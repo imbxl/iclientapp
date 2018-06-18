@@ -78,8 +78,8 @@
 			<variable name="SENDER_ID" value="1089320506180" />
 		</plugin>
 		<plugin name="cordova-plugin-mauron85-background-geolocation">
-		  <variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
-		  <variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
+		  <variable name="ALWAYS_USAGE_DESCRIPTION" value="Se necesita acceso a ubicacion en tiempo real" />
+		  <variable name="MOTION_USAGE_DESCRIPTION" value="Se necesita acceso al sensor de movimiento" />
 		</plugin>
     </platform>
     <preference name="DisallowOverscroll" value="true" />
@@ -87,6 +87,6 @@
 	<plugin name="cordova-plugin-console" />
 	<plugin name="cordova-plugin-statusbar" />
     <plugin name="phonegap-plugin-barcodescanner">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Scan QR-Codes" />
+        <variable name="CAMERA_USAGE_DESCRIPTION" value="Se necesita acceso a la camara para leer QR" />
     </plugin>
 </widget>
