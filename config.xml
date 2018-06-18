@@ -26,6 +26,13 @@
 		<plugin name="cordova-plugin-whitelist" spec="~1.2.0" />
 		<icon src="icon.png" />
 		<splash src="splash.png" />
+		<plugin name="phonegap-plugin-push" spec="2.1.4">
+			<variable name="SENDER_ID" value="1089320506180" />
+		</plugin>
+		<plugin name="cordova-plugin-mauron85-background-geolocation">
+		  <variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
+		  <variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
+		</plugin>
     </platform>
     <platform name="ios">		
 		<icon src="www/assets/icons/ios/icon-small.png" width="29" height="29"/>
@@ -63,6 +70,13 @@
 		<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
 			<string>Se necesita acceso a ubicacion</string>
 		</edit-config>
+		<plugin name="phonegap-plugin-push">
+			<variable name="SENDER_ID" value="1089320506180" />
+		</plugin>
+		<plugin name="cordova-plugin-mauron85-background-geolocation">
+		  <variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
+		  <variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
+		</plugin>
     </platform>
     <preference name="DisallowOverscroll" value="true" />
 	<plugin name="cordova-plugin-dialogs" />
@@ -71,11 +85,4 @@
     <plugin name="phonegap-plugin-barcodescanner">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Scan QR-Codes" />
     </plugin>
-    <plugin name="phonegap-plugin-push">
-        <variable name="SENDER_ID" value="1089320506180" />
-    </plugin>
-	<plugin name="cordova-plugin-mauron85-background-geolocation">
-	  <variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
-	  <variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
-	</plugin>
 </widget>
