@@ -8,7 +8,7 @@ var myApp = new Framework7({
 });
 
 var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto' , 'Septiembre' , 'Octubre', 'Noviembre', 'Diciembre'];
-var dayNamesShort = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+var dayNamesShort = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
 var monthPickerTemplate = '<div class="picker-calendar-month-picker"><a href="#" class="link icon-only picker-calendar-prev-month"><i class="f7-icons">chevron_left</i></a><span class="current-month-value"></span><a href="#" class="link icon-only picker-calendar-next-month"><i class="f7-icons">chevron_right</i></a></div>';
 var yearPickerTemplate = '<div class="picker-calendar-year-picker"><a href="#" class="link icon-only picker-calendar-prev-year"><i class="f7-icons">chevron_left</i></a><span class="current-year-value"></span><a href="#" class="link icon-only picker-calendar-next-year"><i class="f7-icons">chevron_right</i></a></div>';
 
