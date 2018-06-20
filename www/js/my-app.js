@@ -97,6 +97,10 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'canjear') {
 		GetProductos();
 	}
+	
+    if (page.name === 'registroform') {
+		RegistroForm();
+	}
 		
     if (page.name === 'historial') {
 		GetHistorial();
