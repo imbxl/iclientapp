@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ar.com.iclient" version="1.0.17" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ar.com.iclient" version="1.0.18" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
 	<preference name='phonegap-version' value='cli-8.0.0' />	
 	<preference name='pgb-builder-version' value='2' />
     <name>Iclient</name>
@@ -34,8 +34,8 @@
 			<variable name="FCM_VERSION" value="11.6.2" />
 			<variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11.6.2" />
 			<variable name="ANDROID_SUPPORT_LIBRARY_VERSION" value="23+" />
-			<variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
-			<variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
+			<variable name="ALWAYS_USAGE_DESCRIPTION" value="This app requires constant access to your location in order to track your position and search discounts around you, even when the screen is off." />
+			<variable name="MOTION_USAGE_DESCRIPTION" value="This app requires constant access to your motion sensors in order to track your position and search discounts around you, even when the screen is off." />
 		</plugin>
     </platform>
     <platform name="ios">		
@@ -72,14 +72,17 @@
 			<string>Se necesita acceso a la camara para leer QR</string>
 		</edit-config>
 		<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-			<string>Se necesita acceso a ubicacion</string>
+			<string>This app requires constant access to your location in order to track your position and search discounts around you, even when the screen is off.</string>
+		</edit-config>
+		<edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+			<string>This app requires constant access to your location in order to track your position and search discounts around you, even when the screen is off.</string>
 		</edit-config>
 		<plugin name="phonegap-plugin-push">
 			<variable name="SENDER_ID" value="1089320506180" />
 		</plugin>
 		<plugin name="cordova-plugin-mauron85-background-geolocation">
-		  <variable name="ALWAYS_USAGE_DESCRIPTION" value="Se necesita acceso a ubicacion en tiempo real" />
-		  <variable name="MOTION_USAGE_DESCRIPTION" value="Se necesita acceso al sensor de movimiento" />
+		  <variable name="ALWAYS_USAGE_DESCRIPTION" value="This app requires constant access to your location in order to track your position and search discounts around you, even when the screen is off." />
+		  <variable name="MOTION_USAGE_DESCRIPTION" value="This app requires constant access to your motion sensors in order to track your position and search discounts around you, even when the screen is off." />
 		</plugin>
     </platform>
     <preference name="DisallowOverscroll" value="true" />
