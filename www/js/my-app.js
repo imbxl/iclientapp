@@ -7,6 +7,11 @@ var myApp = new Framework7({
 	 modalButtonCancel: 'Cancelar'
 });
 
+var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto' , 'Septiembre' , 'Octubre', 'Noviembre', 'Diciembre'];
+var dayNamesShort = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+var monthPickerTemplate = '<div class="picker-calendar-month-picker"><a href="#" class="link icon-only picker-calendar-prev-month"><i class="f7-icons">chevron_left</i></a><span class="current-month-value"></span><a href="#" class="link icon-only picker-calendar-next-month"><i class="f7-icons">chevron_right</i></a></div>';
+var yearPickerTemplate = '<div class="picker-calendar-year-picker"><a href="#" class="link icon-only picker-calendar-prev-year"><i class="f7-icons">chevron_left</i></a><span class="current-year-value"></span><a href="#" class="link icon-only picker-calendar-next-year"><i class="f7-icons">chevron_right</i></a></div>';
+
 var $$ = Dom7;
 
 var mainView = myApp.addView('.view-main', {
@@ -89,7 +94,12 @@ $$(document).on('pageInit', function (e) {
 			if(json['Nacimiento'] != '0000-00-00') $$('#calendar-nacimiento-cuenta').val(json['Nacimiento']);			
 			else $$('#calendar-nacimiento-cuenta').val('');	
 			myApp.calendar({
-				input: '#calendar-nacimiento-cuenta'
+				input: '#calendar-nacimiento-cuenta',
+				closeOnSelect: true,
+				monthNames: monthNames,
+				dayNamesShort: dayNamesShort,
+				monthPickerTemplate: monthPickerTemplate,
+				yearPickerTemplate: yearPickerTemplate
 			});   
 		});
 	}
@@ -195,7 +205,12 @@ function MostrarModalLogin(salida){
 }
 function RegistroForm(){	
 	myApp.calendar({
-		input: '#calendar-nacimiento'
+		input: '#calendar-nacimiento',
+		closeOnSelect: true,
+		monthNames: monthNames,
+		dayNamesShort: dayNamesShort,
+		monthPickerTemplate: monthPickerTemplate,
+		yearPickerTemplate: yearPickerTemplate
 	});   
 	myApp.closeModal(LoginModal);
 }
