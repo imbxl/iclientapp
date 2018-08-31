@@ -51,12 +51,20 @@ $$(document).on('pageInit', function (e) {
 			Empresas = [];
 			$$.each(json, function (index, row) {
 				Empresas.push(row);
-				if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /></div>';
+				if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><a href="#" onclick="VerEmpresa('+row.id+');"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /></a></div>';
 			});
 			html += '</div>';
 			//console.log(html);
 			$$('.MarcasContainer').html(html);
 		});
+		
+		HeightBanners = 0;
+		$$.getJSON('http://iclient.com.ar/datos.php?tipo=banners', function (json) {
+			$$.each(json, function (index, row) {
+				MostrarBanner(row.Tipo,row.URL,row.producto_id,row.imagesize[0],row.imagesize[1]);
+			});
+		});
+		
 		var bgupdates = window.localStorage.getItem("bgupdates");
 		if (bgupdates == null || bgupdates == '' || bgupdates != 'off') {
 			//
@@ -73,7 +81,7 @@ $$(document).on('pageInit', function (e) {
 		mainView.showToolbar(true);
 		var html = '<div class="row">';
 		$$.each(Empresas, function (index, row) {
-			if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /></div>';
+			if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><a href="#" onclick="VerEmpresa('+row.id+');"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /></a></div>';
 		});
 		html += '</div>';
 		$$('.MarcasContainer').html(html);
@@ -87,7 +95,7 @@ $$(document).on('pageInit', function (e) {
 			$$('#Datos_Nombre').html(json['Nombre']);
 			$$('#Datos_DNI').html(json['DNI']);
 			$$('#Datos_Email').html(json['Email']);
-			$$('#Datos_Puntos').html(parseInt(json['Puntos'])-parseInt(json['Canjes']));			
+			$$('#Datos_Puntos').html('$'+(parseFloat(json['Puntos'])-parseFloat(json['Canjes'])));
 			$$('#Datos_Tel').val(json['Telefono']);
 			$$('#Datos_Genero').val(json['Genero']);
 			$$('#Datos_Provincia').val(json['Provincia']);
@@ -117,6 +125,54 @@ $$(document).on('pageInit', function (e) {
 	}
 	myApp.closePanel();
 })
+
+var HeightBanners = 0;
+function MostrarBanner(tipo,url,producto,width,height){
+	if(tipo == 'TOP'){
+		var top_html = '<img src="http://iclient.com.ar/archivos/banners/'+url+'" style="position:absolute; top:0; left:0; width:100%;" />';
+		if(producto != '0') top_html = '<a href="#" onclick="ForceProductView('+producto+')" >'+top_html+'</a>';
+		$$('body').prepend(top_html);
+		$$('body').css('padding-top',Math.round($$('body').width() * height / width)+'px');
+		HeightBanners += Math.round($$('body').width() * height / width) + 1;
+	}
+	if(tipo == 'BOTTOM'){
+		var bot_html = '<img src="http://iclient.com.ar/archivos/banners/'+url+'" style="position:fixed; bottom:0; left:0; width:100%;" />';
+		if(producto != '0') bot_html = '<a href="#" onclick="ForceProductView('+producto+')" >'+bot_html+'</a>';
+		$$('body').prepend(bot_html);
+		$$('body').css('padding-bottom',Math.round($$('body').width() * height / width)+'px');
+		HeightBanners += Math.round($$('body').width() * height / width) + 1;
+	}
+	if(tipo == 'POPUP'){
+		var popup_html = '<div class="popup popup-banner" style="background-color:#000; background-image:url(\'http://iclient.com.ar/archivos/banners/'+url+'\'); background-repeat:no-repeat; background-position:center center">'+
+				'<a href="#" class="close-popup" style="position:absolute; top:5px; right:5px; display:block; z-index:999999;">Cerrar</a>'+
+			'<div class="close-popup content-block" style="height: 100%; margin: 0; cursor: pointer;" '+((producto != '0') ? 'onclick="ForceProductView('+producto+')"' : '')+'>'+
+			'</div>'+
+		'</div>';
+		$$('body').append(popup_html);
+		myApp.popup('.popup-banner');
+	}
+	if(tipo == 'MODAL'){
+		var modal_html = '<div class="picker-modal picker-banner">'+
+						'<div class="toolbar">'+
+						 ' <div class="toolbar-inner">'+
+							'<div class="left"></div>'+
+							'<div class="right"><a href="#" class="close-picker">Cerrar</a></div>'+
+						 ' </div>'+
+						'</div>'+
+						'<div class="picker-modal-inner" style="text-align:center">'+
+						 '<img '+((producto != '0') ? 'onclick="ForceProductView('+producto+')"' : '')+' src="http://iclient.com.ar/archivos/banners/'+url+'" style="max-width: 100%; max-height: 100%; cursor:pointer" />'+
+						'</div>'+
+					  '</div>';
+		$$('body').append(modal_html);
+		myApp.pickerModal('.picker-banner');
+	}
+	
+	$$('body').css('height',Math.round($$(window).height() - HeightBanners)+'px');
+}
+function ForceProductView(prodid){	
+	mainView.router.load({url:'canjear.html', reload: true});
+	GetProductos(prodid);
+}
 
 function Registrarme() {
     //verificamos conexion y servidores
@@ -296,6 +352,22 @@ function ConfigPush(){
 					mainView.router.load({url:'canjear.html', reload: true});
 					GetProductos(prodid);
 				}
+				if(tipo == 'EMPRESA'){
+					VerEmpresa(prodid);
+				}
+				if(tipo == 'SECCION'){
+					mainView.router.load({url:prodid, reload: true});
+				}
+				if(tipo == 'BANNER'){
+					$$.getJSON('http://iclient.com.ar/datos.php?tipo=banner&id='+prodid, function (json) {
+						$$.each(json, function (index, row) {
+							MostrarBanner(row.Tipo,row.URL,row.producto_id,row.imagesize[0],row.imagesize[1]);
+						});
+					});
+				}
+				if(tipo == 'WEB'){
+					window.open(prodid, '_system');
+				}
 			}
 	   });
 	}
@@ -386,6 +458,36 @@ function GetProductos(id){
 		if(id != 0){
 			ProductoVerMas(id);
 		}
+	});
+}
+function VerEmpresa(id){
+	$$.getJSON('http://iclient.com.ar/datos.php?tipo=verempresa&id='+id, function (datos) {
+		$$('.popup-empresa .name').html(datos.Nombre);
+		var text = '<div class="list-block"><ul>';
+		if(datos.Direccion != ''){
+			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">home</i></div><div class="item-inner"><div class="item-title" style="font-size: 14px; white-space: normal;">'+datos.Direccion+'</div></div></li>';
+		}
+		if(datos.Telefono != ''){
+			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">phone</i></div><div class="item-inner"><div class="item-title" style="font-size: 14px; white-space: normal;">'+datos.Telefono+'</div></div></li>';
+		}
+		if(datos.Horario != ''){
+			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">time</i></div><div class="item-inner"><div class="item-title" style="font-size: 14px; white-space: normal;">'+datos.Horario+'</div></div></li>';
+		}
+		if(datos.Email != ''){
+			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">email</i></div><div class="item-inner"><div class="item-title" style="font-size: 14px; white-space: normal;">'+datos.Email+'</div></div></li>';
+		}
+		if(datos.Web != ''){
+			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">world</i></div><div class="item-inner"><div class="item-title" style="font-size: 14px; white-space: normal;">'+datos.Web+'</div></div></li>';
+		}
+		text += '</ul></div>';
+		$$('.popup-empresa .text').html(text);
+		if(datos.Lat == ''){
+			$$('.popup-empresa .map').html('');
+		}else{
+			$$('.popup-empresa .map').html('<iframe src="https://maps.google.com/maps?q='+datos.Lat+','+datos.Long+'&hl=en&z=14&amp;output=embed" width="100%" height="70%" frameborder="0" style="border:0" allowfullscreen></iframe>');
+		}
+		$$('.popup-empresa img').attr('src','http://iclient.com.ar/archivos/empresas/'+datos.URL);
+		myApp.popup('.popup-empresa');
 	});
 }
 function ProductoVerMas(id){

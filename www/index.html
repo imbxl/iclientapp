@@ -18,10 +18,11 @@
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
     
     <link rel="stylesheet" href="css/framework7-icons.css">
+    
+    <link rel="stylesheet" type="text/css" href="storelocator/css/storelocator.css" />
 
     <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
     <!-- Status bar overlay for full screen mode (PhoneGap) -->
     <div class="statusbar-overlay"></div>
@@ -69,7 +70,23 @@
                       <a href="canjear.html" class="item-link item-content">
                         <div class="item-media"><i class="f7-icons">list</i></div>
                         <div class="item-inner">
-                          <div class="item-title">Canjear puntos</div>
+                          <div class="item-title">Canjear saldo</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="empresas.html" class="item-link item-content">
+                        <div class="item-media"><i class="f7-icons">navigation</i></div>
+                        <div class="item-inner">
+                          <div class="item-title">Locales Adheridos</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="contacto.html" class="item-link item-content">
+                        <div class="item-media"><i class="f7-icons">email</i></div>
+                        <div class="item-inner">
+                          <div class="item-title">Contacto</div>
                         </div>
                       </a>
                     </li>
@@ -171,6 +188,34 @@
         	</div>
         </div>
         <div class="contenido">
+        </div>
+    </div>
+    
+    <div class="popup popup-empresa">
+        <div class="navbar">
+        	<div class="navbar-inner navbar-on-center">
+                <div class="left">
+                    <a href="#" class="close-popup link">
+                        <i class="f7-icons">chevron_left</i>
+                        <span>Volver</span>
+                    </a>
+                </div>
+        	</div>
+        </div>
+        <div class="contenido">
+        	<div class="card post-card">
+            	<div class="card-header">
+                	<div class="avatar">
+                    	<img src="" alt="avatar" />
+                    </div>
+                	<div class="user flex-column">
+                    	<div class="name" style="font-size: 18px;line-height: 40px;"></div>
+                    </div>
+                </div>
+            <div class="card-content">
+            	<div class="text"></div>
+            	<div class="map"></div>
+            </div>
         </div>
     </div>
 
