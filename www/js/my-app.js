@@ -230,28 +230,38 @@ function CrearCupon() {
 		navigator.notification.alert("Debe ingresar un monto.",function(){},'Crear Cupon');
 		return;
 	}
-	$$.post( "http://iclient.com.ar/datos.php?tipo=generarQR", {
-			Uso:document.getElementById('Cupon_Uso').value,
-			monto:document.getElementById('Cupon_Monto').value,
-			control:document.getElementById('Cupon_Control').value,
-			DNI:document.getElementById('Cupon_DNI').value
-		},
-		function( data ) {
-			if(data.result == 'error'){
-				navigator.notification.alert(data.message,function(){},'Crear Cupon');
-				return;
+	var estru = window.localStorage.getItem("estru");
+	var estrp = window.localStorage.getItem("estrp");
+	if ((estru != null && estru != '') && (estrp != null && estrp != '')) {
+		var dstru = CryptoJS.AES.decrypt(estru, "strU");
+		var dstrp = CryptoJS.AES.decrypt(estrp, "strP");
+		$$.post( "http://iclient.com.ar/datos.php?tipo=generarQR", {
+				Uso:document.getElementById('Cupon_Uso').value,
+				monto:document.getElementById('Cupon_Monto').value,
+				control:document.getElementById('Cupon_Control').value,
+				DNI:document.getElementById('Cupon_DNI').value,
+				user:dstru.toString(CryptoJS.enc.Utf8),
+				pass:dstrp.toString(CryptoJS.enc.Utf8)
+			},
+			function( data ) {
+				data = JSON.parse(data);
+				console.log(data);
+				if(data.result == 'error'){
+					navigator.notification.alert(data.message,function(){},'Crear Cupon');
+					return;
+				}
+				
+				var popup_html = '<div class="popup popup-qr" style="background-color:#000; background-image:url(\''+data.url+'\'); background-repeat:no-repeat; background-position:center center">'+
+						'<a href="#" onclick="mainView.router.back()" class="close-popup" style="position:absolute; top:5px; right:5px; display:block; z-index:999999;">Cerrar</a>'+
+					'<div class="close-popup content-block" style="height: 100%; margin: 0; cursor: pointer;" onclick="window.open(\''+data.url+'\', \'_system\', \' \');">'+
+					'</div>'+
+				'</div>';
+				$$('body').append(popup_html);
+				myApp.popup('.popup-qr');
+				window.open(data.url, '_system', ' ');
 			}
-			
-			var popup_html = '<div class="popup popup-qr" style="background-color:#000; background-image:url(\''+data.url+'\'); background-repeat:no-repeat; background-position:center center">'+
-					'<a href="#" class="close-popup" style="position:absolute; top:5px; right:5px; display:block; z-index:999999;">Cerrar</a>'+
-				'<div class="close-popup content-block" style="height: 100%; margin: 0; cursor: pointer;" onclick="window.open(\''+data.url+'\', \'_system\', \' \');">'+
-				'</div>'+
-			'</div>';
-			$$('body').append(popup_html);
-			myApp.popup('.popup-qr');
-			window.open(data.url, '_system', ' ');
-		}
-	);
+		);
+	}
 }
 
 var IniciadoSesion = false;
