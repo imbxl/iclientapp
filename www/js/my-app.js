@@ -258,7 +258,6 @@ function CrearCupon() {
 				'</div>';
 				$$('body').append(popup_html);
 				myApp.popup('.popup-qr');
-				window.open(data.url, '_system', ' ');
 			}
 		);
 	}
