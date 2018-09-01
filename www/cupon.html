@@ -1,0 +1,68 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="f7-icons">chevron_left</i>
+                <span>Volver</span>
+            </a>
+        </div>
+        <div class="center sliding">Crear cupon</div>
+        <div class="right">
+        	<a href="#" class="link icon-only open-panel"><i class="f7-icons">bars</i></a>
+        </div>
+    </div>
+</div>
+<div class="pages">
+    <div data-page="cuenta" class="page">
+        <div class="page-content">
+        	<div class="list-block tablet-inset" style="margin-top: 0; margin-bottom:20px">
+                <ul>
+                    <li>
+                      <a href="#" class="item-link smart-select" data-back-on-select="true">
+                        <!-- select -->
+                        <select id="Cupon_Uso" class="input-with-value" onchange="if($$(this).val() == 'UNICO'){ $$('.serchuserwidget').show(); }else{ $$('#Cupon_DNI').val(''); $$('.serchuserwidget').hide(); }"><option value="UNICO">Una sola vez</option><option value="DIARIO">Una vez por dia</option></select>
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <!-- Select label -->
+                            <div class="item-title">Uso</div>
+                            <!-- Selected value, not required -->
+                            <div class="item-after">Una sola vez</div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">Monto</div>
+                        <div class="item-after"><input type="text" id="Cupon_Monto" placeholder="Monto en AR$" class="input-with-value" style="text-align:right"/></div>
+                        </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">N° de control</div>
+                        <div class="item-after"><input type="text" id="Cupon_Control" placeholder="N° de control" class="input-with-value" style="text-align:right"/></div>
+                        </div>
+                        </div>
+                    </li>
+                    <li class="serchuserwidget">
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">Asignar Usuario</div>
+                        <div class="item-after"><input type="text" id="Cupon_DNI" placeholder="DNI del usuario" class="input-with-value" style="text-align:right"/></div>
+                        </div>
+                        </div>
+                    </li>  
+                </ul>
+            </div>
+        	
+            <p style="text-align:center">Deje vacío el campo DNI para no asignar el cupon a un usuario.</p>
+            
+            <div style="text-align:center">
+            	<button onClick="CrearCupon();" class="col button button-fill" style="margin: auto;">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

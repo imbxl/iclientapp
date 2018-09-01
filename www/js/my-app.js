@@ -225,12 +225,42 @@ function GuardarDatos() {
 	);
 }
 
+function CrearCupon() {
+	if(document.getElementById('Cupon_Monto').value == ''){
+		navigator.notification.alert("Debe ingresar un monto.",function(){},'Crear Cupon');
+		return;
+	}
+	$$.post( "http://iclient.com.ar/datos.php?tipo=generarQR", {
+			Uso:document.getElementById('Cupon_Uso').value,
+			monto:document.getElementById('Cupon_Monto').value,
+			control:document.getElementById('Cupon_Control').value,
+			DNI:document.getElementById('Cupon_DNI').value
+		},
+		function( data ) {
+			if(data.result == 'error'){
+				navigator.notification.alert(data.message,function(){},'Crear Cupon');
+				return;
+			}
+			
+			var popup_html = '<div class="popup popup-qr" style="background-color:#000; background-image:url(\''+data.url+'\'); background-repeat:no-repeat; background-position:center center">'+
+					'<a href="#" class="close-popup" style="position:absolute; top:5px; right:5px; display:block; z-index:999999;">Cerrar</a>'+
+				'<div class="close-popup content-block" style="height: 100%; margin: 0; cursor: pointer;" onclick="window.open(\''+data.url+'\', \'_system\', \' \');">'+
+				'</div>'+
+			'</div>';
+			$$('body').append(popup_html);
+			myApp.popup('.popup-qr');
+			window.open(data.url, '_system', ' ');
+		}
+	);
+}
+
 var IniciadoSesion = false;
+var TipoUsuario = false;
 function login(strU, strP) {
     //verificamos conexion y servidores
 	$$.post( "http://iclient.com.ar/login.php", {Email:strU, Clave:strP},
 		function( data ) {
-        	if (data == 'OK' || data == 'DATOS') {
+        	if (data == 'OK' || data == 'DATOS' || data == 'EMPRESA') {
 				var estrU = CryptoJS.AES.encrypt(strU, "strU");
 				var estrP = CryptoJS.AES.encrypt(strP, "strP");
 				window.localStorage.setItem("estru", estrU);
@@ -239,7 +269,16 @@ function login(strU, strP) {
 				if(data == 'DATOS'){
 					navigator.notification.alert('Se necesitan completar datos personales',function(){},'Mis datos');
 					mainView.router.load({url:'cuenta.html', reload: true});
-				}else{ mainView.router.load({url:'index.html'}); }
+				}else if(data == 'EMPRESA'){
+					IniciadoSesion = true;
+					mainView.router.load({url:'index.html'}); 
+					$$('.only_user').hide();
+					$$('.only_empresa').show();
+				}else{ 
+					mainView.router.load({url:'index.html'}); 
+					$$('.only_empresa').show();
+					$$('.only_user').show();
+				}
 				ConfigPush();
 			}else{
 				MostrarModalLogin('Los datos no son correctos.<br/>');
@@ -275,7 +314,7 @@ function IngresarCodigo(){
 	myApp.prompt('Ingrese el Código de su ticket', 'Ingresar Código', function (value) {		
 		$$.get("http://iclient.com.ar/datos.php?tipo=code&code="+value, function (data) {
 			if(data == 'OK'){
-				navigator.notification.alert("¡Puntos agregados correctamente!",function(){},'Registro');
+				navigator.notification.alert("¡Saldo agregado correctamente!",function(){},'Registro');
 			}else{
 				navigator.notification.alert(data,function(){},'Registro');
 			}
@@ -382,7 +421,7 @@ function Escanear(){
 		  if(!result.cancelled){
 			$$.get(result.text, function (data) {
 				if(data == 'OK'){
-					navigator.notification.alert("¡Puntos agregados correctamente!",function(){},'Registro');
+					navigator.notification.alert("¡Saldo agregados correctamente!",function(){},'Registro');
 				}else{
 					navigator.notification.alert(data,function(){},'Registro');
 				}
@@ -433,7 +472,7 @@ function GetProductos(id){
 			}
              html += '<div class="user flex-column">\
                         <div class="name">'+row.Titulo+'</div>\
-                        <div class="time"><b>'+row.Puntos+'</b> puntos</div>\
+                        <div class="time"><b>$'+row.Puntos+'</b></div>\
                     </div>\
                 </div>\
                 <div class="card-content">\

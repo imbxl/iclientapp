@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src * gap://ready file:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <meta http-equiv="Content-Security-Policy" content="default-src * gap://ready file:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; media-src *; img-src * data:; ">
     <!--<script type="text/javascript" src="http://aelhost.com:5000/target/target-script-min.js#iclient"></script>-->
     <!-- Required meta tags-->
     <meta charset="utf-8">
@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
     
     <link rel="stylesheet" href="css/framework7-icons.css">
-    
-    <link rel="stylesheet" type="text/css" href="storelocator/css/storelocator.css" />
 
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -34,7 +32,15 @@
         <div class="list-block">
             <div class="list-group">
                 <ul>
-                    <li>
+                    <li class="only_empresa">
+                      <a href="cupon.html" class="item-link item-content">
+                        <div class="item-media"><i class="f7-icons">ticket</i></div>
+                        <div class="item-inner">
+                          <div class="item-title">Crear Cupon</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="only_users">
                       <a href="cuenta.html" class="item-link item-content">
                         <div class="item-media"><i class="f7-icons">person</i></div>
                         <div class="item-inner">
@@ -42,7 +48,7 @@
                         </div>
                       </a>
                     </li>
-                    <li>
+                    <li class="only_user">
                       <a href="#" onClick="mainView.hideToolbar(false); Escanear();" class="item-link item-content">
                         <div class="item-media"><i class="f7-icons">ticket</i></div>
                         <div class="item-inner">
@@ -50,15 +56,15 @@
                         </div>
                       </a>
                     </li>
-                    <li>
+                    <li class="only_user">
                       <a href="#" onClick="IngresarCodigo();" class="item-link item-content">
                         <div class="item-media"><i class="f7-icons">ticket</i></div>
                         <div class="item-inner">
                           <div class="item-title">Ingresar Código</div>
                         </div>
                       </a>
-                    </li>
-                    <li>
+                    </li class="only_user">
+                    <li class="only_user">
                       <a href="historial.html" class="item-link item-content">
                         <div class="item-media"><i class="f7-icons">time</i></div>
                         <div class="item-inner">
@@ -66,7 +72,7 @@
                         </div>
                       </a>
                     </li>
-                    <li>
+                    <li class="only_user">
                       <a href="canjear.html" class="item-link item-content">
                         <div class="item-media"><i class="f7-icons">list</i></div>
                         <div class="item-inner">
@@ -74,7 +80,7 @@
                         </div>
                       </a>
                     </li>
-                    <li>
+                    <li class="only_user">
                       <a href="empresas.html" class="item-link item-content">
                         <div class="item-media"><i class="f7-icons">navigation</i></div>
                         <div class="item-inner">
@@ -144,7 +150,7 @@
                 </div>
             </div>
             <!-- Bottom Toolbar-->
-            <div class="toolbar">
+            <div class="toolbar only_user">
                 <div class="toolbar-inner">
                     <!-- Toolbar links -->
                     <a href="canjear.html" class="link">Canjear puntos</a>
