@@ -253,7 +253,7 @@ function CrearCupon() {
 				
 				var popup_html = '<div class="popup popup-qr" style="background-color:#000; background-image:url(\''+data.url+'\'); background-repeat:no-repeat; background-position:center center">'+
 						'<a href="#" onclick="mainView.router.back()" class="close-popup" style="position:absolute; top:5px; right:5px; display:block; z-index:999999;">Cerrar</a>'+
-					'<div class="content-block" style="height: 100%; margin: 0; cursor: pointer;" onclick="PhotoViewer.show(\''+data.url+'\', \'\', \' \');">'+
+					'<div class="content-block" style="height: 100%; margin: 0; cursor: pointer;" onclick="PhotoViewer.show(\''+data.url+'\', \'QR Generado\', {share:true});">'+
 					'</div>'+
 				'</div>';
 				$$('body').append(popup_html);
