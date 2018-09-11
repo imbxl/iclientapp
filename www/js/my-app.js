@@ -296,6 +296,17 @@ function login(strU, strP) {
 		}
 	);
 }
+function Recuperar() {
+	myApp.closeModal('.modal');
+    myApp.prompt('Ingrese su E-Mail', function (value) {		
+		$$.post( "http://iclient.com.ar/datos.php?tipo=recupera", {mail:value}, function (data) {
+			myApp.closeModal('.modal');
+    		myApp.alert('Se envió un mail a "' + value + '". Con un link para recuperar su contraseña.');
+			MostrarModalLogin('');
+		});
+    },function(){ myApp.closeModal('.modal'); MostrarModalLogin('');});
+}
+
 function LogOut() {
 	window.localStorage.clear();
 	IniciadoSesion = false;
@@ -304,7 +315,7 @@ function LogOut() {
 
 var LoginModal;
 function MostrarModalLogin(salida){
-	myApp.modalLogin(salida+'Si no está registrado puede registrarse haciendo click <a href="registro.html" onclick="RegistroForm();">AQUÍ</a>', 'Iniciar sesión', function (username, password) {
+	myApp.modalLogin(salida+'Si no está registrado puede registrarse haciendo click <a href="registro.html" onclick="RegistroForm();">AQUÍ</a>.<br/> <a href="index.html" onclick="Recuperar();">Olvide mi contraseña</a>', 'Iniciar sesión', function (username, password) {
 		login(username, password);
 	}, function(){ MostrarModalLogin(salida); });
 }
@@ -415,7 +426,9 @@ function ConfigPush(){
 					});
 				}
 				if(tipo == 'WEB'){
-					window.open(prodid, '_system');
+					var url = prodid;
+					if(url.substr(0,7) != 'http://' && url.substr(0,8) != 'https://') url = 'http://'+url;
+					window.open(url, '_system', 'location=yes');
 				}
 			}
 	   });
@@ -517,16 +530,20 @@ function VerEmpresa(id){
 			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">home</i></div><div class="item-inner"><div class="item-title" style="font-size: 14px; white-space: normal;">'+datos.Direccion+'</div></div></li>';
 		}
 		if(datos.Telefono != ''){
-			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">phone</i></div><div class="item-inner"><div class="item-title" style="font-size: 14px; white-space: normal;">'+datos.Telefono+'</div></div></li>';
+			var tel = datos.Telefono.replace(' ','');
+			var tel = datos.Telefono.replace('-','');
+			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">phone</i></div><div class="item-inner"><a href="tel:'+tel+'" class="item-title external" style="font-size: 14px; white-space: normal;">'+datos.Telefono+'</a></div></li>';
 		}
 		if(datos.Horario != ''){
 			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">time</i></div><div class="item-inner"><div class="item-title" style="font-size: 14px; white-space: normal;">'+datos.Horario+'</div></div></li>';
 		}
 		if(datos.Email != ''){
-			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">email</i></div><div class="item-inner"><div class="item-title" style="font-size: 14px; white-space: normal;">'+datos.Email+'</div></div></li>';
+			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">email</i></div><div class="item-inner"><a href="mailto:'+datos.Email+'" class="item-title external" style="font-size: 14px; white-space: normal;">'+datos.Email+'</a></div></li>';
 		}
 		if(datos.Web != ''){
-			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">world</i></div><div class="item-inner"><div class="item-title" style="font-size: 14px; white-space: normal;">'+datos.Web+'</div></div></li>';
+			var url = datos.Web;
+			if(url.substr(0,7) != 'http://' && url.substr(0,8) != 'https://') url = 'http://'+url;
+			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">world</i></div><div class="item-inner"><a href="'+url+'" class="item-title external" style="font-size: 14px; white-space: normal;">'+datos.Web+'</a></div></li>';
 		}
 		text += '</ul></div>';
 		$$('.popup-empresa .text').html(text);
