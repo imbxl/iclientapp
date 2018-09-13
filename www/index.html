@@ -218,9 +218,35 @@
                     	<div class="name" style="font-size: 18px;line-height: 40px;"></div>
                     </div>
                 </div>
+            </div>
             <div class="card-content">
             	<div class="text"></div>
             	<div class="map"></div>
+            </div>
+            <input type="hidden" id="CT_EMP_ID" />
+        	<div class="list-block tablet-inset" style="margin-top: 0; margin-bottom:20px">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <input id="CT_EMP_Asunto" type="text" placeholder="Asunto"/>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <textarea id="CT_EMP_Mensaje" type="text" placeholder="Mensaje"></textarea>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div style="text-align:center">
+            	<button onClick="EnviarContactoEmpresa();" class="col button button-fill" style="margin: auto;">Enviar mensaje</button>
             </div>
         </div>
     </div>

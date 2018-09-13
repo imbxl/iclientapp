@@ -127,20 +127,35 @@ $$(document).on('pageInit', function (e) {
 })
 
 var HeightBanners = 0;
-function MostrarBanner(tipo,url,producto,width,height){
+function CloseBanner(tipo, height){
 	if(tipo == 'TOP'){
-		var top_html = '<img src="http://iclient.com.ar/archivos/banners/'+url+'" style="position:absolute; top:0; left:0; width:100%;" />';
-		if(producto != '0') top_html = '<a href="#" onclick="ForceProductView('+producto+')" >'+top_html+'</a>';
-		$$('body').prepend(top_html);
-		$$('body').css('padding-top',Math.round($$('body').width() * height / width)+'px');
-		HeightBanners += Math.round($$('body').width() * height / width) + 1;
+		HeightBanners = HeightBanners - height;
+		$$('body').css('padding-top','0px');
+		$$('.bannertop').remove();
 	}
 	if(tipo == 'BOTTOM'){
-		var bot_html = '<img src="http://iclient.com.ar/archivos/banners/'+url+'" style="position:fixed; bottom:0; left:0; width:100%;" />';
+		HeightBanners = HeightBanners - height;
+		$$('body').css('padding-bottom','0px');
+		$$('.bannerbottom').remove();
+	}
+	$$('body').css('height',Math.round($$(window).height() - HeightBanners)+'px');
+}
+function MostrarBanner(tipo,url,producto,width,height){
+	if(tipo == 'TOP'){
+		var resultheight = Math.round($$('body').width() * height / width) + 1;
+		var top_html = '<img class="bannertop" src="http://iclient.com.ar/archivos/banners/'+url+'" style="position:absolute; top:0; left:0; width:100%;" />';
+		if(producto != '0') top_html = '<a href="#" onclick="ForceProductView('+producto+')" >'+top_html+'</a>';
+		$$('body').prepend(top_html+'<a class="bannertop" href="#" onclick="CloseBanner(\'TOP\','+resultheight+');" style="position:absolute; right:5px; top:5px; background-color:#333; border-radius:50%; width: 25px;text-align: center;color: #fff;"><i class="f7-icons">close</i></a>');
+		$$('body').css('padding-top',Math.round($$('body').width() * height / width)+'px');
+		HeightBanners += resultheight;
+	}
+	if(tipo == 'BOTTOM'){
+		var resultheight = Math.round($$('body').width() * height / width) + 1;
+		var bot_html = '<img class="bannerbottom" src="http://iclient.com.ar/archivos/banners/'+url+'" style="position:fixed; bottom:0; left:0; width:100%;" />';
 		if(producto != '0') bot_html = '<a href="#" onclick="ForceProductView('+producto+')" >'+bot_html+'</a>';
-		$$('body').prepend(bot_html);
+		$$('body').prepend(bot_html+'<a class="bannerbottom" href="#" onclick="CloseBanner(\'BOTTOM\','+resultheight+');" style="position:absolute; right:5px; bottom:5px; background-color:#333; border-radius:50%; width: 25px;text-align: center;color: #fff;"><i class="f7-icons">close</i></a>');
 		$$('body').css('padding-bottom',Math.round($$('body').width() * height / width)+'px');
-		HeightBanners += Math.round($$('body').width() * height / width) + 1;
+		HeightBanners += resultheight;
 	}
 	if(tipo == 'POPUP'){
 		var popup_html = '<div class="popup popup-banner" style="background-color:#000; background-image:url(\'http://iclient.com.ar/archivos/banners/'+url+'\'); background-repeat:no-repeat; background-position:center center">'+
@@ -553,8 +568,31 @@ function VerEmpresa(id){
 			$$('.popup-empresa .map').html('<iframe src="https://maps.google.com/maps?q='+datos.Lat+','+datos.Long+'&hl=en&z=14&amp;output=embed" width="100%" height="70%" frameborder="0" style="border:0" allowfullscreen></iframe>');
 		}
 		$$('.popup-empresa img').attr('src','http://iclient.com.ar/archivos/empresas/'+datos.URL);
+		
+		$$('#CT_EMP_ID').val(id);
+		$$('#CT_EMP_Asunto').val('');
+		$$('#CT_EMP_Mensaje').val('');
+			
 		myApp.popup('.popup-empresa');
 	});
+}
+function EnviarContactoEmpresa(){	
+	$$.post( "http://iclient.com.ar/contacto-empresa.php", {
+			id:$$('#CT_EMP_ID').val(),
+			Asunto:$$('#CT_EMP_Asunto').val(),
+			Mensaje:$$('#CT_EMP_Mensaje').val()
+		},
+		function( data ) {
+			$$('#CT_EMP_ID').val('');
+			$$('#CT_EMP_Asunto').val('');
+			$$('#CT_EMP_Mensaje').val('');
+        	if (data == 'OK') {
+				navigator.notification.alert('Mensaje enviado correctamente',function(){},'Contacto');
+			}else{
+				navigator.notification.alert(data,function(){},'Contacto');
+			}
+		}
+	);
 }
 function ProductoVerMas(id){
 	var html = $$('#prod_'+id).html();
