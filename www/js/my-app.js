@@ -558,7 +558,7 @@ function VerEmpresa(id){
 		if(datos.Web != ''){
 			var url = datos.Web;
 			if(url.substr(0,7) != 'http://' && url.substr(0,8) != 'https://') url = 'http://'+url;
-			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">world</i></div><div class="item-inner"><a href="'+url+'" class="item-title external" style="font-size: 14px; white-space: normal;">'+datos.Web+'</a></div></li>';
+			text += '<li class="item-content"><div class="item-media"><i class="f7-icons">world</i></div><div class="item-inner"><a href="'+url+'" class="item-title external" style="font-size: 14px; white-space: normal;" target="_blank">'+datos.Web+'</a></div></li>';
 		}
 		text += '</ul></div>';
 		$$('.popup-empresa .text').html(text);
