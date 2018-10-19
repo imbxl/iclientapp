@@ -4,7 +4,8 @@ var myApp = new Framework7({
 	 modalUsernamePlaceholder:'E-Mail',
 	 modalPasswordPlaceholder:'Contraseña',
 	 modalButtonOk:'Aceptar',
-	 modalButtonCancel: 'Cancelar'
+	 modalButtonCancel: 'Cancelar',
+	 modalTitle: 'iClient'
 });
 
 var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto' , 'Septiembre' , 'Octubre', 'Noviembre', 'Diciembre'];
@@ -307,6 +308,7 @@ function login(strU, strP) {
 				ConfigPush();
 			}else{
 				MostrarModalLogin('Los datos no son correctos.<br/>');
+				$$('.olvidehref').css('margin-top', '18px');
 			}
 		}
 	);
@@ -330,7 +332,7 @@ function LogOut() {
 
 var LoginModal;
 function MostrarModalLogin(salida){
-	myApp.modalLogin(salida+'Si no está registrado puede registrarse haciendo click <a href="registro.html" onclick="RegistroForm();">AQUÍ</a>.<br/> <a href="index.html" onclick="Recuperar();">Olvide mi contraseña</a>', 'Iniciar sesión', function (username, password) {
+	myApp.modalLogin(salida+'Si no está registrado puede registrarse haciendo click <a href="registro.html" onclick="RegistroForm();">AQUÍ</a>.<br/> <a href="index.html" onclick="Recuperar();" class="olvidehref">Olvide mi contraseña</a>', 'Iniciar sesión', function (username, password) {
 		login(username, password);
 	}, function(){ MostrarModalLogin(salida); });
 }
@@ -432,6 +434,13 @@ function ConfigPush(){
 				}
 				if(tipo == 'SECCION'){
 					mainView.router.load({url:prodid, reload: true});
+				}
+				if(tipo == 'PEDIDO_CANJE'){
+					myApp.confirm(data.message.'. ¿Desea realizar el canje?', "Canjear Saldo", function(){
+						$$.get("http://iclient.com.ar/datos.php?tipo=pedidoCanjeCambio&id="+prodid+"&result=Y", function (data) { });
+					}, function(){
+						$$.get("http://iclient.com.ar/datos.php?tipo=pedidoCanjeCambio&id="+prodid+"&result=C", function (data) { });
+					})
 				}
 				if(tipo == 'BANNER'){
 					$$.getJSON('http://iclient.com.ar/datos.php?tipo=banner&id='+prodid, function (json) {
@@ -594,6 +603,27 @@ function EnviarContactoEmpresa(){
 		}
 	);
 }
+function EnviarContactoEmpresa(){	
+	$$.post( "http://iclient.com.ar/contacto.php", {
+			Tipo:'SOPORTE',
+			Nombre:$$('#CT_SOP_Nombre').val(),
+			Mail:$$('#CT_SOP_Mail').val(),
+			Asunto:$$('#CT_SOP_Asunto').val(),
+			Mensaje:$$('#CT_SOP_Mensaje').val()
+		},
+		function( data ) {
+			$$('#CT_SOP_Nombre').val('');
+			$$('#CT_SOP_Mail').val('');
+			$$('#CT_SOP_Asunto').val('');
+			$$('#CT_SOP_Mensaje').val('');
+        	if (data == 'OK') {
+				navigator.notification.alert('Mensaje enviado correctamente',function(){},'Contacto');
+			}else{
+				navigator.notification.alert(data,function(){},'Contacto');
+			}
+		}
+	);
+}
 function ProductoVerMas(id){
 	var html = $$('#prod_'+id).html();
 	$$('.popup-producto .contenido').html(html);
@@ -605,7 +635,7 @@ function ProductoVerMas(id){
 function ProductoCanjear(id){
 	$$.getJSON('http://iclient.com.ar/datos.php?tipo=canje&id='+id, function (json) {
 		if(json != 'OK'){
-			navigator.notification.alert(json['msg'],function(){},'Iclient');
+			navigator.notification.alert(json['msg'],function(){},'iClient');
 			return;
 		}
 		
@@ -622,10 +652,10 @@ function ProductoCanjear(id){
 				onClick: function () {
 				  $$.getJSON('http://iclient.com.ar/datos.php?tipo=do_canje&id='+id, function (json) {
 					if(json != 'OK'){
-						navigator.notification.alert(json['msg'],function(){},'Iclient');
+						navigator.notification.alert(json['msg'],function(){},'iClient');
 						return;
 					}
-					navigator.notification.alert('Canje realizado correctamente',function(){},'Iclient');
+					navigator.notification.alert('Canje realizado correctamente',function(){},'iClient');
 					mainView.router.load({url:'historial.html', reload: true});
 				  });
 				}
