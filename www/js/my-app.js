@@ -436,7 +436,7 @@ function ConfigPush(){
 					mainView.router.load({url:prodid, reload: true});
 				}
 				if(tipo == 'PEDIDO_CANJE'){
-					myApp.confirm(data.message.'. ¿Desea realizar el canje?', "Canjear Saldo", function(){
+					myApp.confirm(data.message+'. ¿Desea realizar el canje?', "Canjear Saldo", function(){
 						$$.get("http://iclient.com.ar/datos.php?tipo=pedidoCanjeCambio&id="+prodid+"&result=Y", function (data) { });
 					}, function(){
 						$$.get("http://iclient.com.ar/datos.php?tipo=pedidoCanjeCambio&id="+prodid+"&result=C", function (data) { });
