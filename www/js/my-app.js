@@ -117,6 +117,10 @@ $$(document).on('pageInit', function (e) {
 		GetProductos();
 	}
 	
+    if (page.name === 'generados') {
+		GetGenerados();
+	}
+	
     if (page.name === 'registroform') {
 		RegistroForm();
 	}
@@ -300,9 +304,14 @@ function login(strU, strP) {
 					mainView.router.load({url:'index.html'}); 
 					$$('.only_user').hide();
 					$$('.only_empresa').show();
+				}else if(data == 'PERSONA_EMPRESA'){
+					IniciadoSesion = true;
+					mainView.router.load({url:'index.html'}); 
+					$$('.only_user').show();
+					$$('.only_empresa').show();
 				}else{ 
 					mainView.router.load({url:'index.html'}); 
-					$$('.only_empresa').show();
+					$$('.only_empresa').hide();
 					$$('.only_user').show();
 				}
 				ConfigPush();
@@ -503,6 +512,33 @@ function FiltrarPorEmpresa(){
 	}
 }
 
+function GetGenerados(id){
+  	id = typeof id !== 'undefined' ? id : 0;
+	$$.getJSON('http://iclient.com.ar/datos.php?tipo=cupones_generados', function (json) {
+		//console.log(json);
+		var html = '';
+		$$.each(json, function (index, row) {
+			html += '<div id="prod_'+row.id+'" class="producto_item">\
+				<div class="card">\
+                <div class="card-header">';
+			if(row.URL != ''){
+                    html += '<div class="avatar">\
+                    	<img src="http://iclient.com.ar/archivos/qr/'+row.URL+'" alt="avatar">\
+                    </div>';
+			}
+             html += '<div class="user flex-column">\
+                        <div class="name">'+row.AlfaNumerico+'</div>\
+                        <div class="time" style="font-size: 0.8em;">Saldo: <b>$'+row.Puntos+'</b> | Monto: <b>$'+row.Monto+'</b> | Costo: <b>$'+row.Costo+'</b> | Nº Control: <b>'+row.Control+'</b></div>\
+                    </div>\
+                </div>\
+                <div class="card-content">\
+                    <div class="text">'+row.Usuario+'</div>\
+                </div>\
+			</div>';			
+		}); 
+		$$('.generados_lista').html(html);
+	});
+}
 function GetProductos(id){
   	id = typeof id !== 'undefined' ? id : 0;
 	$$.getJSON('http://iclient.com.ar/datos.php?tipo=productos', function (json) {
