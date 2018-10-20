@@ -290,7 +290,7 @@ function login(strU, strP) {
     //verificamos conexion y servidores
 	$$.post( "http://iclient.com.ar/login.php", {Email:strU, Clave:strP},
 		function( data ) {
-        	if (data == 'OK' || data == 'DATOS' || data == 'EMPRESA') {
+        	if (data == 'OK' || data == 'DATOS' || data == 'EMPRESA' || data == 'PERSONA_EMPRESA') {
 				var estrU = CryptoJS.AES.encrypt(strU, "strU");
 				var estrP = CryptoJS.AES.encrypt(strP, "strP");
 				window.localStorage.setItem("estru", estrU);
@@ -523,7 +523,7 @@ function GetGenerados(id){
                 <div class="card-header">';
 			if(row.URL != ''){
                     html += '<div class="avatar">\
-                    	<img src="http://iclient.com.ar/archivos/qr/'+row.URL+'" alt="avatar">\
+                    	<img src="http://iclient.com.ar/archivos/qr/'+row.URL+'">\
                     </div>';
 			}
              html += '<div class="user flex-column">\
