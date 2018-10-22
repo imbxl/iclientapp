@@ -477,7 +477,7 @@ function Escanear(){
 		  if(!result.cancelled){
 			$$.get(result.text, function (data) {
 				if(data == 'OK'){
-					navigator.notification.alert("¡Saldo agregados correctamente!",function(){},'Registro');
+					navigator.notification.alert("¡Saldo agregado correctamente!",function(){},'Registro');
 				}else{
 					navigator.notification.alert(data,function(){},'Registro');
 				}
