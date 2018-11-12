@@ -8,6 +8,15 @@ var myApp = new Framework7({
 	 modalTitle: 'iClient'
 });
 
+function showMessage(message, title, callbackOk){
+	title = title || BXL_TITLE;
+	myApp.alert(message, title, callbackOk);
+}
+function showConfirm(message, title, callbackOk, callbackCancel){
+	title = title || BXL_TITLE;
+	myApp.confirm(message, title, callbackOk, callbackCancel);
+}
+
 var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto' , 'Septiembre' , 'Octubre', 'Noviembre', 'Diciembre'];
 var dayNamesShort = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
 var monthPickerTemplate = '<div class="picker-calendar-month-picker"><a href="#" class="link icon-only picker-calendar-prev-month"><i class="f7-icons">chevron_left</i></a><span class="current-month-value"></span><a href="#" class="link icon-only picker-calendar-next-month"><i class="f7-icons">chevron_right</i></a></div>';
@@ -31,18 +40,11 @@ myApp.onPageInit('registro', function (page) {
 	myApp.closePanel();
 })
 
-var mySwiper1 = myApp.swiper('.swiper-1', {
-  pagination: '.swiper-1 .swiper-pagination',
-  paginationHide: false,
-  paginationClickable: true,
-  nextButton: '.swiper-button-next',
-  prevButton: '.swiper-button-prev',
-});
-
 myApp.onPageAfterAnimation('index', function (page){
 	mainView.showToolbar(true);
 })
-
+var mySwiper0;
+var mySwiper1;
 var XAP_init = false;
 var Empresas = [];
 $$(document).on('pageInit', function (e) {	
@@ -63,6 +65,53 @@ $$(document).on('pageInit', function (e) {
 		$$.getJSON('http://iclient.com.ar/datos.php?tipo=banners', function (json) {
 			$$.each(json, function (index, row) {
 				MostrarBanner(row.Tipo,row.URL,row.producto_id,row.imagesize[0],row.imagesize[1]);
+			});
+		});
+		
+		$$.getJSON('http://iclient.com.ar/datos.php?tipo=verificada', function (json) {
+			if(json != 'OK'){
+				$$('.navbar').append('<div class="noverificada" style="font-size: 15px; background: #b50000; color: #FFFFFF; text-align: center; margin-top: 44px;">Debe verificar su E-Mail</div>');
+			}else{
+				$$('.noverificada').remove();
+			}
+		});
+		
+		$$.getJSON('http://iclient.com.ar/datos.php?tipo=slider', function (json) {
+			var slides = '';
+			$$.each(json, function (index, row) {
+				slides = slides+'<div class="swiper-slide"><img src="http://iclient.com.ar'+row.Foto+'" style="width:100%;" /></div>';
+			});
+			var html = '<div class="swiper-container swiper-0">'+
+                                '<div class="swiper-pagination"></div>'+
+                                '<div class="swiper-wrapper">'+slides+
+                                '</div>'+
+                                '<div class="swiper-button-prev"></div>'+
+                                '<div class="swiper-button-next"></div>'+
+                            '</div>';
+			$$('.SliderContainer').eq(0).html(html);
+			mySwiper0 = myApp.swiper('.swiper-0', {
+			  pagination: '.swiper-0 .swiper-pagination',
+			  paginationHide: false,
+			  width: $$(window).width(),
+			  paginationClickable: true,
+			  nextButton: '.swiper-button-next',
+			  prevButton: '.swiper-button-prev',
+			});
+			var html = '<div class="swiper-container swiper-1">'+
+                                '<div class="swiper-pagination"></div>'+
+                                '<div class="swiper-wrapper">'+slides+
+                                '</div>'+
+                                '<div class="swiper-button-prev"></div>'+
+                                '<div class="swiper-button-next"></div>'+
+                            '</div>';
+			$$('.SliderContainer').eq(1).html(html);
+			mySwiper1 = myApp.swiper('.swiper-1', {
+			  pagination: '.swiper-1 .swiper-pagination',
+			  paginationHide: false,
+			  width: $$(window).width(),
+			  paginationClickable: true,
+			  nextButton: '.swiper-button-next',
+			  prevButton: '.swiper-button-prev',
 			});
 		});
 		
@@ -144,6 +193,7 @@ function CloseBanner(tipo, height){
 		$$('.bannerbottom').remove();
 	}
 	$$('body').css('height',Math.round($$(window).height() - HeightBanners)+'px');
+	mySwiper1.update();
 }
 function MostrarBanner(tipo,url,producto,width,height){
 	if(tipo == 'TOP'){
@@ -194,7 +244,48 @@ function ForceProductView(prodid){
 	GetProductos(prodid);
 }
 
+function ValidateEmail(email){
+ 
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+ 
+  var input = document.createElement('input');
+ 
+  input.type = 'email';
+  input.value = email;
+ 
+  return typeof input.checkValidity == 'function' ? input.checkValidity() : re.test(email);
+ 
+}
+
 function Registrarme() {
+	if(document.getElementById('formreg_name').value.trim() == ''){
+		showMessage('Debe completar su nombre',function(){},'Registro');
+		return;
+	}
+	if(document.getElementById('formreg_dni').value.trim() == ''){
+		showMessage('Debe completar su DNI',function(){},'Registro');
+		return;
+	}
+	if(document.getElementById('formreg_tel').value.trim() == ''){
+		showMessage('Debe completar su Teléfono',function(){},'Registro');
+		return;
+	}
+	if(document.getElementById('formreg_mail').value.trim() == ''){
+		showMessage('Debe completar su E-mail',function(){},'Registro');
+		return;
+	}
+	if(!ValidateEmail(document.getElementById('formreg_mail').value.trim())){
+		showMessage('Debe ingresar un E-mail válido',function(){},'Registro');
+		return;
+	}
+	if(document.getElementById('formreg_pass').value.trim() == ''){
+		showMessage('Debe completar su Contraseña',function(){},'Registro');
+		return;
+	}
+	if(document.getElementById('calendar-nacimiento').value.trim() == ''){
+		showMessage('Debe completar su Fecha de Nacimiento',function(){},'Registro');
+		return;
+	}
     //verificamos conexion y servidores
 	$$.post( "http://iclient.com.ar/registro_usuario.php", {
 			Nombre:document.getElementById('formreg_name').value,
@@ -208,29 +299,38 @@ function Registrarme() {
 		},
 		function( data ) {
         	if (data == 'OK') {
-				navigator.notification.alert('¡Se registró con exito en iClient!',function(){},'Registro');
-				login(document.getElementById('formreg_mail').value, document.getElementById('formreg_pass').value);
+				var userxx = document.getElementById('formreg_mail').value;
+				var passxx = document.getElementById('formreg_pass').value;
+				document.getElementById('formreg_name').value = '';
+				document.getElementById('calendar-nacimiento').value = '';
+				document.getElementById('formreg_tel').value = '';
+				document.getElementById('formreg_dni').value = '';
+				document.getElementById('formreg_mail').value = '';
+				document.getElementById('formreg_pass').value = '';
+				showMessage('Registro exitoso. Le enviamos un e-mail para verificar su cuenta (no olvide revisar su carpeta de SPAM).',function(){},'Registro');
+				//login(userxx, passxx);
+				mainView.router.load({url:'index.html', reload: true});
 			}else{
-				navigator.notification.alert(data,function(){},'Registro');
+				showMessage(data,function(){},'Registro');
 			}
 		}
 	);
 }
 function GuardarDatos() {
 	if(document.getElementById('Datos_Genero').value == ''){
-		navigator.notification.alert("Debe ingresar su Género.",function(){},'Mis datos');
+		showMessage("Debe ingresar su Género.",function(){},'Mis datos');
 		return;
 	}
 	if(document.getElementById('calendar-nacimiento-cuenta').value == ''){
-		navigator.notification.alert("Debe ingresar su Fecha de Nacimiento.",function(){},'Mis datos');
+		showMessage("Debe ingresar su Fecha de Nacimiento.",function(){},'Mis datos');
 		return;
 	}
 	if(document.getElementById('Datos_Provincia').value == ''){
-		navigator.notification.alert("Debe ingresar su Provincia.",function(){},'Mis datos');
+		showMessage("Debe ingresar su Provincia.",function(){},'Mis datos');
 		return;
 	}
 	if(document.getElementById('Datos_Tel').value == ''){
-		navigator.notification.alert("Debe ingresar su Teléfono.",function(){},'Mis datos');
+		showMessage("Debe ingresar su Teléfono.",function(){},'Mis datos');
 		return;
 	}
 	$$.post( "http://iclient.com.ar/datos.php?tipo=update_datos", {
@@ -247,7 +347,7 @@ function GuardarDatos() {
 
 function CrearCupon() {
 	if(document.getElementById('Cupon_Monto').value == ''){
-		navigator.notification.alert("Debe ingresar un monto.",function(){},'Crear Cupon');
+		showMessage("Debe ingresar un monto.",function(){},'Crear Cupon');
 		return;
 	}
 	var estru = window.localStorage.getItem("estru");
@@ -256,7 +356,7 @@ function CrearCupon() {
 		var dstru = CryptoJS.AES.decrypt(estru, "strU");
 		var dstrp = CryptoJS.AES.decrypt(estrp, "strP");
 		$$.post( "http://iclient.com.ar/datos.php?tipo=generarQR", {
-				Uso:document.getElementById('Cupon_Uso').value,
+				uso:document.getElementById('Cupon_Uso').value,
 				monto:document.getElementById('Cupon_Monto').value,
 				control:document.getElementById('Cupon_Control').value,
 				DNI:document.getElementById('Cupon_DNI').value,
@@ -267,7 +367,7 @@ function CrearCupon() {
 				data = JSON.parse(data);
 				console.log(data);
 				if(data.result == 'error'){
-					navigator.notification.alert(data.message,function(){},'Crear Cupon');
+					showMessage(data.message,function(){},'Crear Cupon');
 					return;
 				}
 				
@@ -297,7 +397,7 @@ function login(strU, strP) {
 				window.localStorage.setItem("estrp", estrP);
 				IniciadoSesion = true;
 				if(data == 'DATOS'){
-					navigator.notification.alert('Se necesitan completar datos personales',function(){},'Mis datos');
+					showMessage('Se necesitan completar datos personales',function(){},'Mis datos');
 					mainView.router.load({url:'cuenta.html', reload: true});
 				}else if(data == 'EMPRESA'){
 					IniciadoSesion = true;
@@ -361,9 +461,9 @@ function IngresarCodigo(){
 	myApp.prompt('Ingrese el Código de su ticket', 'Ingresar Código', function (value) {		
 		$$.get("http://iclient.com.ar/datos.php?tipo=code&code="+value, function (data) {
 			if(data == 'OK'){
-				navigator.notification.alert("¡Saldo agregado correctamente!",function(){},'Registro');
+				showMessage("¡Saldo agregado correctamente!",function(){},'Registro');
 			}else{
-				navigator.notification.alert(data,function(){},'Registro');
+				showMessage(data,function(){},'Registro');
 			}
 		});
     });
@@ -425,7 +525,7 @@ function ConfigPush(){
 				if(typeof data.additionalData.prodid !== 'undefined') prodid = data.additionalData.prodid;
 				if(typeof data.additionalData['gcm.notification.prodid'] !== 'undefined') prodid = data.additionalData['gcm.notification.prodid'];
 				if(tipo == 'PUNTOS'){
-					navigator.notification.alert(
+					showMessage(
 						data.message,         // message
 						function(){
 							mainView.router.load({url:'cuenta.html', reload: true});
@@ -477,15 +577,15 @@ function Escanear(){
 		  if(!result.cancelled){
 			$$.get(result.text, function (data) {
 				if(data == 'OK'){
-					navigator.notification.alert("¡Saldo agregado correctamente!",function(){},'Registro');
+					showMessage("¡Saldo agregado correctamente!",function(){},'Registro');
 				}else{
-					navigator.notification.alert(data,function(){},'Registro');
+					showMessage(data,function(){},'Registro');
 				}
 			});
 		  }
 	  },
 	  function (error) {
-			navigator.notification.alert("Error al leer el ticket",function(){},'Registro');
+			showMessage("Error al leer el ticket",function(){},'Registro');
 	  },
 	  {
 		  preferFrontCamera : false, // iOS and Android
@@ -632,9 +732,9 @@ function EnviarContactoEmpresa(){
 			$$('#CT_EMP_Asunto').val('');
 			$$('#CT_EMP_Mensaje').val('');
         	if (data == 'OK') {
-				navigator.notification.alert('Mensaje enviado correctamente',function(){},'Contacto');
+				showMessage('Mensaje enviado correctamente',function(){},'Contacto');
 			}else{
-				navigator.notification.alert(data,function(){},'Contacto');
+				showMessage(data,function(){},'Contacto');
 			}
 		}
 	);
@@ -653,9 +753,9 @@ function EnviarContactoEmpresa(){
 			$$('#CT_SOP_Asunto').val('');
 			$$('#CT_SOP_Mensaje').val('');
         	if (data == 'OK') {
-				navigator.notification.alert('Mensaje enviado correctamente',function(){},'Contacto');
+				showMessage('Mensaje enviado correctamente',function(){},'Contacto');
 			}else{
-				navigator.notification.alert(data,function(){},'Contacto');
+				showMessage(data,function(){},'Contacto');
 			}
 		}
 	);
@@ -671,7 +771,7 @@ function ProductoVerMas(id){
 function ProductoCanjear(id){
 	$$.getJSON('http://iclient.com.ar/datos.php?tipo=canje&id='+id, function (json) {
 		if(json != 'OK'){
-			navigator.notification.alert(json['msg'],function(){},'iClient');
+			showMessage(json['msg'],function(){},'iClient');
 			return;
 		}
 		
@@ -688,10 +788,10 @@ function ProductoCanjear(id){
 				onClick: function () {
 				  $$.getJSON('http://iclient.com.ar/datos.php?tipo=do_canje&id='+id, function (json) {
 					if(json != 'OK'){
-						navigator.notification.alert(json['msg'],function(){},'iClient');
+						showMessage(json['msg'],function(){},'iClient');
 						return;
 					}
-					navigator.notification.alert('Canje realizado correctamente',function(){},'iClient');
+					showMessage('Canje realizado correctamente',function(){},'iClient');
 					mainView.router.load({url:'historial.html', reload: true});
 				  });
 				}
