@@ -1,0 +1,45 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="f7-icons">chevron_left</i>
+                <span>Volver</span>
+            </a>
+        </div>
+        <div class="center sliding">Solicitar Dinero</div>
+        <div class="right">
+        	<a href="#" class="link icon-only open-panel"><i class="f7-icons">bars</i></a>
+        </div>
+    </div>
+</div>
+<div class="pages">
+    <div data-page="solicitar_dinero" class="page">
+        <div class="page-content">
+    		<br/>
+        	<div class="list-block tablet-inset" style="margin-top: 0; margin-bottom:20px">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">Monto</div>
+                        <div class="item-input"><input type="text" id="Dinero_Monto" placeholder="Monto en AR$" class="input-with-value" style="text-align:right"/></div>
+                        </div>
+                        </div>
+                    </li>
+                    <li class="serchuserwidget">
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">DNI del Usuario</div>
+                        <div class="item-input"><input type="text" id="Dinero_DNI" placeholder="DNI del usuario" class="input-with-value" style="text-align:right"/></div>
+                        </div>
+                        </div>
+                    </li>  
+                </ul>
+            </div>
+            
+            <div style="text-align:center">
+            	<button onClick="CrearSolicitudDinero();" class="col button button-fill" style="margin: auto;">Solicitar Dinero</button>
+            </div>
+        </div>
+    </div>
+</div>

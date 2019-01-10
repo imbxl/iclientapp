@@ -162,6 +162,33 @@ $$(document).on('pageInit', function (e) {
 		});
 	}
 	
+    if (page.name === 'solicitar_canje') {	
+		var estru = window.localStorage.getItem("estru");
+		var estrp = window.localStorage.getItem("estrp");
+		if ((estru != null && estru != '') && (estrp != null && estrp != '')) {
+			var dstru = CryptoJS.AES.decrypt(estru, "strU");
+			var dstrp = CryptoJS.AES.decrypt(estrp, "strP");
+					
+			$$.post('http://iclient.com.ar/datos.php?tipo=getProdsEmpresa', {
+					user:dstru.toString(CryptoJS.enc.Utf8),
+					pass:dstrp.toString(CryptoJS.enc.Utf8)
+			}, function (json) {
+				json = JSON.parse(json);
+				console.log(json); 
+				$$('#Dinero_Producto').html('');
+				var primero = true;
+				$$.each(json, function (index, row) {
+					$$('#Dinero_Producto').append('<option value="'+row['id']+'">'+row['Titulo']+'</option>');
+					if(primero){
+						$$('#Dinero_Producto_Front .item-title').html(row['Titulo']);
+						$$('#Dinero_Producto_Front .item-after').html(row['id']);
+					}
+					primero = false;
+				});
+			});
+		}
+	}
+	
     if (page.name === 'canjear') {
 		GetProductos();
 	}
@@ -343,6 +370,117 @@ function GuardarDatos() {
 			mainView.router.load({url:'index.html', reload: true});
 		}
 	);
+}
+
+function CrearSolicitudDinero() {
+	if(document.getElementById('Dinero_Monto').value == ''){
+		showMessage("Debe ingresar un monto.",function(){},'Error al solicitar dinero');
+		return;
+	}
+	if(document.getElementById('Dinero_DNI').value == ''){
+		showMessage("Debe ingresar un DNI.",function(){},'Error al solicitar dinero');
+		return;
+	}
+	
+	var estru = window.localStorage.getItem("estru");
+	var estrp = window.localStorage.getItem("estrp");
+	if ((estru != null && estru != '') && (estrp != null && estrp != '')) {
+		var dstru = CryptoJS.AES.decrypt(estru, "strU");
+		var dstrp = CryptoJS.AES.decrypt(estrp, "strP");
+		$$.post( "http://iclient.com.ar/datos.php?tipo=payment", {
+				action:'checkdni',
+				monto:document.getElementById('Dinero_Monto').value,
+				dni:document.getElementById('Dinero_DNI').value,
+				user:dstru.toString(CryptoJS.enc.Utf8),
+				pass:dstrp.toString(CryptoJS.enc.Utf8)
+			},
+			function( data ) {
+				data = JSON.parse(data);
+				if (data["result"] == "error")
+				{
+					showMessage(data["message"],function(){},'Error al solicitar dinero');
+				}
+				else
+				{
+					EsperarResultadoCanje(data["id"]);
+				}
+				
+			}
+		);
+	}	
+}
+function CrearSolicitudCanje() {
+	if(document.getElementById('Dinero_Producto').value == ''){
+		showMessage("Debe ingresar un producto.",function(){},'Error al solicitar dinero');
+		return;
+	}
+	if(document.getElementById('Canje_DNI').value == ''){
+		showMessage("Debe ingresar un DNI.",function(){},'Error al solicitar dinero');
+		return;
+	}
+	
+	var estru = window.localStorage.getItem("estru");
+	var estrp = window.localStorage.getItem("estrp");
+	if ((estru != null && estru != '') && (estrp != null && estrp != '')) {
+		var dstru = CryptoJS.AES.decrypt(estru, "strU");
+		var dstrp = CryptoJS.AES.decrypt(estrp, "strP");
+		$$.post( "http://iclient.com.ar/datos.php?tipo=canjearEmpresa", {
+				producto:document.getElementById('Dinero_Producto').value,
+				dni:document.getElementById('Canje_DNI').value,
+				user:dstru.toString(CryptoJS.enc.Utf8),
+				pass:dstrp.toString(CryptoJS.enc.Utf8)
+			},
+			function( data ) {
+				data = JSON.parse(data);
+				if (data["result"] == "error")
+				{
+					showMessage(data["message"],function(){},'Error al solicitar dinero');
+				}
+				else
+				{
+					EsperarResultadoCanje(data["id"]);
+				}
+				
+			}
+		);
+	}	
+}
+
+var TimeoutSolCanje = false;
+var IntervalSolCanje = false;
+var idSolCanje = 0;
+function EsperarResultadoCanje(id){
+	idSolCanje = id;
+	$$('#LoaderPrincipal').show();
+	IntervalSolCanje = setInterval(function(){						
+		$$.post( "http://iclient.com.ar/datos.php?tipo=pedidoCanjeHecho", {
+				id:idSolCanje
+			},
+			function( data ) {
+				if(data === "Y"){
+					showMessage("La transacción se realizó correctamente.",function(){},'Solicitud de dinero ACEPTADA');
+					$$('#LoaderPrincipal').hide();		
+					$$('#Dinero_Monto').val("");
+					$$('#Dinero_DNI').val("");
+					$$('#Canje_DNI').val("");
+					clearInterval(IntervalSolCanje);
+					clearTimeout(TimeoutSolCanje);
+				}
+				if (data === "C"){
+					showMessage("Error: El usuario canceló el canje.",function(){},'Error al solicitar dinero');
+					$$('#LoaderPrincipal').hide();		
+					clearInterval(IntervalSolCanje);
+					clearTimeout(TimeoutSolCanje);
+				}						
+			}
+		);
+		
+	}, 5000);
+	TimeoutSolCanje = setTimeout(function(){
+		showMessage("Error: No se pudo canjear el producto, el usuario no confirmó el canje.",function(){},'Error al solicitar dinero');
+		clearInterval(IntervalSolCanje);
+		$$('#LoaderPrincipal').hide();
+	}, 300000);
 }
 
 function CrearCupon() {
@@ -728,7 +866,7 @@ function EnviarContactoEmpresa(){
 			Mensaje:$$('#CT_EMP_Mensaje').val()
 		},
 		function( data ) {
-			$$('#CT_EMP_ID').val('');
+			//$$('#CT_EMP_ID').val('');
 			$$('#CT_EMP_Asunto').val('');
 			$$('#CT_EMP_Mensaje').val('');
         	if (data == 'OK') {
@@ -739,7 +877,7 @@ function EnviarContactoEmpresa(){
 		}
 	);
 }
-function EnviarContactoEmpresa(){	
+function EnviarContacto(){	
 	$$.post( "http://iclient.com.ar/contacto.php", {
 			Tipo:'SOPORTE',
 			Nombre:$$('#CT_SOP_Nombre').val(),

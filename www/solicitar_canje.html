@@ -1,0 +1,51 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="f7-icons">chevron_left</i>
+                <span>Volver</span>
+            </a>
+        </div>
+        <div class="center sliding">Solicitar Canje</div>
+        <div class="right">
+        	<a href="#" class="link icon-only open-panel"><i class="f7-icons">bars</i></a>
+        </div>
+    </div>
+</div>
+<div class="pages">
+    <div data-page="solicitar_canje" class="page">
+        <div class="page-content">
+    		<br/>
+        	<div class="list-block tablet-inset" style="margin-top: 0; margin-bottom:20px">
+                <ul>
+                    <li>
+                      <a href="#" class="item-link smart-select" data-back-on-select="true">
+                        <!-- select -->
+                        <select id="Dinero_Producto" class="input-with-value"></select>
+                        <div class="item-content">
+                          <div id="Dinero_Producto_Front" class="item-inner">
+                            <!-- Select label -->
+                            <div class="item-title"></div>
+                            <!-- Selected value, not required -->
+                            <div class="item-after"></div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="serchuserwidget">
+                        <div class="item-content">
+                        <div class="item-inner">
+                        <div class="item-title label">DNI del Usuario</div>
+                        <div class="item-input"><input type="text" id="Canje_DNI" placeholder="DNI del usuario" class="input-with-value" style="text-align:right"/></div>
+                        </div>
+                        </div>
+                    </li>  
+                </ul>
+            </div>
+            
+            <div style="text-align:center">
+            	<button onClick="CrearSolicitudCanje();" class="col button button-fill" style="margin: auto;">Solicitar Canje</button>
+            </div>
+        </div>
+    </div>
+</div>

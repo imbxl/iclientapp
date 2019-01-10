@@ -32,6 +32,9 @@
         <div class="list-block">
             <div class="list-group">
                 <ul>
+                    <li class="only_empresa" style="text-align: center; font-size: 0.7em; padding-top: 7px;">
+                    	<span>Menú Empresas</span>
+                    </li>
                     <li class="only_empresa">
                       <a href="cupon.html" class="item-link item-content">
                         <div class="item-media"><i class="f7-icons">ticket</i></div>
@@ -47,6 +50,25 @@
                           <div class="item-title">Cupones generados</div>
                         </div>
                       </a>
+                    </li>
+                    <li class="only_empresa">
+                      <a href="solicitar_dinero.html" class="item-link item-content">
+                        <div class="item-media"><i class="f7-icons">money_dollar_round</i></div>
+                        <div class="item-inner">
+                          <div class="item-title">Solicitar dinero</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="only_empresa">
+                      <a href="solicitar_canje.html" class="item-link item-content">
+                        <div class="item-media"><i class="f7-icons">reload_round</i></div>
+                        <div class="item-inner">
+                          <div class="item-title">Solicitar canje</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="only_empresa" style="text-align: center; font-size: 0.7em; padding-top: 15px;">
+                    	<span>Menú Usuarios</span>
                     </li>
                     <li class="only_user">
                       <a href="cuenta.html" class="item-link item-content">
@@ -247,6 +269,13 @@
             <div style="text-align:center">
             	<button onClick="EnviarContactoEmpresa();" class="col button button-fill" style="margin: auto;">Enviar mensaje</button>
             </div>
+        </div>
+    </div>
+    
+    <div id="LoaderPrincipal" style="position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999999; display:none">
+        <div style="position:fixed; top:50%; left:0; width:100%; text-align:center; color:#FFF; margin-top:-33px;">
+            Espere...<br/>
+            <span style="width:42px; height:42px" class="preloader preloader-white"></span>
         </div>
     </div>
 
