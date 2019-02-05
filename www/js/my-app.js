@@ -234,6 +234,7 @@ function ValidarForm(){
 									pass:dstrp.toString(CryptoJS.enc.Utf8)
 								},
 								function( data2 ) {
+									data2 = JSON.parse(data2);
 									showMessage(data2["message"],function(){},'Validar código');
 								}
 							);						
