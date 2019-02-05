@@ -64,7 +64,7 @@ $$(document).on('pageInit', function (e) {
 		HeightBanners = 0;
 		$$.getJSON('http://iclient.com.ar/datos.php?tipo=banners', function (json) {
 			$$.each(json, function (index, row) {
-				MostrarBanner(row.Tipo,row.URL,row.producto_id,row.imagesize[0],row.imagesize[1]);
+				MostrarBanner(row.Tipo,row.URL,row.producto_id,row.imagesize[0],row.imagesize[1],row.Link);
 			});
 		});
 		
@@ -207,6 +207,45 @@ $$(document).on('pageInit', function (e) {
 	myApp.closePanel();
 })
 
+function ValidarForm(){
+	myApp.prompt('Ingrese el código de verificación', 'iClient', function(value){	
+		var estru = window.localStorage.getItem("estru");
+		var estrp = window.localStorage.getItem("estrp");
+		if ((estru != null && estru != '') && (estrp != null && estrp != '')) {
+			var dstru = CryptoJS.AES.decrypt(estru, "strU");
+			var dstrp = CryptoJS.AES.decrypt(estrp, "strP");
+			$$.post( "http://iclient.com.ar/datos.php?tipo=validar", {
+					codigo:value,
+					user:dstru.toString(CryptoJS.enc.Utf8),
+					pass:dstrp.toString(CryptoJS.enc.Utf8)
+				},
+				function( data ) {
+					data = JSON.parse(data);
+					if (data["result"] == "error")
+					{
+						showMessage(data["message"],function(){},'Error al validar código');
+					}
+					else
+					{
+						myApp.confirm('El código "'+data["Codigo"]+'" esta disponible para el producto "'+data["Titulo"]+'". ¿Desea utilizarlo?', 'iClient', function(){
+							$$.post( "http://iclient.com.ar/datos.php?tipo=utilizar_canje", {
+									codigo:value,
+									user:dstru.toString(CryptoJS.enc.Utf8),
+									pass:dstrp.toString(CryptoJS.enc.Utf8)
+								},
+								function( data2 ) {
+									showMessage(data2["message"],function(){},'Validar código');
+								}
+							);						
+						});
+					}
+					
+				}
+			);
+		}	
+	});
+}
+
 var HeightBanners = 0;
 function CloseBanner(tipo, height){
 	if(tipo == 'TOP'){
@@ -222,11 +261,11 @@ function CloseBanner(tipo, height){
 	$$('body').css('height',Math.round($$(window).height() - HeightBanners)+'px');
 	mySwiper1.update();
 }
-function MostrarBanner(tipo,url,producto,width,height){
+function MostrarBanner(tipo,url,producto,width,height, linkexterno){
 	if(tipo == 'TOP'){
 		var resultheight = Math.round($$('body').width() * height / width) + 1;
 		var top_html = '<img class="bannertop" src="http://iclient.com.ar/archivos/banners/'+url+'" style="position:absolute; top:0; left:0; width:100%;" />';
-		if(producto != '0') top_html = '<a href="#" onclick="ForceProductView('+producto+')" >'+top_html+'</a>';
+		if(producto != '0') top_html = '<a href="#" onclick="ForceProductView('+producto+','+linkexterno+')" >'+top_html+'</a>';
 		$$('body').prepend(top_html+'<a class="bannertop" href="#" onclick="CloseBanner(\'TOP\','+resultheight+');" style="position:absolute; right:5px; top:5px; background-color:#333; border-radius:50%; width: 25px;text-align: center;color: #fff;"><i class="f7-icons">close</i></a>');
 		$$('body').css('padding-top',Math.round($$('body').width() * height / width)+'px');
 		HeightBanners += resultheight;
@@ -234,7 +273,7 @@ function MostrarBanner(tipo,url,producto,width,height){
 	if(tipo == 'BOTTOM'){
 		var resultheight = Math.round($$('body').width() * height / width) + 1;
 		var bot_html = '<img class="bannerbottom" src="http://iclient.com.ar/archivos/banners/'+url+'" style="position:fixed; bottom:0; left:0; width:100%;" />';
-		if(producto != '0') bot_html = '<a href="#" onclick="ForceProductView('+producto+')" >'+bot_html+'</a>';
+		if(producto != '0') bot_html = '<a href="#" onclick="ForceProductView('+producto+','+linkexterno+')" >'+bot_html+'</a>';
 		$$('body').prepend(bot_html+'<a class="bannerbottom" href="#" onclick="CloseBanner(\'BOTTOM\','+resultheight+');" style="position:absolute; right:5px; bottom:5px; background-color:#333; border-radius:50%; width: 25px;text-align: center;color: #fff;"><i class="f7-icons">close</i></a>');
 		$$('body').css('padding-bottom',Math.round($$('body').width() * height / width)+'px');
 		HeightBanners += resultheight;
@@ -242,7 +281,7 @@ function MostrarBanner(tipo,url,producto,width,height){
 	if(tipo == 'POPUP'){
 		var popup_html = '<div class="popup popup-banner" style="background-color:#000; background-image:url(\'http://iclient.com.ar/archivos/banners/'+url+'\'); background-repeat:no-repeat; background-position:center center">'+
 				'<a href="#" class="close-popup" style="position:absolute; top:5px; right:5px; display:block; z-index:999999;">Cerrar</a>'+
-			'<div class="close-popup content-block" style="height: 100%; margin: 0; cursor: pointer;" '+((producto != '0') ? 'onclick="ForceProductView('+producto+')"' : '')+'>'+
+			'<div class="close-popup content-block" style="height: 100%; margin: 0; cursor: pointer;" '+((producto != '0') ? 'onclick="ForceProductView('+producto+','+linkexterno+')"' : '')+'>'+
 			'</div>'+
 		'</div>';
 		$$('body').append(popup_html);
@@ -257,7 +296,7 @@ function MostrarBanner(tipo,url,producto,width,height){
 						 ' </div>'+
 						'</div>'+
 						'<div class="picker-modal-inner" style="text-align:center">'+
-						 '<img '+((producto != '0') ? 'onclick="ForceProductView('+producto+')"' : '')+' src="http://iclient.com.ar/archivos/banners/'+url+'" style="max-width: 100%; max-height: 100%; cursor:pointer" />'+
+						 '<img '+((producto != '0') ? 'onclick="ForceProductView('+producto+','+linkexterno+')"' : '')+' src="http://iclient.com.ar/archivos/banners/'+url+'" style="max-width: 100%; max-height: 100%; cursor:pointer" />'+
 						'</div>'+
 					  '</div>';
 		$$('body').append(modal_html);
@@ -266,9 +305,15 @@ function MostrarBanner(tipo,url,producto,width,height){
 	
 	$$('body').css('height',Math.round($$(window).height() - HeightBanners)+'px');
 }
-function ForceProductView(prodid){	
-	mainView.router.load({url:'canjear.html', reload: true});
-	GetProductos(prodid);
+function ForceProductView(prodid,linkexterno){	
+	if(prodid == '-1'){
+		var url = linkexterno;
+		if(url.substr(0,7) != 'http://' && url.substr(0,8) != 'https://') url = 'http://'+url;
+		window.open(url, '_system', 'location=yes');
+	}else{
+		mainView.router.load({url:'canjear.html', reload: true});
+		GetProductos(prodid);
+	}
 }
 
 function ValidateEmail(email){
@@ -692,7 +737,7 @@ function ConfigPush(){
 				if(tipo == 'BANNER'){
 					$$.getJSON('http://iclient.com.ar/datos.php?tipo=banner&id='+prodid, function (json) {
 						$$.each(json, function (index, row) {
-							MostrarBanner(row.Tipo,row.URL,row.producto_id,row.imagesize[0],row.imagesize[1]);
+							MostrarBanner(row.Tipo,row.URL,row.producto_id,row.imagesize[0],row.imagesize[1],row.Link);
 						});
 					});
 				}
