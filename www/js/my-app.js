@@ -195,6 +195,10 @@ $$(document).on('pageInit', function (e) {
 	
     var page = e.detail.page;
 	
+	$$('.tab-link-active').removeClass('tab-link-active');
+	$$('.tab-link.ln_'+page.name).addClass('tab-link-active');
+	CreateTabBarSup();
+	
 	//console.log(e);
 	
     if (page.name === 'index') {
