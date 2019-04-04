@@ -172,20 +172,32 @@
                     <!-- Scrollable page content -->
                     <div class="page-content">
                         <div class="content-block" style="margin-top:0; padding: 0; margin-bottom:0">
-                        	<div class="SliderContainer"></div>
-                            <div align="center" class="MarcasContainer"> </div>
+                        	<div class="SliderContainer" style="text-align:center"><div class="preloader"></div></div>
+                            <div align="center" class="MarcasContainer"><div class="preloader"></div></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Bottom Toolbar-->
-            <div class="toolbar only_user">
+            <!-- Bottom Toolbar only_user ??-->
+              <div class="toolbar only_user">
                 <div class="toolbar-inner">
-                    <!-- Toolbar links -->
-                    <a href="canjear.html" class="link">Canjear saldo</a>
-                    <a href="#" onClick="Escanear()" class="link">Escanear ticket</a>
+                  <a href="index.html" onClick="Escanear(); return false;" class="tab-link link icon_qr">
+                    <i class="icon"></i>
+                  </a>
+                  <a href="canjear.html" class="tab-link link icon_promos ln_canjear">
+                    <i class="icon"></i>
+                  </a>
+                  <a href="historial.html" class="tab-link link icon_canjes ln_historial">
+                    <i class="icon"></i>
+                  </a>
+                  <a href="empresas.html" class="tab-link link icon_tiendas ln_empresas">
+                    <i class="icon"></i>
+                  </a>
+                  <a href="cuenta.html" class="tab-link link icon_user ln_cuenta">
+                    <i class="icon"></i>
+                  </a>
                 </div>
-            </div>
+              </div>
         </div>
     </div>
 

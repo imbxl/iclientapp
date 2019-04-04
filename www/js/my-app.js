@@ -1,4 +1,5 @@
 var myApp = new Framework7({
+	 pushState: false,
 	 swipePanel: 'left',
 	 cache: false,
 	 modalUsernamePlaceholder:'E-Mail',
@@ -29,8 +30,65 @@ var mainView = myApp.addView('.view-main', {
 });
 
 $$(document).on('deviceready', function() {
+	document.addEventListener("backbutton", function (e) { 
+		e.preventDefault(); 		
+		if (mainView.activePage.name === 'index' || mainView.activePage.name === 'control_lista') {
+			showConfirm("Desea salir de la aplicación?", 'Salir',function(){  navigator.app.exitApp(); },function(){});
+		} else {
+			mainView.router.back();
+		}
+		return false;
+	}, false ); 
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
+	//$$('.tab-link').eq(0).trigger('click');
 });
+
+$$(document).on('page:back', function (e) {
+	var name = $$('.page-on-left').attr('data-page');
+	$$('.tab-link-active').removeClass('tab-link-active');
+	$$('.tab-link.ln_'+name).addClass('tab-link-active');
+	CreateTabBarSup();
+});
+
+function CreateTabBarSup(){
+	if($$('.tab-link-active').length == 0){
+		$$('.tab-sup').remove();
+		return;
+	}
+	var left = $$('.tab-link-active').index();
+	if($$('.tab-sup').length == 0){
+		$$('.toolbar').append('<div class="tab-sup" style="left:0%; width:20%;"></div>');
+	}
+	$$('.tab-sup').css('left', (left*20)+"%");
+}
+
+$$(document).on('click', '.tab-link', function (e) { 
+	$$('.tab-link-active').removeClass('tab-link-active');
+	$$(this).addClass('tab-link-active');
+	CreateTabBarSup();
+	var url = $$(this).attr('href');
+	if(url == 'index.html'){
+		if(mainView.activePage.name != 'index') goToHome();
+	}else{
+		//mainView.router.back({url:'index.html', animatePages: false});
+		//mainView.history = ['index.html'];
+		mainView.router.loadPage(url);
+	}
+});
+
+var firstHome = true;
+function goToHome(){
+	$$('.page-on-left, .navbar-on-left').remove();
+	if(firstHome){
+		TraerSlider();
+		MarcasYBanners();
+		firstHome = false;
+	}else{
+		//mainView.history = ['index.html'];
+		mainView.router.back({url:'index.html'});
+		MarcasYBanners();
+	}
+}
 
 myApp.onPageInit('cuenta', function (page) {
 	myApp.closePanel();
@@ -42,13 +100,54 @@ myApp.onPageInit('registro', function (page) {
 
 myApp.onPageAfterAnimation('index', function (page){
 	mainView.showToolbar(true);
+	$$('.tab-sup').remove();
+	$$('.tab-link-active').removeClass("tab-link-active");
 })
-var mySwiper0;
-var mySwiper1;
-var XAP_init = false;
-var Empresas = [];
-$$(document).on('pageInit', function (e) {	
-	if(!XAP_init){
+var slides = '';
+function TraerSlider(){		
+	$$.getJSON('http://iclient.com.ar/datos.php?tipo=slider', function (json) {
+		$$.each(json, function (index, row) {
+			slides = slides+'<div class="swiper-slide"><img src="http://iclient.com.ar'+row.Foto+'" style="width:100%;" /></div>';
+		});
+		DeclararSlider();
+	});
+}
+function DeclararSlider(){
+	if(slides == '') return;
+		var html = '<div class="swiper-container swiper-0">'+
+							'<div class="swiper-pagination"></div>'+
+							'<div class="swiper-wrapper">'+slides+
+							'</div>'+
+							'<div class="f7-icons swiper-button-prev">chevron_left</div>'+
+							'<div class="f7-icons swiper-button-next">chevron_right</div>'+
+						'</div>';
+		$$('.SliderContainer').eq(0).html(html);
+		mySwiper0 = myApp.swiper('.swiper-0', {
+		  pagination: '.swiper-0 .swiper-pagination',
+		  paginationHide: false,
+		  width: $$(window).width(),
+		  paginationClickable: true,
+		  nextButton: '.swiper-button-next',
+		  prevButton: '.swiper-button-prev',
+		});
+		var html = '<div class="swiper-container swiper-1">'+
+							'<div class="swiper-pagination"></div>'+
+							'<div class="swiper-wrapper">'+slides+
+							'</div>'+
+							'<div class="f7-icons swiper-button-prev">chevron_left</div>'+
+							'<div class="f7-icons swiper-button-next">chevron_right</div>'+
+						'</div>';
+		$$('.SliderContainer').eq(1).html(html);
+		mySwiper1 = myApp.swiper('.swiper-1', {
+		  pagination: '.swiper-1 .swiper-pagination',
+		  paginationHide: false,
+		  width: $$(window).width(),
+		  paginationClickable: true,
+		  nextButton: '.swiper-button-next',
+		  prevButton: '.swiper-button-prev',
+		});
+}
+function MarcasYBanners(){	
 		$$.getJSON('http://iclient.com.ar/datos.php?tipo=empresas', function (json) {
 			var html = '<div class="row">';
 			Empresas = [];
@@ -70,50 +169,22 @@ $$(document).on('pageInit', function (e) {
 		
 		$$.getJSON('http://iclient.com.ar/datos.php?tipo=verificada', function (json) {
 			if(json != 'OK'){
-				$$('.navbar').append('<div class="noverificada" style="font-size: 15px; background: #b50000; color: #FFFFFF; text-align: center; margin-top: 44px;">Debe verificar su E-Mail</div>');
+				if($$('.noverificada').lenght == 0){
+					$$('.navbar').append('<div class="noverificada" style="font-size: 15px; background: #b50000; color: #FFFFFF; text-align: center; margin-top: 44px;">Debe verificar su E-Mail</div>');
+				}
 			}else{
 				$$('.noverificada').remove();
 			}
 		});
-		
-		$$.getJSON('http://iclient.com.ar/datos.php?tipo=slider', function (json) {
-			var slides = '';
-			$$.each(json, function (index, row) {
-				slides = slides+'<div class="swiper-slide"><img src="http://iclient.com.ar'+row.Foto+'" style="width:100%;" /></div>';
-			});
-			var html = '<div class="swiper-container swiper-0">'+
-                                '<div class="swiper-pagination"></div>'+
-                                '<div class="swiper-wrapper">'+slides+
-                                '</div>'+
-                                '<div class="swiper-button-prev"></div>'+
-                                '<div class="swiper-button-next"></div>'+
-                            '</div>';
-			$$('.SliderContainer').eq(0).html(html);
-			mySwiper0 = myApp.swiper('.swiper-0', {
-			  pagination: '.swiper-0 .swiper-pagination',
-			  paginationHide: false,
-			  width: $$(window).width(),
-			  paginationClickable: true,
-			  nextButton: '.swiper-button-next',
-			  prevButton: '.swiper-button-prev',
-			});
-			var html = '<div class="swiper-container swiper-1">'+
-                                '<div class="swiper-pagination"></div>'+
-                                '<div class="swiper-wrapper">'+slides+
-                                '</div>'+
-                                '<div class="swiper-button-prev"></div>'+
-                                '<div class="swiper-button-next"></div>'+
-                            '</div>';
-			$$('.SliderContainer').eq(1).html(html);
-			mySwiper1 = myApp.swiper('.swiper-1', {
-			  pagination: '.swiper-1 .swiper-pagination',
-			  paginationHide: false,
-			  width: $$(window).width(),
-			  paginationClickable: true,
-			  nextButton: '.swiper-button-next',
-			  prevButton: '.swiper-button-prev',
-			});
-		});
+}
+var mySwiper0;
+var mySwiper1;
+var XAP_init = false;
+var Empresas = [];
+$$(document).on('pageInit', function (e) {	
+	if(!XAP_init){		
+		TraerSlider();
+		MarcasYBanners();
 		
 		var bgupdates = window.localStorage.getItem("bgupdates");
 		if (bgupdates == null || bgupdates == '' || bgupdates != 'off') {
@@ -129,6 +200,7 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'index') {
 		testLogin();
 		mainView.showToolbar(true);
+		DeclararSlider();
 		var html = '<div class="row">';
 		$$.each(Empresas, function (index, row) {
 			if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><a href="#" onclick="VerEmpresa('+row.id+');"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /></a></div>';
@@ -136,7 +208,8 @@ $$(document).on('pageInit', function (e) {
 		html += '</div>';
 		$$('.MarcasContainer').html(html);
 	}else{
-		mainView.hideToolbar(true);
+		mainView.showToolbar(true);
+		//mainView.hideToolbar(true);
 	}
 	
     if (page.name === 'cuenta') {
@@ -382,7 +455,8 @@ function Registrarme() {
 				document.getElementById('formreg_pass').value = '';
 				showMessage('Registro exitoso. Le enviamos un e-mail para verificar su cuenta (no olvide revisar su carpeta de SPAM).',function(){},'Registro');
 				//login(userxx, passxx);
-				mainView.router.load({url:'index.html', reload: true});
+				//mainView.router.load({url:'index.html', reload: true});
+				goToHome();
 			}else{
 				showMessage(data,function(){},'Registro');
 			}
@@ -413,7 +487,8 @@ function GuardarDatos() {
 			Tel:document.getElementById('Datos_Tel').value
 		},
 		function( data ) {
-			mainView.router.load({url:'index.html', reload: true});
+			//mainView.router.load({url:'index.html', reload: true});
+			goToHome();
 		}
 	);
 }
@@ -585,16 +660,19 @@ function login(strU, strP) {
 					mainView.router.load({url:'cuenta.html', reload: true});
 				}else if(data == 'EMPRESA'){
 					IniciadoSesion = true;
-					mainView.router.load({url:'index.html'}); 
+					//mainView.router.load({url:'index.html'}); 
+					goToHome();
 					$$('.only_user').hide();
 					$$('.only_empresa').show();
 				}else if(data == 'PERSONA_EMPRESA'){
 					IniciadoSesion = true;
-					mainView.router.load({url:'index.html'}); 
+					//mainView.router.load({url:'index.html'}); 
+					goToHome();
 					$$('.only_user').show();
 					$$('.only_empresa').show();
 				}else{ 
-					mainView.router.load({url:'index.html'}); 
+					//mainView.router.load({url:'index.html'}); 
+					goToHome();
 					$$('.only_empresa').hide();
 					$$('.only_user').show();
 				}
@@ -620,7 +698,8 @@ function Recuperar() {
 function LogOut() {
 	window.localStorage.clear();
 	IniciadoSesion = false;
-	mainView.router.load({url:'index.html', reload: true});
+	//mainView.router.load({url:'index.html', reload: true});
+	goToHome();
 }
 
 var LoginModal;
@@ -758,6 +837,8 @@ function ConfigPush(){
 function Escanear(){
 	cordova.plugins.barcodeScanner.scan(
 	  function (result) {
+			$$('.tab-link-active').removeClass('tab-link-active');
+			CreateTabBarSup();
 		  if(!result.cancelled){
 			$$.get(result.text, function (data) {
 				if(data == 'OK'){
@@ -770,6 +851,8 @@ function Escanear(){
 	  },
 	  function (error) {
 			showMessage("Error al leer el ticket",function(){},'Registro');
+			$$('.tab-link-active').removeClass('tab-link-active');
+			CreateTabBarSup();
 	  },
 	  {
 		  preferFrontCamera : false, // iOS and Android
