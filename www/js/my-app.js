@@ -76,6 +76,29 @@ $$(document).on('click', '.tab-link', function (e) {
 	}
 });
 
+function QRSelect(){	
+	$$('.tab-link-active').removeClass('tab-link-active');
+  myApp.modal({
+    title:  'Cargar Puntos',
+    text: '',
+    verticalButtons: true,
+    buttons: [
+      {
+        text: 'Scanner QR',
+        onClick: function() {
+          Escanear();
+        }
+      },
+      {
+        text: 'Ingresar Código',
+        onClick: function() {
+          IngresarCodigo();
+        }
+      }
+    ]
+  })
+}
+
 var firstHome = true;
 function goToHome(){
 	$$('.page-on-left, .navbar-on-left').remove();
@@ -219,10 +242,11 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'cuenta') {
 		$$.getJSON('http://iclient.com.ar/datos.php?tipo=cuenta', function (json) {
 			//console.log(json);
+			var saldo = (parseFloat(json['Puntos'])-parseFloat(json['Canjes']));
 			$$('#Datos_Nombre').html(json['Nombre']);
 			$$('#Datos_DNI').html(json['DNI']);
 			$$('#Datos_Email').html(json['Email']);
-			$$('#Datos_Puntos').html('$'+(parseFloat(json['Puntos'])-parseFloat(json['Canjes'])));
+			$$('#Datos_Puntos').html('$ '+(saldo.toFixed(2)+''));
 			$$('#Datos_Tel').val(json['Telefono']);
 			$$('#Datos_Genero').val(json['Genero']);
 			$$('#Datos_Provincia').val(json['Provincia']);
@@ -272,6 +296,10 @@ $$(document).on('pageInit', function (e) {
 	
     if (page.name === 'generados') {
 		GetGenerados();
+	}
+	
+    if (page.name === 'canjeados') {
+		GetHistorialEmpresa();
 	}
 	
     if (page.name === 'registroform') {
@@ -497,6 +525,48 @@ function GuardarDatos() {
 	);
 }
 
+function CrearCargaDinero() {
+	if(document.getElementById('Dinero_Monto').value == ''){
+		showMessage("Debe ingresar un monto.",function(){},'Error al solicitar dinero');
+		return;
+	}
+	if(document.getElementById('Dinero_DNI').value == ''){
+		showMessage("Debe ingresar un DNI.",function(){},'Error al solicitar dinero');
+		return;
+	}
+	
+	var estru = window.localStorage.getItem("estru");
+	var estrp = window.localStorage.getItem("estrp");
+	if ((estru != null && estru != '') && (estrp != null && estrp != '')) {
+		var dstru = CryptoJS.AES.decrypt(estru, "strU");
+		var dstrp = CryptoJS.AES.decrypt(estrp, "strP");
+		$$.post( "http://iclient.com.ar/datos.php?tipo=cargarSaldo", {
+				action:'checkdni',
+				monto:document.getElementById('Dinero_Monto').value,
+				dni:document.getElementById('Dinero_DNI').value,
+				user:dstru.toString(CryptoJS.enc.Utf8),
+				pass:dstrp.toString(CryptoJS.enc.Utf8)
+			},
+			function( data ) {
+				data = JSON.parse(data);
+				if (data["result"] == "error")
+				{
+					showMessage(data["message"],function(){},'Error al cargar saldo');
+				}
+				else
+				{
+					showMessage('La carga de saldo se realizó correctamente.',function(){},'Error al cargar saldo');
+					$$('#LoaderPrincipal').hide();		
+					$$('#Dinero_Monto').val("");
+					$$('#Dinero_DNI').val("");
+					$$('#Canje_DNI').val("");
+				}
+				
+			}
+		);
+	}	
+}
+
 function CrearSolicitudDinero() {
 	if(document.getElementById('Dinero_Monto').value == ''){
 		showMessage("Debe ingresar un monto.",function(){},'Error al solicitar dinero');
@@ -668,17 +738,23 @@ function login(strU, strP) {
 					goToHome();
 					$$('.only_user').hide();
 					$$('.only_empresa').show();
+					myApp.params.swipePanel = true;
+					$$('body').removeClass('nosidebar');
 				}else if(data == 'PERSONA_EMPRESA'){
 					IniciadoSesion = true;
 					//mainView.router.load({url:'index.html'}); 
 					goToHome();
 					$$('.only_user').show();
 					$$('.only_empresa').show();
+					myApp.params.swipePanel = true;
+					$$('body').removeClass('nosidebar');
 				}else{ 
 					//mainView.router.load({url:'index.html'}); 
 					goToHome();
 					$$('.only_empresa').hide();
 					$$('.only_user').show();
+					myApp.params.swipePanel = false;
+					$$('body').addClass('nosidebar');
 				}
 				ConfigPush();
 			}else{
@@ -933,8 +1009,8 @@ function GetProductos(id){
                     <div class="text">'+row.Copete+'</div>\
                 </div>\
                 <div class="card-footer flex-row">\
-                <a href="#" onclick="ProductoVerMas('+row.id+')" class="tool tool-border flex-rest-width link"><i class="f7-icons">eye</i> <span class="text">Ver más</span></a> \
-                <a href="#" onclick="ProductoCanjear('+row.id+')" class="tool flex-rest-width link"><span class="f7-icons">navigation</span> <span class="text">Canjear</span></a></div>\
+                <a href="#" onclick="ProductoVerMas('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">Ver más</span></a> \
+                <a href="#" onclick="ProductoCanjear('+row.id+')" class="tool flex-rest-width link"><span class="text">Canjear</span></a></div>\
             	</div>\
             	<div class="descripcion_larga" style="display:none">'+row.Descripcion+'</div>\
 			</div>';			
@@ -1072,6 +1148,75 @@ function ProductoCanjear(id){
 	});
 }
 
+function UsarCupon(id, code){
+	showConfirm("¿Está seguro que desea usar el cupón \""+code+"\"?", 'Usar Cupón',function(){
+		$$.getJSON('http://iclient.com.ar/datos.php?tipo=usarCupon&id='+id, function (json) {
+			if(json != 'OK'){
+				showMessage(json['msg'],function(){},'iClient');
+			}else{
+				showMessage('El cupón se usó correctamente.',function(){},'iClient');
+				$$('.historial_lista').html('<div class="preloader loader loading"></div>');
+				GetHistorialEmpresa();
+			}
+		});
+	},function(){});
+}
+function DesUsarCupon(id, code){
+	showConfirm("¿Está seguro que desea reactivar el cupón \""+code+"\"?", 'Usar Cupón',function(){
+		$$.getJSON('http://iclient.com.ar/datos.php?tipo=desUsarCupon&id='+id, function (json) {
+			if(json != 'OK'){
+				showMessage(json['msg'],function(){},'iClient');
+			}else{
+				showMessage('El cupón se reactivó correctamente.',function(){},'iClient');
+				$$('.historial_lista').html('<div class="preloader loader loading"></div>');
+				GetHistorialEmpresa();
+			}
+		});
+	},function(){});
+}
+function GetHistorialEmpresa(){
+	$$.getJSON('http://iclient.com.ar/datos.php?tipo=historialEmpresa', function (json) {
+		//console.log(json);
+		var html = '';
+		$$.each(json, function (index, row) {
+			if(row.Usado == 'Y'){
+				var CODE = 'Canje ya utilizado ("'+row.Codigo+'")';
+				var style = ' style="background-color: #EEE;"';	
+				var boton = '<a href="#" onclick="DesUsarCupon('+row.id+',\''+row.Codigo+'\')" class="tool tool-border flex-rest-width link red"><span class="text">Deshacer</span></a>';	
+			}else{
+				var CODE = 'CODIGO: <b>'+row.Codigo+'</b>';
+				var style = '';	
+				var boton = '<a href="#" onclick="UsarCupon('+row.id+',\''+row.Codigo+'\')" class="tool tool-border flex-rest-width link green"><span class="text">Usar cupón</span></a>';	
+			}
+			
+			html += '<div id="histo_'+row.id+'">\
+				<div class="card" '+style+'>\
+                <div class="card-header">';
+			if(row.URL != ''){
+                    html += '<div class="avatar">\
+                    	<img src="http://iclient.com.ar/archivos/productos/'+row.URL+'" alt="avatar">\
+                    </div>';
+			}
+             html += '<div class="user flex-column">\
+                        <div class="name">'+row.Titulo+'</div>\
+                        <div class="time">'+CODE+'</div>\
+                    </div>\
+                </div>\
+                <div class="card-content">\
+                    <div class="text">'+row.Copete+'</div>\
+                </div>\
+                <div class="card-footer flex-row">\
+                	'+boton+' \
+            	</div>\
+            	</div>\
+            	<div class="descripcion_larga" style="display:none">'+row.Descripcion+'</div>\
+			</div>';			
+		}); 
+		$$('.historial_lista').html(html);
+	});
+}
+
+
 function GetHistorial(){
 	$$.getJSON('http://iclient.com.ar/datos.php?tipo=historial', function (json) {
 		//console.log(json);
@@ -1079,7 +1224,7 @@ function GetHistorial(){
 		$$.each(json, function (index, row) {
 			if(row.Usado == 'Y'){
 				var CODE = 'Canje ya utilizado';
-				var style = ' style="background-color: #DDD;"';	
+				var style = ' style="background-color: #EEE;"';	
 			}else{
 				var CODE = 'CODIGO: <b>'+row.Codigo+'</b>';
 				var style = '';	
@@ -1102,7 +1247,7 @@ function GetHistorial(){
                     <div class="text">'+row.Copete+'</div>\
                 </div>\
                 <div class="card-footer flex-row">\
-                	<a href="#" onclick="HistorialVerMas('+row.id+')" class="tool tool-border flex-rest-width link"><i class="f7-icons">eye</i> <span class="text">Ver más</span></a> \
+                	<a href="#" onclick="HistorialVerMas('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">Ver más</span></a> \
             	</div>\
             	</div>\
             	<div class="descripcion_larga" style="display:none">'+row.Descripcion+'</div>\

@@ -121,7 +121,7 @@
     transition-duration: .3s;
 }
 .card .card-footer {
-    min-height: 35px;
+    min-height: 50px;
     padding: 0;
 }
 .card .card-footer .tool.tool-border {
@@ -256,7 +256,104 @@ input[name="modal-password"]{
 	-o-transition: all 500ms ease;
 	transition: all 500ms ease;
 }
+.list-block .item-content{
+	padding-left:0;
+}
+.list-block .item-content > *{
+	padding-left: 15px;
+}
+.card{
+	border-color: #ff6a2b;
+}
+.card-header:after,
+.list-block ul:before,
+.list-block ul:after,
+.list-block .item-inner:before,
+.list-block .item-inner:after{
+	background-color: #ff6a2b;
+}
+.list-block .item-inner{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.list-block .item-title.label {
+    width: auto;
+}
+.list-block .item-input-wrap{
+    width: 100%;
+}
+.list-block .item-after,
+.list-block .item-input-wrap,
+.list-block .item-input-wrap > *{  
+	text-align-last: left;
+    text-align: left;
+    direction:inherit;
+	width: 100%;
+}
+.list-block .item-input-wrap > select,  
+.list-block .item-input-wrap > input{  
+	margin-top: 1px;
+	margin-left: 2px;
+}
+.list-block .item-input{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.card-footer a{
+    background-color: #ff6a2b;
+    color: #fff;
+    border-radius: 15px;
+    margin: 0px 10px;
+}
 
+.modal-title{		
+    width: fit-content;
+    margin: auto;
+    padding: 0 10px 3px 10px;
+    border-bottom: solid 2px #ff6a2b;
+}
+.modal-inner{
+    border: solid 1px #ff6a2b;
+    border-bottom: 0;
+}
+.modal-buttons{
+    border: solid 1px #ff6a2b;
+    border-top: 0;	
+	height: auto;
+}
+.modal-buttons.modal-buttons-1,
+.modal-buttons.modal-buttons-2{
+    background-color: #fff;
+    padding: 10px;
+}
+.modal-buttons.modal-buttons-1 .modal-button,
+.modal-buttons.modal-buttons-2 .modal-button{
+    border-radius: 13px;
+    background-color: #ff6a2b;
+    color: #FFF;
+    height: 38px;
+    line-height: 38px;
+    margin: 0 5px;
+}
+.modal-buttons.modal-buttons-vertical{
+    background-color: #fff;
+    padding: 15px;
+}
+.modal-buttons-vertical .modal-button {
+    border-radius: 0;
+    background-color: #ff6a2b;
+    color: #FFF;
+}
+.modal-buttons-vertical .modal-button:first-child {
+    border-radius: 13px 13px 0 0 !important;
+}
+.modal-buttons-vertical .modal-button:last-child {
+    border-radius: 0 0 13px 13px !important;
+}
+
+.nosidebar .navbar .navbar-inner .right{
+	display:none !important;
+}
 .toolbar-inner .icon{
     width: 30px;
 	padding:0 10px;

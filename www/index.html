@@ -52,6 +52,14 @@
                       </a>
                     </li>
                     <li class="only_empresa">
+                      <a href="canjeados.html" class="item-link item-content">
+                        <div class="item-media"><i class="f7-icons">time</i></div>
+                        <div class="item-inner">
+                          <div class="item-title">Canjes realizados a mi</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="only_empresa">
                       <a href="solicitar_dinero.html" class="item-link item-content">
                         <div class="item-media"><i class="f7-icons">money_dollar_round</i></div>
                         <div class="item-inner">
@@ -68,6 +76,14 @@
                       </a>
                     </li>
                     <li class="only_empresa">
+                      <a href="cargar_dinero.html" class="item-link item-content">
+                        <div class="item-media"><i class="f7-icons">money_dollar_round</i></div>
+                        <div class="item-inner">
+                          <div class="item-title">Cargar saldo</div>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="only_empresa">
                       <a href="javascript:ValidarForm();" class="item-link item-content">
                         <div class="item-media"><i class="f7-icons">check_round</i></div>
                         <div class="item-inner">
@@ -75,6 +91,15 @@
                         </div>
                       </a>
                     </li>
+                    <li>
+                      <a href="#" onClick="LogOut();" class="item-link item-content">
+                        <div class="item-media"><i class="f7-icons">logout</i></div>
+                        <div class="item-inner">
+                          <div class="item-title">Cerrar Sesión</div>
+                        </div>
+                      </a>
+                    </li>
+					<!--
                     <li class="only_empresa" style="text-align: center; font-size: 0.7em; padding-top: 15px;">
                     	<span>Menú Usuarios</span>
                     </li>
@@ -141,7 +166,7 @@
                           <div class="item-title">Cerrar Sesión</div>
                         </div>
                       </a>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
         </div>
@@ -181,7 +206,7 @@
             <!-- Bottom Toolbar only_user ??-->
               <div class="toolbar only_user">
                 <div class="toolbar-inner">
-                  <a href="index.html" onClick="Escanear(); return false;" class="tab-link link icon_qr">
+                  <a href="index.html" onClick="QRSelect(); return false;" class="tab-link link icon_qr">
                     <i class="icon"></i>
                   </a>
                   <a href="canjear.html" class="tab-link link icon_promos ln_canjear">
@@ -265,6 +290,7 @@
             	<div class="map"></div>
             </div>
             <input type="hidden" id="CT_EMP_ID" />
+			<div class="modal-title" style="margin-bottom: 10px;">Contacto</div>
         	<div class="list-block tablet-inset" style="margin-top: 0; margin-bottom:20px">
                 <ul>
                     <li>

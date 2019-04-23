@@ -17,10 +17,10 @@
         <div class="page-content">
         	<div class="list-block tablet-inset" style="margin-top: 0; margin-bottom:20px">
                 <ul>
-                    <li>
+                    <li style="display: none">
                       <a href="#" class="item-link smart-select" data-back-on-select="true">
                         <!-- select -->
-                        <select id="Cupon_Uso" class="input-with-value" onchange="if($$(this).val() == 'UNICO'){ $$('.serchuserwidget').show(); }else{ $$('#Cupon_DNI').val(''); $$('.serchuserwidget').hide(); }"><option value="UNICO">Una sola vez</option><option value="DIARIO">Una vez por dia</option></select>
+                        <select id="Cupon_Uso" class="input-with-value" onchange="if($$(this).val() == 'UNICO'){ $$('.serchuserwidget').show(); }else{ $$('#Cupon_DNI').val(''); $$('.serchuserwidget').hide(); }"><option value="UNICO" selected>Una sola vez</option><option value="DIARIO">Una vez por dia</option></select>
                         <div class="item-content">
                           <div class="item-inner">
                             <!-- Select label -->
