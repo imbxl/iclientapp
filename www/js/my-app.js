@@ -738,7 +738,7 @@ function login(strU, strP) {
 					goToHome();
 					$$('.only_user').hide();
 					$$('.only_empresa').show();
-					myApp.params.swipePanel = true;
+					myApp.params.swipePanel = 'left';
 					$$('body').removeClass('nosidebar');
 				}else if(data == 'PERSONA_EMPRESA'){
 					IniciadoSesion = true;
@@ -746,7 +746,7 @@ function login(strU, strP) {
 					goToHome();
 					$$('.only_user').show();
 					$$('.only_empresa').show();
-					myApp.params.swipePanel = true;
+					myApp.params.swipePanel = 'left';
 					$$('body').removeClass('nosidebar');
 				}else{ 
 					//mainView.router.load({url:'index.html'}); 
