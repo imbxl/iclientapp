@@ -1,3 +1,6 @@
+a{
+    text-decoration: underline;
+}
 .statusbar-overlay {
     background: #000000;
 }
@@ -361,6 +364,9 @@ input[name="modal-password"]{
     background-size: 60% 60%;
 	background-position:center center;
     background-repeat: no-repeat;
+}
+.swiper-pagination-bullet-active {
+    background: #000;
 }
 .icon_qr .icon{	background-image: url("../img/iconos/QR.svg"); }
 .icon_qr.tab-link-active .icon{	background-image: url("../img/iconos/active/QR.svg"); }

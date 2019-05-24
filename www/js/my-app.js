@@ -1180,7 +1180,7 @@ function GetHistorialEmpresa(){
 		var html = '';
 		$$.each(json, function (index, row) {
 			if(row.Usado == 'Y'){
-				var CODE = 'Canje ya utilizado ("'+row.Codigo+'")';
+				var CODE = 'Canje ya utilizado ("'+row.Codigo+'") el '+row.Fecha;
 				var style = ' style="background-color: #EEE;"';	
 				var boton = '<a href="#" onclick="DesUsarCupon('+row.id+',\''+row.Codigo+'\')" class="tool tool-border flex-rest-width link red"><span class="text">Deshacer</span></a>';	
 			}else{
@@ -1188,6 +1188,11 @@ function GetHistorialEmpresa(){
 				var style = '';	
 				var boton = '<a href="#" onclick="UsarCupon('+row.id+',\''+row.Codigo+'\')" class="tool tool-border flex-rest-width link green"><span class="text">Usar cupón</span></a>';	
 			}
+            var CONBOTON = true;
+			if(row.Titulo == 'Pago con iClient' || row.Titulo == 'Carga de Saldo'){
+				var CODE = 'Fecha: '+row.Fecha;
+                CONBOTON = false;
+            }
 			
 			html += '<div id="histo_'+row.id+'">\
 				<div class="card" '+style+'>\
@@ -1204,12 +1209,12 @@ function GetHistorialEmpresa(){
                 </div>\
                 <div class="card-content">\
                     <div class="text">'+row.Copete+'</div>\
-                </div>\
-                <div class="card-footer flex-row">\
-                	'+boton+' \
-            	</div>\
-            	</div>\
-            	<div class="descripcion_larga" style="display:none">'+row.Descripcion+'</div>\
+                </div>';
+            if(CONBOTON){
+                html += '<div class="card-footer flex-row">'+boton+'</div>\
+            	</div>';
+            }
+             html += '<div class="descripcion_larga" style="display:none">'+row.Descripcion+'</div>\
 			</div>';			
 		}); 
 		$$('.historial_lista').html(html);
@@ -1223,12 +1228,17 @@ function GetHistorial(){
 		var html = '';
 		$$.each(json, function (index, row) {
 			if(row.Usado == 'Y'){
-				var CODE = 'Canje ya utilizado';
+				var CODE = 'Canje ya utilizado el '+row.Fecha;
 				var style = ' style="background-color: #EEE;"';	
 			}else{
 				var CODE = 'CODIGO: <b>'+row.Codigo+'</b>';
 				var style = '';	
 			}
+            var CONBOTON = true;
+			if(row.Titulo == 'Pago con iClient' || row.Titulo == 'Carga de Saldo'){
+				var CODE = 'Fecha: '+row.Fecha;
+                CONBOTON = false;
+            }
 			
 			html += '<div id="histo_'+row.id+'">\
 				<div class="card" '+style+'>\
@@ -1245,11 +1255,13 @@ function GetHistorial(){
                 </div>\
                 <div class="card-content">\
                     <div class="text">'+row.Copete+'</div>\
-                </div>\
-                <div class="card-footer flex-row">\
+                </div>';
+            if(CONBOTON){
+                html += '<div class="card-footer flex-row">\
                 	<a href="#" onclick="HistorialVerMas('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">Ver más</span></a> \
-            	</div>\
-            	</div>\
+            	</div>';
+               }
+             html += '</div>\
             	<div class="descripcion_larga" style="display:none">'+row.Descripcion+'</div>\
 			</div>';			
 		}); 
