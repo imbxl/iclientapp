@@ -997,7 +997,7 @@ function GetProductos(id){
                 <div class="card-header">';
 			if(row.URL != ''){
                     html += '<div class="avatar">\
-                    	<img src="http://iclient.com.ar/archivos/productos/'+row.URL+'" alt="avatar">\
+                    	<img src="'+row.URL+'" alt="avatar">\
                     </div>';
 			}
              html += '<div class="user flex-column">\
