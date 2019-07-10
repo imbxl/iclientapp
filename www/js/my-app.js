@@ -13,21 +13,21 @@ function TraduceAllTexts(){
 	myApp.params.modalPasswordPlaceholder=traducir('Contraseña');
 	myApp.params.modalButtonOk=traducir('Aceptar');
 	myApp.params.modalButtonCancel=traducir('Cancelar');
-    $$('lng').each(function(index, element){
-        var html = $$(this).html();
-        var attr = $$(this).attr('original-lng');
-        if(typeof attr !== "undefined" && attr != "") html = attr;
+    $$('lng, option').each(function(index, element){
+        var html = $$(element).html();
+        var attr = $$(element).attr('original-lng');
+        if(typeof attr !== "undefined" && attr != "" && attr != null) html = attr;
         var traduccion = traducir(html);
-        $$(this).html(traduccion);
-        $$(this).attr('original-lng', traduccion);
+        $$(element).html(traduccion);
+        $$(element).attr('original-lng', traduccion);
     });
     $$('input, textarea, button').each(function(index, element){
-        var html = $$(this).attr('placeholder');
-        var attr = $$(this).attr('original-lng');
-        if(typeof attr !== "undefined" && attr != "") html = attr;
+        var html = $$(element).attr('placeholder');
+        var attr = $$(element).attr('original-ph-lng');
+        if(typeof attr !== "undefined" && attr != "" && attr != null) html = attr;
         var traduccion = traducir(html);
-        $$(this).html(traduccion);
-        $$(this).attr('original-lng', traduccion);
+        $$(element).html(traduccion);
+        $$(element).attr('original-ph-lng', traduccion);
     });
 }
 
@@ -55,7 +55,7 @@ $$(document).on('deviceready', function() {
 	document.addEventListener("backbutton", function (e) { 
 		e.preventDefault(); 		
 		if (mainView.activePage.name === 'index' || mainView.activePage.name === 'control_lista') {
-			showConfirm("Desea salir de la aplicación?", 'Salir',function(){  navigator.app.exitApp(); },function(){});
+			showConfirm(traducir("Desea salir de la aplicación?"), traducir('Salir'),function(){  navigator.app.exitApp(); },function(){});
 		} else {
 			mainView.router.back();
 		}
@@ -63,6 +63,7 @@ $$(document).on('deviceready', function() {
 	}, false ); 
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
 	//$$('.tab-link').eq(0).trigger('click');
+    
 });
 
 $$(document).on('page:back', function (e) {
@@ -215,7 +216,7 @@ function MarcasYBanners(){
 		$$.getJSON('http://iclient.com.ar/datos.php?tipo=verificada', function (json) {
 			if(json != 'OK'){
 				if($$('.noverificada').lenght == 0){
-					$$('.navbar').append('<div class="noverificada" style="font-size: 15px; background: #b50000; color: #FFFFFF; text-align: center; margin-top: 44px;">Debe verificar su E-Mail</div>');
+					$$('.navbar').append('<div class="noverificada" style="font-size: 15px; background: #b50000; color: #FFFFFF; text-align: center; margin-top: 44px;">'+traducir('Debe verificar su E-Mail')+'</div>');
 				}
 			}else{
 				$$('.noverificada').remove();
@@ -371,7 +372,7 @@ $$(document).on('pageInit', function (e) {
 })
 
 function ValidarForm(){
-	myApp.prompt('Ingrese el código de verificación', 'iClient', function(value){	
+	myApp.prompt(traducir('Ingrese el código de verificación'), 'iClient', function(value){	
 		var estru = window.localStorage.getItem("estru");
 		var estrp = window.localStorage.getItem("estrp");
 		if ((estru != null && estru != '') && (estrp != null && estrp != '')) {
@@ -386,11 +387,11 @@ function ValidarForm(){
 					data = JSON.parse(data);
 					if (data["result"] == "error")
 					{
-						showMessage(data["message"],function(){},'Error al validar código');
+						showMessage(data["message"],function(){},traducir('Error al validar código'));
 					}
 					else
 					{
-						myApp.confirm('El código "'+data["Codigo"]+'" esta disponible para el producto "'+data["Titulo"]+'". ¿Desea utilizarlo?', 'iClient', function(){
+						myApp.confirm(traducir('El código')+' "'+data["Codigo"]+'" '+traducir('esta disponible para el producto')+' "'+data["Titulo"]+'". '+traducir('¿Desea utilizarlo?'), 'iClient', function(){
 							$$.post( "http://iclient.com.ar/datos.php?tipo=utilizar_canje", {
 									codigo:value,
 									user:dstru.toString(CryptoJS.enc.Utf8),
@@ -398,7 +399,7 @@ function ValidarForm(){
 								},
 								function( data2 ) {
 									data2 = JSON.parse(data2);
-									showMessage(data2["message"],function(){},'Validar código');
+									showMessage(data2["message"],function(){},traducir('Validar código'));
 								}
 							);						
 						});
@@ -456,7 +457,7 @@ function MostrarBanner(tipo,url,producto,width,height, linkexterno){
 						'<div class="toolbar">'+
 						 ' <div class="toolbar-inner">'+
 							'<div class="left"></div>'+
-							'<div class="right"><a href="#" class="close-picker">Cerrar</a></div>'+
+							'<div class="right"><a href="#" class="close-picker">'+traducir('Cerrar')+'</a></div>'+
 						 ' </div>'+
 						'</div>'+
 						'<div class="picker-modal-inner" style="text-align:center">'+
@@ -495,31 +496,31 @@ function ValidateEmail(email){
 
 function Registrarme() {
 	if(document.getElementById('formreg_name').value.trim() == ''){
-		showMessage('Debe completar su nombre',function(){},'Registro');
+		showMessage(traducir('Debe completar su nombre'),function(){},'Registro');
 		return;
 	}
 	if(document.getElementById('formreg_dni').value.trim() == ''){
-		showMessage('Debe completar su DNI',function(){},'Registro');
+		showMessage(traducir('Debe completar su DNI'),function(){},'Registro');
 		return;
 	}
 	if(document.getElementById('formreg_tel').value.trim() == ''){
-		showMessage('Debe completar su Teléfono',function(){},'Registro');
+		showMessage(traducir('Debe completar su Teléfono'),function(){},'Registro');
 		return;
 	}
 	if(document.getElementById('formreg_mail').value.trim() == ''){
-		showMessage('Debe completar su E-mail',function(){},'Registro');
+		showMessage(traducir('Debe completar su E-mail'),function(){},'Registro');
 		return;
 	}
 	if(!ValidateEmail(document.getElementById('formreg_mail').value.trim())){
-		showMessage('Debe ingresar un E-mail válido',function(){},'Registro');
+		showMessage(traducir('Debe ingresar un E-mail válido'),function(){},'Registro');
 		return;
 	}
 	if(document.getElementById('formreg_pass').value.trim() == ''){
-		showMessage('Debe completar su Contraseña',function(){},'Registro');
+		showMessage(traducir('Debe completar su Contraseña'),function(){},'Registro');
 		return;
 	}
 	if(document.getElementById('calendar-nacimiento').value.trim() == ''){
-		showMessage('Debe completar su Fecha de Nacimiento',function(){},'Registro');
+		showMessage(traducir('Debe completar su Fecha de Nacimiento'),function(){},'Registro');
 		return;
 	}
     //verificamos conexion y servidores
@@ -544,31 +545,31 @@ function Registrarme() {
 				document.getElementById('formreg_dni').value = '';
 				document.getElementById('formreg_mail').value = '';
 				document.getElementById('formreg_pass').value = '';
-				showMessage('Registro exitoso. Le enviamos un e-mail para verificar su cuenta (no olvide revisar su carpeta de SPAM).',function(){},'Registro');
+				showMessage(traducir('Registro exitoso. Le enviamos un e-mail para verificar su cuenta (no olvide revisar su carpeta de SPAM).'),function(){},traducir('Registro'));
 				//login(userxx, passxx);
 				//mainView.router.load({url:'index.html', reload: true});
 				goToHome();
 			}else{
-				showMessage(data,function(){},'Registro');
+				showMessage(data,function(){},traducir('Registro'));
 			}
 		}
 	);
 }
 function GuardarDatos() {
 	if(document.getElementById('Datos_Genero').value == ''){
-		showMessage("Debe ingresar su Género.",function(){},'Mis datos');
+		showMessage(traducir("Debe ingresar su Género."),function(){},traducir('Mis datos'));
 		return;
 	}
 	if(document.getElementById('calendar-nacimiento-cuenta').value == ''){
-		showMessage("Debe ingresar su Fecha de Nacimiento.",function(){},'Mis datos');
+		showMessage(traducir("Debe ingresar su Fecha de Nacimiento."),function(){},traducir('Mis datos'));
 		return;
 	}
 	if(document.getElementById('Datos_Provincia').value == ''){
-		showMessage("Debe ingresar su Provincia.",function(){},'Mis datos');
+		showMessage(traducir("Debe ingresar su Provincia."),function(){},traducir('Mis datos'));
 		return;
 	}
 	if(document.getElementById('Datos_Tel').value == ''){
-		showMessage("Debe ingresar su Teléfono.",function(){},'Mis datos');
+		showMessage(traducir("Debe ingresar su Teléfono."),function(){},traducir('Mis datos'));
 		return;
 	}
 	$$.post( "http://iclient.com.ar/datos.php?tipo=update_datos", {
@@ -579,7 +580,11 @@ function GuardarDatos() {
 			Tel:document.getElementById('Datos_Tel').value
 		},
 		function( data ) {
-			//mainView.router.load({url:'index.html', reload: true});
+			//mainView.router.load({url:'index.html', reload: true});        
+            $$.getJSON("http://iclient.com.ar/datos.php?tipo=datosUser", function(json){
+                DatosUser = json;
+                TraduceAllTexts();
+            });
 			goToHome();
 		}
 	);
@@ -587,11 +592,11 @@ function GuardarDatos() {
 
 function CrearCargaDinero() {
 	if(document.getElementById('Dinero_Monto').value == ''){
-		showMessage("Debe ingresar un monto.",function(){},'Error al solicitar dinero');
+		showMessage(traducir("Debe ingresar un monto."),function(){},traducir('Error al solicitar dinero'));
 		return;
 	}
 	if(document.getElementById('Dinero_DNI').value == ''){
-		showMessage("Debe ingresar un DNI.",function(){},'Error al solicitar dinero');
+		showMessage(traducir("Debe ingresar un DNI."),function(){},traducir('Error al solicitar dinero'));
 		return;
 	}
 	
@@ -611,11 +616,11 @@ function CrearCargaDinero() {
 				data = JSON.parse(data);
 				if (data["result"] == "error")
 				{
-					showMessage(data["message"],function(){},'Error al cargar saldo');
+					showMessage(data["message"],function(){},traducir('Error al cargar saldo'));
 				}
 				else
 				{
-					showMessage('La carga de saldo se realizó correctamente.',function(){},'Error al cargar saldo');
+					showMessage('La carga de saldo se realizó correctamente.',function(){},traducir('Error al cargar saldo'));
 					$$('#LoaderPrincipal').hide();		
 					$$('#Dinero_Monto').val("");
 					$$('#Dinero_DNI').val("");
@@ -629,11 +634,11 @@ function CrearCargaDinero() {
 
 function CrearSolicitudDinero() {
 	if(document.getElementById('Dinero_Monto').value == ''){
-		showMessage("Debe ingresar un monto.",function(){},'Error al solicitar dinero');
+		showMessage(traducir("Debe ingresar un monto."),function(){},traducir('Error al solicitar dinero'));
 		return;
 	}
 	if(document.getElementById('Dinero_DNI').value == ''){
-		showMessage("Debe ingresar un DNI.",function(){},'Error al solicitar dinero');
+		showMessage(traducir("Debe ingresar un DNI."),function(){},traducir('Error al solicitar dinero'));
 		return;
 	}
 	
@@ -653,7 +658,7 @@ function CrearSolicitudDinero() {
 				data = JSON.parse(data);
 				if (data["result"] == "error")
 				{
-					showMessage(data["message"],function(){},'Error al solicitar dinero');
+					showMessage(data["message"],function(){},traducir('Error al solicitar dinero'));
 				}
 				else
 				{
@@ -666,11 +671,11 @@ function CrearSolicitudDinero() {
 }
 function CrearSolicitudCanje() {
 	if(document.getElementById('Dinero_Producto').value == ''){
-		showMessage("Debe ingresar un producto.",function(){},'Error al solicitar dinero');
+		showMessage(traducir("Debe ingresar un producto."),function(){},traducir('Error al solicitar dinero'));
 		return;
 	}
 	if(document.getElementById('Canje_DNI').value == ''){
-		showMessage("Debe ingresar un DNI.",function(){},'Error al solicitar dinero');
+		showMessage(traducir("Debe ingresar un DNI."),function(){},traducir('Error al solicitar dinero'));
 		return;
 	}
 	
@@ -689,7 +694,7 @@ function CrearSolicitudCanje() {
 				data = JSON.parse(data);
 				if (data["result"] == "error")
 				{
-					showMessage(data["message"],function(){},'Error al solicitar dinero');
+					showMessage(data["message"],function(){},traducir('Error al solicitar dinero'));
 				}
 				else
 				{
@@ -713,7 +718,7 @@ function EsperarResultadoCanje(id){
 			},
 			function( data ) {
 				if(data === "Y"){
-					showMessage("La transacción se realizó correctamente.",function(){},'Solicitud de dinero ACEPTADA');
+					showMessage(traducir("La transacción se realizó correctamente."),function(){},traducir('Solicitud de dinero ACEPTADA'));
 					$$('#LoaderPrincipal').hide();		
 					$$('#Dinero_Monto').val("");
 					$$('#Dinero_DNI').val("");
@@ -722,7 +727,7 @@ function EsperarResultadoCanje(id){
 					clearTimeout(TimeoutSolCanje);
 				}
 				if (data === "C"){
-					showMessage("Error: El usuario canceló el canje.",function(){},'Error al solicitar dinero');
+					showMessage(traducir("Error: El usuario canceló el canje."),function(){},traducir('Error al solicitar dinero'));
 					$$('#LoaderPrincipal').hide();		
 					clearInterval(IntervalSolCanje);
 					clearTimeout(TimeoutSolCanje);
@@ -732,7 +737,7 @@ function EsperarResultadoCanje(id){
 		
 	}, 5000);
 	TimeoutSolCanje = setTimeout(function(){
-		showMessage("Error: No se pudo canjear el producto, el usuario no confirmó el canje.",function(){},'Error al solicitar dinero');
+		showMessage(traducir("Error: No se pudo canjear el producto, el usuario no confirmó el canje."),function(){},traducir('Error al solicitar dinero'));
 		clearInterval(IntervalSolCanje);
 		$$('#LoaderPrincipal').hide();
 	}, 300000);
@@ -740,7 +745,7 @@ function EsperarResultadoCanje(id){
 
 function CrearCupon() {
 	if(document.getElementById('Cupon_Monto').value == ''){
-		showMessage("Debe ingresar un monto.",function(){},'Crear Cupon');
+		showMessage(traducir("Debe ingresar un monto."),function(){},traducir('Crear Cupon'));
 		return;
 	}
 	var estru = window.localStorage.getItem("estru");
@@ -760,12 +765,12 @@ function CrearCupon() {
 				data = JSON.parse(data);
 				console.log(data);
 				if(data.result == 'error'){
-					showMessage(data.message,function(){},'Crear Cupon');
+					showMessage(data.message,function(){},traducir('Crear Cupon'));
 					return;
 				}
 				
 				var popup_html = '<div class="popup popup-qr" style="background-color:#000; background-image:url(\''+data.url+'\'); background-repeat:no-repeat; background-position:center center">'+
-						'<a href="#" onclick="mainView.router.back()" class="close-popup" style="position:absolute; top:5px; right:5px; display:block; z-index:999999;">Cerrar</a>'+
+						'<a href="#" onclick="mainView.router.back()" class="close-popup" style="position:absolute; top:5px; right:5px; display:block; z-index:999999;">'+traducir('Cerrar')+'</a>'+
 					'<div class="content-block" style="height: 100%; margin: 0; cursor: pointer;" onclick="window.open(\''+data.url+'\', \'_system\', \'location=yes\');">'+
 					'</div>'+
 				'</div>';
@@ -791,7 +796,7 @@ function login(strU, strP) {
 				window.localStorage.setItem("estrp", estrP);
 				IniciadoSesion = true;
 				if(data == 'DATOS'){
-					showMessage('Se necesitan completar datos personales',function(){},'Mis datos');
+					showMessage(traducir('Se necesitan completar datos personales'),function(){},traducir('Mis datos'));
 					mainView.router.load({url:'cuenta.html', reload: true});
 				}else if(data == 'EMPRESA'){
 					IniciadoSesion = true;
@@ -820,6 +825,7 @@ function login(strU, strP) {
                 if(IniciadoSesion){
                     $$.getJSON("http://iclient.com.ar/datos.php?tipo=datosUser", function(json){
                         DatosUser = json;
+                        TraduceAllTexts();
                     });
                 }
 				ConfigPush();
@@ -1088,6 +1094,7 @@ function GetGenerados(id){
 }
 function GetProductos(id){
   	id = typeof id !== 'undefined' ? id : 0;
+	$$('#LoaderPrincipal').show();
 	$$.getJSON('http://iclient.com.ar/datos.php?tipo=productos', function (json) {
 		//console.log(json);
 		var html = '';
@@ -1116,6 +1123,7 @@ function GetProductos(id){
 			</div>';			
 		}); 
 		$$('.productos_lista').html(html);
+	    $$('#LoaderPrincipal').hide();
 		
 		var empresas_html = '<option value="todas" selected>Todas</option>';
 		$$.each(Empresas, function (index, row) {
@@ -1328,18 +1336,20 @@ function GetHistorial(){
 		var html = '';
 		$$.each(json, function (index, row) {
 			if(row.Usado == 'Y'){
-				var CODE = 'Canje ya utilizado el '+row.Fecha;
+				var CODE = traducir('Canje ya utilizado el ')+row.Fecha;
 				var style = ' style="background-color: #EEE;"';	
 			}else{
-				var CODE = 'CODIGO: <b>'+row.Codigo+'</b>';
+				var CODE = traducir('CODIGO')+': <b>'+row.Codigo+'</b>';
 				var style = '';	
 			}
             var CONBOTON = true;
 			if(row.Titulo == 'Pago con iClient' || row.Titulo == 'Carga de Saldo'){
-				var CODE = 'Fecha: '+row.Fecha;
+				var CODE = traducir('Fecha')+': '+row.Fecha;
                 CONBOTON = false;
             }
-			
+            
+			row.Titulo = traducir(row.Titulo);
+                
 			html += '<div id="histo_'+row.id+'">\
 				<div class="card" '+style+'>\
                 <div class="card-header">';
@@ -1358,7 +1368,7 @@ function GetHistorial(){
                 </div>';
             if(CONBOTON){
                 html += '<div class="card-footer flex-row">\
-                	<a href="#" onclick="HistorialVerMas('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">Ver más</span></a> \
+                	<a href="#" onclick="HistorialVerMas('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">'+traducir('Ver más')+'</span></a> \
             	</div>';
                }
              html += '</div>\
