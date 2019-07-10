@@ -249,7 +249,42 @@ $$(document).on('pageInit', function (e) {
 			$$('#Datos_Puntos').html('$ '+(saldo.toFixed(2)+''));
 			$$('#Datos_Tel').val(json['Telefono']);
 			$$('#Datos_Genero').val(json['Genero']);
-			$$('#Datos_Provincia').val(json['Provincia']);
+            
+			//$$('#Datos_Provincia').val();
+            $$('#LoaderPrincipal').show();
+            $$.getJSON( "http://iclient.com.ar/datos.php?tipo=paises",
+                function( jsonx ) {
+                    var html = "";
+                    $$.each(jsonx, function (index, row) {
+                        html += '<option value="'+row['id']+'" '+((json['Pais'] == row['id']) ? 'selected':'')+'>'+row['Nombre']+' ('+row['Moneda']+')</option>';
+                    });
+                    $$('#Datos_Pais').html(html);
+                    $$.getJSON( "http://iclient.com.ar/datos.php?tipo=provincias&pais="+document.getElementById('Datos_Pais').value,
+                        function( json2 ) {
+                            var html = "";
+                            $$.each(json2, function (index2, row2) {
+                                html += '<option value="'+row2['id']+'" '+((json['Provincia'] == row2['id']) ? 'selected':'')+'>'+row2['Nombre']+'</option>';
+                            });
+                            $$('#Datos_Provincia').html(html);
+                            $$('#LoaderPrincipal').hide();
+                            $$('#Datos_Pais').off('change').on('change', function (e) {
+                                $$('#LoaderPrincipal').show();
+                                $$.getJSON( "http://iclient.com.ar/datos.php?tipo=provincias&pais="+document.getElementById('Datos_Pais').value,
+                                    function( json3 ) {
+                                        var html = "";
+                                        $$.each(json3, function (index3, row3) {
+                                            html += '<option value="'+row3['id']+'">'+row3['Nombre']+'</option>';
+                                        });
+                                        $$('#Datos_Provincia').html(html);
+                                        $$('#LoaderPrincipal').hide();
+                                    }
+                                );
+                            });
+                        }
+                    );
+                }
+            );
+            
 			if(json['Nacimiento'] != '0000-00-00') $$('#calendar-nacimiento-cuenta').val(json['Nacimiento']);			
 			else $$('#calendar-nacimiento-cuenta').val('');	
 			myApp.calendar({
@@ -468,6 +503,7 @@ function Registrarme() {
 	$$.post( "http://iclient.com.ar/registro_usuario.php", {
 			Nombre:document.getElementById('formreg_name').value,
 			Genero:document.getElementById('formreg_genero').value,
+			Pais:document.getElementById('formreg_pais').value,
 			Provincia:document.getElementById('formreg_provincia').value,
 			Nacimiento:document.getElementById('calendar-nacimiento').value,
 			Tel:document.getElementById('formreg_tel').value,
@@ -514,6 +550,7 @@ function GuardarDatos() {
 	}
 	$$.post( "http://iclient.com.ar/datos.php?tipo=update_datos", {
 			Genero:document.getElementById('Datos_Genero').value,
+			Pais:document.getElementById('Datos_Pais').value,
 			Provincia:document.getElementById('Datos_Provincia').value,
 			Nacimiento:document.getElementById('calendar-nacimiento-cuenta').value,
 			Tel:document.getElementById('Datos_Tel').value
@@ -719,6 +756,7 @@ function CrearCupon() {
 
 var IniciadoSesion = false;
 var TipoUsuario = false;
+var DatosUser = {};
 function login(strU, strP) {
     //verificamos conexion y servidores
 	$$.post( "http://iclient.com.ar/login.php", {Email:strU, Clave:strP},
@@ -756,6 +794,11 @@ function login(strU, strP) {
 					myApp.params.swipePanel = false;
 					$$('body').addClass('nosidebar');
 				}
+                if(IniciadoSesion){
+                    $$.getJSON("http://iclient.com.ar/datos.php?tipo=datosUser", function(json){
+                        DatosUser = json;
+                    });
+                }
 				ConfigPush();
 			}else{
 				MostrarModalLogin('Los datos no son correctos.<br/>');
@@ -798,6 +841,40 @@ function RegistroForm(){
 		yearPickerTemplate: yearPickerTemplate
 	});   
 	myApp.closeModal(LoginModal);
+    
+	$$('#LoaderPrincipal').show();
+	$$.getJSON( "http://iclient.com.ar/datos.php?tipo=paises",
+		function( json ) {
+            var html = "";
+            $$.each(json, function (index, row) {
+                html += '<option value="'+row['id']+'">'+row['Nombre']+' ('+row['Moneda']+')</option>';
+            });
+            $$('#formreg_pais').html(html);
+            $$.getJSON( "http://iclient.com.ar/datos.php?tipo=provincias&pais="+document.getElementById('formreg_pais').value,
+                function( json2 ) {
+                    var html = "";
+                    $$.each(json2, function (index2, row2) {
+                        html += '<option value="'+row2['id']+'">'+row2['Nombre']+'</option>';
+                    });
+                    $$('#formreg_provincia').html(html);
+                    $$('#LoaderPrincipal').hide();
+                    $$('#formreg_pais').off('change').on('change', function (e) {
+	                    $$('#LoaderPrincipal').show();
+                        $$.getJSON( "http://iclient.com.ar/datos.php?tipo=provincias&pais="+document.getElementById('formreg_pais').value,
+                            function( json3 ) {
+                                var html = "";
+                                $$.each(json3, function (index3, row3) {
+                                    html += '<option value="'+row3['id']+'">'+row3['Nombre']+'</option>';
+                                });
+                                $$('#formreg_provincia').html(html);
+                                $$('#LoaderPrincipal').hide();
+                            }
+                        );
+                    });
+                }
+            );
+		}
+	);
 }
 
 function IngresarCodigo(){
@@ -1002,7 +1079,7 @@ function GetProductos(id){
 			}
              html += '<div class="user flex-column">\
                         <div class="name">'+row.Titulo+'</div>\
-                        <div class="time"><b>$'+row.Puntos+'</b></div>\
+                        <div class="time"><b>'+DatosUser['Moneda']+' '+row.Puntos+'</b></div>\
                     </div>\
                 </div>\
                 <div class="card-content">\
