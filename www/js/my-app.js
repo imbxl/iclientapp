@@ -9,7 +9,7 @@ var myApp = new Framework7({
 	 modalTitle: 'iClient'
 });
 
-function TraduceAllTexts(string){
+function TraduceAllTexts(){
 	myApp.params.modalPasswordPlaceholder=traducir('Contraseña');
 	myApp.params.modalButtonOk=traducir('Aceptar');
 	myApp.params.modalButtonCancel=traducir('Cancelar');
@@ -366,6 +366,7 @@ $$(document).on('pageInit', function (e) {
     if (page.name === 'historial') {
 		GetHistorial();
 	}
+    TraduceAllTexts();
 	myApp.closePanel();
 })
 
