@@ -9,6 +9,28 @@ var myApp = new Framework7({
 	 modalTitle: 'iClient'
 });
 
+function TraduceAllTexts(string){
+	myApp.params.modalPasswordPlaceholder=traducir('Contraseña');
+	myApp.params.modalButtonOk=traducir('Aceptar');
+	myApp.params.modalButtonCancel=traducir('Cancelar');
+    $$('lng').each(function(index, element){
+        var html = $$(this).html();
+        var attr = $$(this).attr('original-lng');
+        if(typeof attr !== "undefined" && attr != "") html = attr;
+        var traduccion = traducir(html);
+        $$(this).html(traduccion);
+        $$(this).attr('original-lng', traduccion);
+    });
+    $$('input, textarea, button').each(function(index, element){
+        var html = $$(this).attr('placeholder');
+        var attr = $$(this).attr('original-lng');
+        if(typeof attr !== "undefined" && attr != "") html = attr;
+        var traduccion = traducir(html);
+        $$(this).html(traduccion);
+        $$(this).attr('original-lng', traduccion);
+    });
+}
+
 function showMessage(message, title, callbackOk){
 	title = title || BXL_TITLE;
 	myApp.alert(message, title, callbackOk);
@@ -79,7 +101,7 @@ $$(document).on('click', '.tab-link', function (e) {
 function QRSelect(){	
 	$$('.tab-link-active').removeClass('tab-link-active');
   myApp.modal({
-    title:  'Cargar Puntos',
+    title:  traducir('Cargar saldo'),
     text: '',
     verticalButtons: true,
     buttons: [
@@ -90,7 +112,7 @@ function QRSelect(){
         }
       },
       {
-        text: 'Ingresar Código',
+        text: traducir('Ingresar Código'),
         onClick: function() {
           IngresarCodigo();
         }
