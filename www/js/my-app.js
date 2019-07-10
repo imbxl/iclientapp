@@ -13,7 +13,7 @@ function TraduceAllTexts(){
 	myApp.params.modalPasswordPlaceholder=traducir('Contraseña');
 	myApp.params.modalButtonOk=traducir('Aceptar');
 	myApp.params.modalButtonCancel=traducir('Cancelar');
-    $$('lng, option').each(function(index, element){
+    $$('lng, option, button').each(function(index, element){
         var html = $$(element).html();
         var attr = $$(element).attr('original-lng');
         if(typeof attr !== "undefined" && attr != "" && attr != null) html = attr;
@@ -21,7 +21,7 @@ function TraduceAllTexts(){
         $$(element).html(traduccion);
         $$(element).attr('original-lng', traduccion);
     });
-    $$('input, textarea, button').each(function(index, element){
+    $$('input, textarea').each(function(index, element){
         var html = $$(element).attr('placeholder');
         var attr = $$(element).attr('original-ph-lng');
         if(typeof attr !== "undefined" && attr != "" && attr != null) html = attr;
