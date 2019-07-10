@@ -246,7 +246,7 @@ $$(document).on('pageInit', function (e) {
 			$$('#Datos_Nombre').html(json['Nombre']);
 			$$('#Datos_DNI').html(json['DNI']);
 			$$('#Datos_Email').html(json['Email']);
-			$$('#Datos_Puntos').html('$ '+(saldo.toFixed(2)+''));
+			$$('#Datos_Puntos').html(DatosUser['Moneda']+' '+(saldo.toFixed(2)+''));
 			$$('#Datos_Tel').val(json['Telefono']);
 			$$('#Datos_Genero').val(json['Genero']);
             
