@@ -19,15 +19,15 @@ function TraduceAllTexts(){
         if(typeof attr !== "undefined" && attr != "" && attr != null) html = attr;
         var traduccion = traducir(html);
         $$(element).html(traduccion);
-        $$(element).attr('original-lng', traduccion);
+        $$(element).attr('original-lng', html);
     });
     $$('input, textarea').each(function(index, element){
         var html = $$(element).attr('placeholder');
         var attr = $$(element).attr('original-ph-lng');
         if(typeof attr !== "undefined" && attr != "" && attr != null) html = attr;
         var traduccion = traducir(html);
-        $$(element).html(traduccion);
-        $$(element).attr('original-ph-lng', traduccion);
+        $$(element).attr('placeholder',traduccion);
+        $$(element).attr('original-ph-lng', html);
     });
 }
 
@@ -889,6 +889,12 @@ function RegistroForm(){
                     $$('#LoaderPrincipal').hide();
                     $$('#formreg_pais').off('change').on('change', function (e) {
 	                    $$('#LoaderPrincipal').show();
+                        if(document.getElementById('formreg_pais').value == '2'){
+                            forceLang = 'EN';
+                        }else{
+                            forceLang = 'ES';
+                        }
+                        TraduceAllTexts();
                         $$.getJSON( "http://iclient.com.ar/datos.php?tipo=provincias&pais="+document.getElementById('formreg_pais').value,
                             function( json3 ) {
                                 var html = "";

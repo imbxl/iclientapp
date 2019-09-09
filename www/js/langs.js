@@ -27,6 +27,8 @@ langs['EN'] = {
     "Cargar saldo" : "Balance charge",
     "Validar código" : "Validate Code",
     "Locales Adheridos" : "Stores attached",
+    "Fecha de nacimiento": "Birthdate",
+    "Ingrese sus datos": "Enter your information",
     "Espere" : "Wait",
     "Monto" : "Amount",
     "DNI del Usuario" : "User Document",
@@ -79,8 +81,10 @@ langs['EN'] = {
     "Pago con iClient" : "iClient Payment",
     "Carga de Saldo" : "Balance charge"
 };
+var forceLang = false;
 function traducir(string){
     var lang = DatosUser['Idioma'] || 'ES';
+    if(forceLang !== false) lang = forceLang;
     if(lang != 'ES' && typeof langs[lang] !== "undefined" && typeof langs[lang][string] !== "undefined"){
         return langs[lang][string];
     }
