@@ -523,6 +523,10 @@ function Registrarme() {
 		showMessage(traducir('Debe completar su Fecha de Nacimiento'),function(){},'Registro');
 		return;
 	}
+	if(!$$('#formreg_check').is(':checked')){
+		showMessage(traducir('Debe aceptar los términos y condiciones del servicio'),function(){},'Registro');
+		return;
+	}
     //verificamos conexion y servidores
 	$$.post( "http://iclient.com.ar/registro_usuario.php", {
 			Nombre:document.getElementById('formreg_name').value,
