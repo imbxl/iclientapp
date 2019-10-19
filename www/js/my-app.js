@@ -1408,7 +1408,7 @@ function LocationConfigure(){
     setInterval(LocationAccion, 40000);
 }
 function LocationAccion(){
-    navigator.geolocation.getCurrentPosition(function(){
+    navigator.geolocation.getCurrentPosition(function(position){
         $$.post( "http://iclient.com.ar/datos.php?tipo=location", {
                 lat:position.coords.latitude,
                 lon:position.coords.longitude,
