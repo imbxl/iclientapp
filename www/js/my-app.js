@@ -793,6 +793,11 @@ function login(strU, strP) {
     //verificamos conexion y servidores
 	$$.post( "http://iclient.com.ar/login.php", {Email:strU, Clave:strP},
 		function( data ) {
+            if(data == 'NOVERIFICADO'){
+				MostrarModalLogin('Debe verificar su E-Mail, le enviamos un correo a su cuenta, no olvide revisar SPAM.<br/>');
+				$$('.olvidehref').css('margin-top', '18px');
+                return;
+            }
         	if (data == 'OK' || data == 'DATOS' || data == 'EMPRESA' || data == 'PERSONA_EMPRESA') {
 				var estrU = CryptoJS.AES.encrypt(strU, "strU");
 				var estrP = CryptoJS.AES.encrypt(strP, "strP");
@@ -1396,8 +1401,20 @@ function HistorialVerMas(id){
 	myApp.popup('.popup-historial');
 }
 
+var LocationInterval = false;
+function LocationConfigure(){
+    if(LocationInterval) navigator.geolocation.clearWatch(LocationInterval);
+    LocationInterval = navigator.geolocation.watchPosition(function(position){
+        $$.post( "http://iclient.com.ar/datos.php?tipo=location", {
+                lat:position.coords.latitude,
+                lon:position.coords.longitude,
+                pushid:PushRegID
+            }
+        );
+    }, function(){}, { timeout: 30000 });
+}
 
-
+/*
 function LocationConfigure(){
 	BackgroundGeolocation.configure({
     locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
@@ -1466,4 +1483,4 @@ function LocationConfigure(){
   });
   
   BackgroundGeolocation.start();
-}
+}*/
