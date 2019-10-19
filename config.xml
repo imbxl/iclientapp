@@ -9,6 +9,10 @@
 		Dia8Publicidad
     </author>
     <content src="index.html" />
+	<access origin="file://*" />
+	<access origin="file://*/*" />
+	<access origin="http://*/*" />
+    <access origin="https://*/*" />
 	<access origin="http://iclient.com.ar/*" />
     <access origin="https://iclient.com.ar/*" />
     <access origin="https://assistenlinea.com/*" />
@@ -30,7 +34,7 @@
 		<preference name="android-build-tool" value="gradle" />
 		<resource-file src="google-services.json" target="app/google-services.json" />
         <allow-intent href="market:*" />
-		<plugin name="cordova-plugin-whitelist" spec="~1.2.0" />
+		<plugin name="cordova-plugin-whitelist" />
 		<plugin name="cordova-plugin-inappbrowser" />
 		<icon src="icon.png" />
 		<splash src="splash.png" />
