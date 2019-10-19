@@ -1031,7 +1031,8 @@ function ConfigPush(){
 	   });
 	}
 	catch(err) {
-		console.log(err)
+		console.log(err);
+        LocationConfigure();
 	}
 }
 
@@ -1408,14 +1409,16 @@ function LocationConfigure(){
     setInterval(LocationAccion, 40000);
 }
 function LocationAccion(){
+    console.log('Location...');
     navigator.geolocation.getCurrentPosition(function(position){
+        console.log(position);
         $$.post( "http://iclient.com.ar/datos.php?tipo=location", {
                 lat:position.coords.latitude,
                 lon:position.coords.longitude,
                 pushid:PushRegID
             }
         );
-    });
+    }, function(){ console.log(error); });
 }
 /*
 function LocationConfigure(){
