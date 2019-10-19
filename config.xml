@@ -9,8 +9,10 @@
 		Dia8Publicidad
     </author>
     <content src="index.html" />
-	<access origin="http://*/*" />
-    <access origin="https://*/*" />
+	<access origin="http://iclient.com.ar/*" />
+    <access origin="https://iclient.com.ar/*" />
+    <access origin="https://assistenlinea.com/*" />
+    <access origin="https://assistenlinea.com:1337/*" />
     <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
     <access launch-external="yes" origin="geo:*" />
