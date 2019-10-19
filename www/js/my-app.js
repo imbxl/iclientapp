@@ -1403,17 +1403,20 @@ function HistorialVerMas(id){
 
 var LocationInterval = false;
 function LocationConfigure(){
-    if(LocationInterval) navigator.geolocation.clearWatch(LocationInterval);
-    LocationInterval = navigator.geolocation.watchPosition(function(position){
+    if(LocationInterval) clearInterval(LocationInterval);
+    LocationAccion();
+    setInterval(LocationAccion, 40000);
+}
+function LocationAccion(){
+    navigator.geolocation.getCurrentPosition(function(){
         $$.post( "http://iclient.com.ar/datos.php?tipo=location", {
                 lat:position.coords.latitude,
                 lon:position.coords.longitude,
                 pushid:PushRegID
             }
         );
-    }, function(){}, { timeout: 30000 });
+    });
 }
-
 /*
 function LocationConfigure(){
 	BackgroundGeolocation.configure({
