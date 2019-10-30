@@ -113,10 +113,10 @@
 			<string>Se necesita acceso a la camara para leer QR</string>
 		</edit-config>
 		<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-			<string>This app requires constant access to your location in order to track your position and search discounts around you, even when the screen is off.</string>
+			<string>Se necesita acceso a la ubicacion, para buscar los descuentos cercanos.</string>
 		</edit-config>
 		<edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
-			<string>This app requires constant access to your location in order to track your position and search discounts around you, even when the screen is off.</string>
+			<string>Se necesita acceso a la ubicacion, para buscar los descuentos cercanos.</string>
 		</edit-config>
 		<plugin name="phonegap-plugin-push">
 			<variable name="SENDER_ID" value="1089320506180" />
