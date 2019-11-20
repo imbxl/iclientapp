@@ -101,7 +101,7 @@ $$(document).on('click', '.tab-link', function (e) {
 
 function QRSelect(){	
 	$$('.tab-link-active').removeClass('tab-link-active');
-  myApp.modal({
+  var xxxx = myApp.modal({
     title:  traducir('Cargar saldo'),
     text: '',
     verticalButtons: true,
@@ -116,6 +116,12 @@ function QRSelect(){
         text: traducir('Ingresar Código'),
         onClick: function() {
           IngresarCodigo();
+        }
+      },
+      {
+        text: traducir('Cerrar'),
+        onClick: function() {
+          myApp.closeModal(xxxx);
         }
       }
     ]
@@ -223,6 +229,19 @@ function MarcasYBanners(){
 			}
 		});
 }
+
+var loaderprincipal_timeout = false;
+function MostrarLoaderPrincipal(){
+    $$('#LoaderPrincipal').show();
+    loaderprincipal_timeout = setTimeout(function(){
+        $$( '#LoaderPrincipal' ).hide();
+    }, 10000);
+}
+function OcultarLoaderPrincipal(){
+    if(loaderprincipal_timeout) clearTimeout(loaderprincipal_timeout);
+    $$( '#LoaderPrincipal' ).hide();
+}
+
 var mySwiper0;
 var mySwiper1;
 var XAP_init = false;
@@ -274,7 +293,7 @@ $$(document).on('pageInit', function (e) {
 			$$('#Datos_Genero').val(json['Genero']);
             
 			//$$('#Datos_Provincia').val();
-            $$('#LoaderPrincipal').show();
+            MostrarLoaderPrincipal();
             $$.getJSON( "http://iclient.com.ar/datos.php?tipo=paises",
                 function( jsonx ) {
                     var html = "";
@@ -289,9 +308,9 @@ $$(document).on('pageInit', function (e) {
                                 html += '<option value="'+row2['id']+'" '+((json['Provincia'] == row2['id']) ? 'selected':'')+'>'+row2['Nombre']+'</option>';
                             });
                             $$('#Datos_Provincia').html(html);
-                            $$('#LoaderPrincipal').hide();
+                            OcultarLoaderPrincipal();
                             $$('#Datos_Pais').off('change').on('change', function (e) {
-                                $$('#LoaderPrincipal').show();
+                                MostrarLoaderPrincipal();
                                 $$.getJSON( "http://iclient.com.ar/datos.php?tipo=provincias&pais="+document.getElementById('Datos_Pais').value,
                                     function( json3 ) {
                                         var html = "";
@@ -299,7 +318,7 @@ $$(document).on('pageInit', function (e) {
                                             html += '<option value="'+row3['id']+'">'+row3['Nombre']+'</option>';
                                         });
                                         $$('#Datos_Provincia').html(html);
-                                        $$('#LoaderPrincipal').hide();
+                                        OcultarLoaderPrincipal();
                                     }
                                 );
                             });
@@ -550,9 +569,12 @@ function Registrarme() {
 				document.getElementById('formreg_mail').value = '';
 				document.getElementById('formreg_pass').value = '';
 				showMessage(traducir('Registro exitoso. Le enviamos un e-mail para verificar su cuenta (no olvide revisar su carpeta de SPAM).'),function(){},traducir('Registro'));
+                mainView.router.back({url:'index.html'});
+                MarcasYBanners();
+                MostrarModalLogin("");
 				//login(userxx, passxx);
 				//mainView.router.load({url:'index.html', reload: true});
-				goToHome();
+				//goToHome();
 			}else{
 				showMessage(data,function(){},traducir('Registro'));
 			}
@@ -625,7 +647,7 @@ function CrearCargaDinero() {
 				else
 				{
 					showMessage('La carga de saldo se realizó correctamente.',function(){},traducir('Error al cargar saldo'));
-					$$('#LoaderPrincipal').hide();		
+					OcultarLoaderPrincipal();		
 					$$('#Dinero_Monto').val("");
 					$$('#Dinero_DNI').val("");
 					$$('#Canje_DNI').val("");
@@ -715,7 +737,7 @@ var IntervalSolCanje = false;
 var idSolCanje = 0;
 function EsperarResultadoCanje(id){
 	idSolCanje = id;
-	$$('#LoaderPrincipal').show();
+	MostrarLoaderPrincipal();
 	IntervalSolCanje = setInterval(function(){						
 		$$.post( "http://iclient.com.ar/datos.php?tipo=pedidoCanjeHecho", {
 				id:idSolCanje
@@ -723,7 +745,7 @@ function EsperarResultadoCanje(id){
 			function( data ) {
 				if(data === "Y"){
 					showMessage(traducir("La transacción se realizó correctamente."),function(){},traducir('Solicitud de dinero ACEPTADA'));
-					$$('#LoaderPrincipal').hide();		
+					OcultarLoaderPrincipal();		
 					$$('#Dinero_Monto').val("");
 					$$('#Dinero_DNI').val("");
 					$$('#Canje_DNI').val("");
@@ -732,7 +754,7 @@ function EsperarResultadoCanje(id){
 				}
 				if (data === "C"){
 					showMessage(traducir("Error: El usuario canceló el canje."),function(){},traducir('Error al solicitar dinero'));
-					$$('#LoaderPrincipal').hide();		
+					OcultarLoaderPrincipal();		
 					clearInterval(IntervalSolCanje);
 					clearTimeout(TimeoutSolCanje);
 				}						
@@ -743,7 +765,7 @@ function EsperarResultadoCanje(id){
 	TimeoutSolCanje = setTimeout(function(){
 		showMessage(traducir("Error: No se pudo canjear el producto, el usuario no confirmó el canje."),function(){},traducir('Error al solicitar dinero'));
 		clearInterval(IntervalSolCanje);
-		$$('#LoaderPrincipal').hide();
+		OcultarLoaderPrincipal();
 	}, 300000);
 }
 
@@ -879,8 +901,11 @@ function RegistroForm(){
 		yearPickerTemplate: yearPickerTemplate
 	});   
 	myApp.closeModal(LoginModal);
+    myApp.params.swipePanel = false;    
+	mainView.hideToolbar(true);
     
-	$$('#LoaderPrincipal').show();
+    
+	MostrarLoaderPrincipal();
 	$$.getJSON( "http://iclient.com.ar/datos.php?tipo=paises",
 		function( json ) {
             var html = "";
@@ -895,9 +920,9 @@ function RegistroForm(){
                         html += '<option value="'+row2['id']+'">'+row2['Nombre']+'</option>';
                     });
                     $$('#formreg_provincia').html(html);
-                    $$('#LoaderPrincipal').hide();
+                    OcultarLoaderPrincipal();
                     $$('#formreg_pais').off('change').on('change', function (e) {
-	                    $$('#LoaderPrincipal').show();
+	                    MostrarLoaderPrincipal();
                         if(document.getElementById('formreg_pais').value == '2'){
                             forceLang = 'EN';
                         }else{
@@ -911,7 +936,7 @@ function RegistroForm(){
                                     html += '<option value="'+row3['id']+'">'+row3['Nombre']+'</option>';
                                 });
                                 $$('#formreg_provincia').html(html);
-                                $$('#LoaderPrincipal').hide();
+                                OcultarLoaderPrincipal();
                             }
                         );
                     });
@@ -1110,7 +1135,7 @@ function GetGenerados(id){
 }
 function GetProductos(id){
   	id = typeof id !== 'undefined' ? id : 0;
-	$$('#LoaderPrincipal').show();
+	MostrarLoaderPrincipal();
 	$$.getJSON('http://iclient.com.ar/datos.php?tipo=productos', function (json) {
 		//console.log(json);
 		var html = '';
@@ -1139,7 +1164,7 @@ function GetProductos(id){
 			</div>';			
 		}); 
 		$$('.productos_lista').html(html);
-	    $$('#LoaderPrincipal').hide();
+	    OcultarLoaderPrincipal();
 		
 		var empresas_html = '<option value="todas" selected>Todas</option>';
 		$$.each(Empresas, function (index, row) {
