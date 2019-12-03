@@ -76,6 +76,11 @@ $$(document).on('page:back', function (e) {
 	var name = $$('.page-on-left').attr('data-page');
 	$$('.tab-link-active').removeClass('tab-link-active');
 	$$('.tab-link.ln_'+name).addClass('tab-link-active');
+    mainView.router.back();
+    mainView.router.back();
+    mainView.router.back();
+    mainView.router.back();
+    mainView.router.back();
 	CreateTabBarSup();
 });
 
