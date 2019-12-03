@@ -73,6 +73,7 @@ $$(document).on('page:back', function (e) {
 	$$('.tab-link-active').removeClass('tab-link-active');
 	$$('.tab-link.ln_'+name).addClass('tab-link-active');
 	CreateTabBarSup();
+    goToHome();
 });
 
 function CreateTabBarSup(){
