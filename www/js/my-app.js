@@ -87,8 +87,13 @@ function CreateTabBarSup(){
 
 $$(document).on('click', '.tab-link', function (e) {
     var url = $$(this).attr('href');
-    mainView.router.back({url:'index.html'});
-    mainView.history = ['/'];
+    var tiempo = 600;
+    if(mainView.activePage.name == 'index'){
+        tiempo = 10;
+    }else{
+        mainView.router.back({url:'index.html'});
+        mainView.history = ['index.html'];
+    }
     setTimeout(function(){
         //$$('.pages > div:first-child').remove();
         $$('.tab-link-active').removeClass('tab-link-active');
@@ -99,7 +104,7 @@ $$(document).on('click', '.tab-link', function (e) {
         }else{
             mainView.router.loadPage(url);
         }
-    },600);
+    },tiempo);
 });
 
 function QRSelect(){	
