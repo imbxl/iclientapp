@@ -53,12 +53,14 @@ var mainView = myApp.addView('.view-main', {
 
 $$(document).on('deviceready', function() {
 	document.addEventListener("backbutton", function (e) { 
-		e.preventDefault(); 		
+		e.preventDefault(); 
+        goToHome();
+        /*
 		if (mainView.activePage.name === 'index' || mainView.activePage.name === 'control_lista') {
 			showConfirm(traducir("Desea salir de la aplicación?"), traducir('Salir'),function(){  navigator.app.exitApp(); },function(){});
 		} else {
 			mainView.router.back();
-		}
+		}*/
 		return false;
 	}, false ); 
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
