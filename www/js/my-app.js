@@ -54,11 +54,12 @@ var mainView = myApp.addView('.view-main', {
 $$(document).on('deviceready', function() {
 	document.addEventListener("backbutton", function (e) { 
 		e.preventDefault();
-        mainView.router.back();
-        mainView.router.back();
-        mainView.router.back();
-        mainView.router.back();
-        mainView.router.back();
+    $$('a.back').click();
+    $$('a.back').click();
+    $$('a.back').click();
+    $$('a.back').click();
+    $$('a.back').click();
+    $$('a.back').click();
         /*
 		if (mainView.activePage.name === 'index' || mainView.activePage.name === 'control_lista') {
 			showConfirm(traducir("Desea salir de la aplicación?"), traducir('Salir'),function(){  navigator.app.exitApp(); },function(){});
@@ -73,14 +74,15 @@ $$(document).on('deviceready', function() {
 });
 
 $$(document).on('page:back', function (e) {
+    $$('a.back').click();
+    $$('a.back').click();
+    $$('a.back').click();
+    $$('a.back').click();
+    $$('a.back').click();
+    $$('a.back').click();
 	var name = $$('.page-on-left').attr('data-page');
 	$$('.tab-link-active').removeClass('tab-link-active');
 	$$('.tab-link.ln_'+name).addClass('tab-link-active');
-    mainView.router.back();
-    mainView.router.back();
-    mainView.router.back();
-    mainView.router.back();
-    mainView.router.back();
 	CreateTabBarSup();
 });
 
