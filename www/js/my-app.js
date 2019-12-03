@@ -54,12 +54,6 @@ var mainView = myApp.addView('.view-main', {
 $$(document).on('deviceready', function() {
 	document.addEventListener("backbutton", function (e) { 
 		e.preventDefault();
-    $$('a.back').click();
-    $$('a.back').click();
-    $$('a.back').click();
-    $$('a.back').click();
-    $$('a.back').click();
-    $$('a.back').click();
         /*
 		if (mainView.activePage.name === 'index' || mainView.activePage.name === 'control_lista') {
 			showConfirm(traducir("Desea salir de la aplicación?"), traducir('Salir'),function(){  navigator.app.exitApp(); },function(){});
@@ -70,16 +64,9 @@ $$(document).on('deviceready', function() {
 	}, false ); 
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
 	//$$('.tab-link').eq(0).trigger('click');
-    
 });
 
 $$(document).on('page:back', function (e) {
-    $$('a.back').click();
-    $$('a.back').click();
-    $$('a.back').click();
-    $$('a.back').click();
-    $$('a.back').click();
-    $$('a.back').click();
 	var name = $$('.page-on-left').attr('data-page');
 	$$('.tab-link-active').removeClass('tab-link-active');
 	$$('.tab-link.ln_'+name).addClass('tab-link-active');
@@ -98,18 +85,21 @@ function CreateTabBarSup(){
 	$$('.tab-sup').css('left', (left*20)+"%");
 }
 
-$$(document).on('click', '.tab-link', function (e) { 
-	$$('.tab-link-active').removeClass('tab-link-active');
-	$$(this).addClass('tab-link-active');
-	CreateTabBarSup();
-	var url = $$(this).attr('href');
-	if(url == 'index.html'){
-		if(mainView.activePage.name != 'index') goToHome();
-	}else{
-		//mainView.router.back({url:'index.html', animatePages: false});
-		//mainView.history = ['index.html'];
-		mainView.router.loadPage(url);
-	}
+$$(document).on('click', '.tab-link', function (e) {
+    var url = $$(this).attr('href');
+    mainView.router.back({url:'index.html'});
+    mainView.history = ['/'];
+    setTimeout(function(){
+        //$$('.pages > div:first-child').remove();
+        $$('.tab-link-active').removeClass('tab-link-active');
+        $$(this).addClass('tab-link-active');
+        CreateTabBarSup();
+        if(url == 'index.html'){
+            if(mainView.activePage.name != 'index') goToHome();
+        }else{
+            mainView.router.loadPage(url);
+        }
+    },600);
 });
 
 function QRSelect(){	
