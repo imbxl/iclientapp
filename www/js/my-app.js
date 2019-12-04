@@ -60,6 +60,7 @@ $$(document).on('deviceready', function() {
 		} else {
 			mainView.router.back();
 		}*/
+		mainView.router.back();
 		return false;
 	}, false ); 
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
