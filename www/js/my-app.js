@@ -214,7 +214,7 @@ function MarcasYBanners(){
 			Empresas = [];
 			$$.each(json, function (index, row) {
 				Empresas.push(row);
-				if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><a href="#" onclick="VerEmpresa('+row.id+');"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /></a></div>';
+				if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><a href="#" onclick="VerEmpresa('+row.id+');"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /><span>'+row.Porcentaje+'%</span></a></div>';
 			});
 			html += '</div>';
 			//console.log(html);
@@ -281,7 +281,7 @@ $$(document).on('pageInit', function (e) {
 		DeclararSlider();
 		var html = '<div class="row">';
 		$$.each(Empresas, function (index, row) {
-			if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><a href="#" onclick="VerEmpresa('+row.id+');"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /></a></div>';
+			if(row.URL != '') html += '<div class="col-50 tablet-25" align="center"><a href="#" onclick="VerEmpresa('+row.id+');"><img style="width:100%; max-width:100%;" src="http://iclient.com.ar/archivos/empresas/'+row.URL+'" data-rel="external" /><span>'+row.Porcentaje+'%</span></a></div>';
 		});
 		html += '</div>';
 		$$('.MarcasContainer').html(html);
@@ -867,6 +867,13 @@ function login(strU, strP) {
                         DatosUser = json;
                         TraduceAllTexts();
                     });
+                    var applaunchCount = window.localStorage.getItem('launchCount');
+                    applaunchCount = false;
+                    if(applaunchCount){
+                    }else{
+                        window.localStorage.setItem('launchCount',1);
+					    $$('#Tour').show();
+                    }
                 }
 				ConfigPush();
 			}else{
@@ -1452,7 +1459,7 @@ function LocationAccion(){
                 pushid:PushRegID
             }
         );
-    }, function(){ console.log(error); });
+    }, function(error){ console.log(error); });
 }
 /*
 function LocationConfigure(){
