@@ -868,10 +868,9 @@ function login(strU, strP) {
                         TraduceAllTexts();
                     });
                     var applaunchCount = window.localStorage.getItem('launchCount');
-                    applaunchCount = false;
+                    //applaunchCount = false;
                     if(applaunchCount){
                     }else{
-                        window.localStorage.setItem('launchCount',1);
 					    $$('#Tour').show();
                     }
                 }

@@ -319,11 +319,242 @@
         </div>
     </div>
     
-    <div id="Tour" style="position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999999; display:none">
-        <div style="position:fixed; top:50%; left:0; width:100%; text-align:center; color:#FFF; margin-top:-33px;">
-            <lng>Espere</lng>...<br/>
-            <span style="width:42px; height:42px" class="preloader preloader-white"></span>
+    <div id="Tour" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index: 999999; display:none">
+        <script>
+            function iralpaso(paso){
+                for(var i = 1; i < 8; i++){
+                    if(i == paso){
+                        $$('.paso_'+i).show();
+                    }else{
+                        $$('.paso_'+i).hide();
+                    }
+                }
+            }
+            function finalizartour(){
+                window.localStorage.setItem('launchCount',1);
+				$$('#Tour').hide();
+            }
+        </script>
+        <style>
+            #Tour .cuerpo{
+                background: #fa944a;
+                height: calc(100vh - 14vw);
+            }
+            .circletool{ 
+                position: absolute; 
+                bottom: 0;
+            }
+            .btn-iclient{
+                background-color: #f96600; 
+                border-radius: 15px; 
+                color:#FFF;
+                padding: 5px 10px;
+                text-decoration: none;
+                font-size: 18px;
+            }
+        </style>
+        <div class="paso_1" style="height: 100%">
+            <div class="cuerpo" style="background-color: #FFF; position: relative; height: 100%">
+                    <div style="    background-image: url(img/tour/logo.png); background-repeat: no-repeat; background-position: center center; height: calc(100vh - 120px);">&nbsp;</div>
+                <div style="position: absolute; bottom: 0px; background-color: #fa944a;border-top-left-radius: 15px;border-top-right-radius: 15px; height: 120px; width: 100%; padding: 10px">
+                    <h1 style="margin: 0">En 6 Pasos</h1>
+                    <p style="margin: 0 0 10px 0">Te contamos como funciona iClient</p>
+                    <a href="#" onClick="iralpaso(2);" class="btn-iclient">Comenzar</a>
+                    <div style="text-align: center; padding: 5px 0;">
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="paso_2" style="display: none">
+            <div class="cuerpo" style="overflow-y: auto; height: calc(100vh - 28vw);">
+                <div style="padding: 15px">
+                    <h1 style="margin: 0">1. Mi Cuenta</h1>
+                    <p style="margin: 0 0 10px 0">Aquí puedes:</p>
+                    <ul>
+                        <li>Cambiar tus datos</li>
+                        <li>Cambiar de Pais, según donde te encuentras</li>
+                        <li>Consultar tu Saldo</li>
+                        <li>Contactarnos</li>
+                    </ul>
+                </div>
+                <div style="position: absolute; bottom: 14vw; background-color: #fa944a; height: 14vw; width: 100%;">
+                    <a href="#" onClick="iralpaso(3);" class="btn-iclient" style="margin-left: 10px">Continuar</a>
+                    <div style="text-align: center; padding: 5px 0;">
+                        <div style="border: solid 1px #FFF; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                    </div>
+                </div>
+            </div>
+            <svg class="circletool" viewbox="0 0 700 100" width="100%">
+              <defs>
+                <mask id="mask" x="0" y="0" width="100%" height="100%">
+                  <rect x="0" y="0" width="100%" height="100%" fill="#fff"/>
+                  <ellipse  cx="620" cy="50" rx="80" ry="50" />
+                </mask>
+              </defs>
+              <rect x="0" y="0" width="100%" height="100%" fill="#fa944a" mask="url(#mask)"/>    
+            </svg>
+        </div>
+        <div class="paso_3" style="display: none">
+            <div class="cuerpo" style="overflow-y: auto; height: calc(100vh - 28vw);">
+                <div style="padding: 15px">
+                    <h1 style="margin: 0">2. Locales Geolocalizados</h1>
+                    <div style="text-align: right; padding: 15px"><img src="img/tour/store.png" /></div>
+                    <p style="margin: 0 0 10px 0">Encontra los locales adheridos con tiendas físicas, según tu ubicación</p>
+                </div>
+                <div style="position: absolute; bottom: 14vw; background-color: #fa944a; height: 14vw; width: 100%;">
+                    <a href="#" onClick="iralpaso(4);" class="btn-iclient" style="margin-left: 10px">Continuar</a>
+                    <div style="text-align: center; padding: 5px 0;">
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #FFF; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                    </div>
+                </div>
+            </div>
+            <svg class="circletool" viewbox="0 0 700 100" width="100%">
+              <defs>
+                <mask id="mask2" x="0" y="0" width="100%" height="100%">
+                  <rect x="0" y="0" width="100%" height="100%" fill="#fff"/>
+                  <ellipse  cx="492" cy="50" rx="80" ry="50" />
+                </mask>
+              </defs>
+              <rect x="0" y="0" width="100%" height="100%" fill="#fa944a" mask="url(#mask2)"/>    
+            </svg>
+        </div>
+        <div class="paso_4" style="display: none">
+            <div class="cuerpo" style="overflow-y: auto; height: calc(100vh - 28vw);">
+                <div style="padding: 15px">
+                    <h1 style="margin: 0">3. Sumar Saldo</h1>
+                    <p style="margin: 0 0 10px 0">Aqui <b>sumas saldo</b>:</p>
+                    <ul>
+                        <li>Scaneando un QR</li>
+                        <li>Cargando un código alfanumerico</li>
+                    </ul>
+                    <div style="text-align: center; padding: 15px">
+                        <p style="margin: 0 0 10px 0">También puedes <b>sumas saldo</b>:</p>
+                        <p style="margin: 0 0 10px 0">Cargando tu DNI en una tienda física o tienda online</p>
+                    </div>
+                    <div style="text-align: left; padding: 15px"><img src="img/tour/phone.png" /></div>
+                </div>
+                <div style="position: absolute; bottom: 14vw; background-color: #fa944a; height: 14vw; width: 100%;">
+                    <a href="#" onClick="iralpaso(5);" class="btn-iclient" style="margin-left: 10px">Continuar</a>
+                    <div style="text-align: center; padding: 5px 0;">
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #FFF; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                    </div>
+                </div>
+            </div>
+            <svg class="circletool" viewbox="0 0 700 100" width="100%">
+              <defs>
+                <mask id="mask3" x="0" y="0" width="100%" height="100%">
+                  <rect x="0" y="0" width="100%" height="100%" fill="#fff"/>
+                  <ellipse  cx="352" cy="50" rx="80" ry="50" />
+                </mask>
+              </defs>
+              <rect x="0" y="0" width="100%" height="100%" fill="#fa944a" mask="url(#mask3)"/>    
+            </svg>
+        </div>
+        <div class="paso_5" style="display: none">
+            <div class="cuerpo" style="overflow-y: auto; height: calc(100vh - 28vw);">
+                <div style="padding: 15px">
+                    <h1 style="margin: 0">4. Tienda iClient</h1>
+                    <p style="margin: 0 0 10px 0">La tienda de todos los comercios adheridos.</p>
+                    <div style="text-align: right; padding: 15px"><img src="img/tour/tienda.png" /></div>
+                    <div style="text-align: left;">
+                        <p style="margin: 0 0 10px 0">Cambia tu saldo por productos de todas las tiendas adheridas..</p>
+                    </div>
+                </div>
+                <div style="position: absolute; bottom: 14vw; background-color: #fa944a; height: 14vw; width: 100%;">
+                    <a href="#" onClick="iralpaso(6);" class="btn-iclient" style="margin-left: 10px">Continuar</a>
+                    <div style="text-align: center; padding: 5px 0;">
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #FFF; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                    </div>
+                </div>
+            </div>
+            <svg class="circletool" viewbox="0 0 700 100" width="100%">
+              <defs>
+                <mask id="mask4" x="0" y="0" width="100%" height="100%">
+                  <rect x="0" y="0" width="100%" height="100%" fill="#fff"/>
+                  <ellipse  cx="210" cy="50" rx="80" ry="50" />
+                </mask>
+              </defs>
+              <rect x="0" y="0" width="100%" height="100%" fill="#fa944a" mask="url(#mask4)"/>    
+            </svg>
+        </div>
+        <div class="paso_6" style="display: none">
+            <div class="cuerpo" style="overflow-y: auto; height: calc(100vh - 28vw);">
+                <div style="padding: 15px">
+                    <h1 style="margin: 0">5. Canjes Realizados</h1>
+                    <p style="margin: 0 0 10px 0">Puedes ver los canjes realizados, o los que están pendientes para utilizar..</p>
+                    <div style="text-align: right; padding: 15px"><img src="img/tour/bag.png" /></div>
+                </div>
+                <div style="position: absolute; bottom: 14vw; background-color: #fa944a; height: 14vw; width: 100%;">
+                    <a href="#" onClick="iralpaso(7);" class="btn-iclient" style="margin-left: 10px">Continuar</a>
+                    <div style="text-align: center; padding: 5px 0;">
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #FFF; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                    </div>
+                </div>
+            </div>
+            <svg class="circletool" viewbox="0 0 700 100" width="100%">
+              <defs>
+                <mask id="mask5" x="0" y="0" width="100%" height="100%">
+                  <rect x="0" y="0" width="100%" height="100%" fill="#fff"/>
+                  <ellipse  cx="80" cy="50" rx="80" ry="50" />
+                </mask>
+              </defs>
+              <rect x="0" y="0" width="100%" height="100%" fill="#fa944a" mask="url(#mask5)"/>    
+            </svg>
+        </div>        
+        <div class="paso_7" style="height: 100%">
+            <div class="cuerpo" style="background-color: transparent; position: relative; height: 100%">
+                <div style="position: absolute; bottom: 0px; background-color: #fa944a;border-top-left-radius: 15px;border-top-right-radius: 15px; height: 200px; width: 100%; padding: 10px">
+                    <h1 style="margin: 0">6. Home</h1>
+                    <p style="margin: 0 0 10px 0">Aqui puedes:</p>
+                    <ul>
+                        <li>Conocer los comercios adheridos</li>
+                        <li>Su información</li>
+                        <li>Si quieres puedes enviarles un mensaje.</li>
+                    </ul>
+                    <a href="#" onClick="finalizartour();" class="btn-iclient">Continuar</a>
+                    <div style="text-align: center; padding: 5px 0;">
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #666; width: 6%; display: inline-block; margin: 1%"></div>
+                        <div style="border: solid 1px #FFF; width: 6%; display: inline-block; margin: 1%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
     
     <div id="LoaderPrincipal" style="position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999999; display:none">
