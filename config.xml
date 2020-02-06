@@ -33,24 +33,18 @@
 		<icon density="xhdpi" src="www/res/icon/android/xhdpi.png"/>
 		<icon density="xxhdpi" src="www/res/icon/android/xxhdpi.png"/>
 		<icon density="xxxhdpi" src="www/res/icon/android/xxxhdpi.png"/>
-		<splash density="port-ldpi" src="www/res/screen/android/splash-port-ldpi.png"/>
-		<splash density="port-mdpi" src="www/res/screen/android/splash-port-mdpi.png"/>
-		<splash density="port-hdpi" src="www/res/screen/android/splash-port-hdpi.png"/>
-		<splash density="port-xhdpi" src="www/res/screen/android/splash-port-xhdpi.png"/>
-		<splash density="port-xxhdpi" src="www/res/screen/android/splash-port-xxhdpi.png"/>
-		<splash density="port-xxxhdpi" src="www/res/screen/android/splash-port-xxxhdpi.png"/>
-        <splash density="land-ldpi" src="www/res/screen/android/splash-land-ldpi.png"/>
-        <splash density="land-mdpi" src="www/res/screen/android/splash-land-mdpi.png"/>
-        <splash density="land-hdpi" src="www/res/screen/android/splash-land-hdpi.png"/>
-        <splash density="land-xhdpi" src="www/res/screen/android/splash-land-xhdpi.png"/>
-        <splash density="land-xxhdpi" src="www/res/screen/android/splash-land-xxhdpi.png"/>
-        <splash density="land-xxxhdpi" src="www/res/screen/android/splash-land-xxxhdpi.png"/>
+		<splash density="ldpi" src="www/res/screen/android/splash-port-ldpi.png"/>
+		<splash density="mdpi" src="www/res/screen/android/splash-port-mdpi.png"/>
+		<splash density="hdpi" src="www/res/screen/android/splash-port-hdpi.png"/>
+		<splash density="xhdpi" src="www/res/screen/android/splash-port-xhdpi.png"/>
+		<splash density="xxhdpi" src="www/res/screen/android/splash-port-xxhdpi.png"/>
+		<splash density="xxxhdpi" src="www/res/screen/android/splash-port-xxxhdpi.png"/>
         <preference name="android-minSdkVersion" value="21" />
 		<preference name="android-build-tool" value="gradle" />
 		<resource-file src="google-services.json" target="app/google-services.json" />
         <allow-intent href="market:*" />
 		<plugin name="cordova-plugin-inappbrowser" />
-		<plugin name="phonegap-plugin-push" spec="2.1.3">
+		<plugin name="phonegap-plugin-push">
 			<variable name="FCM_VERSION" value="11.6.2" />
 			<variable name="SENDER_ID" value="1089320506180" />
 		</plugin>
