@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="ar.com.iclient" version="1.0.30" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-	<preference name='phonegap-version' value='cli-8.0.0' />	
-	<preference name='pgb-builder-version' value='2' />
+	<preference name='phonegap-version' value='cli-9.0.0' />
     <name>iClient</name>
     <description>
         Comprás, ganás
