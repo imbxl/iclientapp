@@ -44,6 +44,7 @@
 		<resource-file src="google-services.json" target="app/google-services.json" />
         <allow-intent href="market:*" />
 		<plugin name="cordova-plugin-inappbrowser" />
+		<plugin name="cordova-plugin-whitelist" />
 		<plugin name="phonegap-plugin-push">
 			<variable name="FCM_VERSION" value="11.6.2" />
 			<variable name="SENDER_ID" value="1089320506180" />
