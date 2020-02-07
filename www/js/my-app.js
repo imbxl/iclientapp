@@ -1071,7 +1071,7 @@ function ConfigPush(){
 	   });
 	}
 	catch(err) {
-		alert(err);
+		console.log(err);
         LocationConfigure();
 	}
 }
