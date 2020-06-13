@@ -1,137 +1,201 @@
 <div class="navbar">
-    <div class="navbar-inner">
-        <div class="center sliding"><lng>Registrarse</lng></div>
+    <div class="navbar-inner" style="background-color: #FFF; border: 0">
+        <div class="right">
+            <a href="index.html" class="link" style="color: #ff6a2b">
+                <i class="f7-icons">multiply_circle</i></span>
+            </a>
+        </div>
     </div>
 </div>
 <div class="pages">
     <div data-page="registroform" class="page">
         <div class="page-content">
-            <div class="content-block">                
-                	<div class="content-block-title"><lng>Ingrese sus datos</lng></div>
-                    <div class="list-block">
-                      <ul>
-                        <!-- Text inputs -->
+            <style>
+                [data-page="registroform"] .navbar:after{
+                    display: none !important;
+                }
+                [data-page="registroform"] .page-content{
+                    overflow: visible;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    height: auto;
+                    max-height: 100%;
+                    width: 100%;
+                }
+                [data-page="registroform"] .page{
+                    display: flex;
+                    flex-direction: column;
+                    box-sizing: border-box;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    transform: none;
+                }
+                [data-page="registroform"] .page .list-block ul:before,
+                [data-page="registroform"] .page .list-block ul:after,
+                [data-page="registroform"] .page .item-content .item-inner:after{
+                    display: none !important;
+                }
+                [data-page="registroform"] .page .item-content{
+                    background-color: #fbb17e;
+                    margin-bottom: 15px;
+                    border-radius: 22px;
+                }
+                [data-page="registroform"] .page .item-media{
+                    color: #666;
+                }
+                [data-page="registroform"] .page .item-input *{
+                    color: #666;
+                }
+                [data-page="registroform"] .page .list-block{
+                    margin: 30px;
+                }
+                [data-page="registroform"] .page .button{
+                    background-color: #fbb17e;
+                    width: auto;
+                    display: inline-block;
+                    padding: 0 30px;
+                    margin: 15px auto;
+                    border-radius: 22px;
+                    color: #666;
+                    font-weight: normal;
+                }
+                .codigo{
+                    display: flex;
+                }
+                .codigo input{
+                    width: 15% !important;
+                    margin: 0 0.833333% !important;
+                    border-bottom: solid 2px #666 !important;
+                    text-align: center !important;
+                }
+            </style>
+            <div style="font-size: 22px; text-align: center; color: #ff6a2b"><lng>Registrarse</lng></div>
+            <div class="list-block">
+                <ul id="reg_paso1">
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><i class="icon f7-icons">globe</i></div>
+                        <div class="item-inner">
+                          <div class="item-input">
+                            <select id="formreg_pais" placeholder="País">
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><i class="icon f7-icons">map</i></div>
+                        <div class="item-inner">
+                          <div class="item-input">
+                            <select id="formreg_provincia" placeholder="Provincia">
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li style="text-align: center">
+                        <a href="#" onClick="reg_paso2()" class="button button-fill button-big"><lng>Siguiente</lng></a>
+                    </li>
+                </ul>
+                <ul id="reg_paso2" style="display: none; opacity: 0">
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><i class="icon f7-icons">envelope</i></div>
+                        <div class="item-inner">
+                          <div class="item-input">
+                            <input type="email" id="formreg_mail" placeholder="E-mail">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><i class="icon f7-icons">lock_open_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-input">
+                            <input type="password" id="formreg_pass" placeholder="Contraseña">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><i class="icon f7-icons">lock_fill</i></div>
+                        <div class="item-inner">
+                          <div class="item-input">
+                            <input type="password" id="formreg_pass2" placeholder="Confirmar Contraseña">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li style="text-align: center">
+                        <a href="#" onClick="reg_paso3()" class="button button-fill button-big"><lng>Siguiente</lng></a><br/>
+                        <span style="color: #ff6a2b; font-size: 14px;"><lng>o registrate con</lng></span>
+                    </li>
+                    <li style="text-align: center">
+                        <a href="#" onClick="reg_paso3b()" class="button button-fill button-big" style="background-color: #f4f08a; color: #666;display: block;"><i class="icon f7-icons" style="font-size: 20px;">envelope_fill</i> <lng>Confirmación con SMS</lng></a>
+                    </li>
+                </ul>
+                <ul id="reg_paso3" style="display: none; opacity: 0">
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><i class="icon f7-icons">person_crop_rectangle</i></div>
+                        <div class="item-inner">
+                          <div class="item-input">
+                            <input type="text" id="formreg_dni" placeholder="DNI">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><i class="icon f7-icons">calendar_today</i></div>
+                        <div class="item-inner">
+                          <div class="item-input-wrap">
+                            <input type="text" placeholder="Fecha de nacimiento" readonly id="calendar-nacimiento"/>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li style="text-align: center">
+                        <a href="#" onClick="go_registro()" class="button button-fill button-big"><lng>Registrarme</lng></a>
+                    </li>
+                </ul>
+                <ul id="reg_paso3b" style="display: none; opacity: 0">
                         <li>
                           <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">person</i></div>
-                            <div class="item-inner">
+                            <div class="item-media" style="margin-top: 3px;"><i class="icon f7-icons">device_phone_portrait</i><b id="pais_codigo">+54</b></div>
+                            <div class="item-inner" style="margin-left: 0">
                               <div class="item-input">
-                                <input type="text" id="formreg_name" placeholder="Nombre y Apellido">
+                                <input type="number" id="formreg_tel" placeholder="Teléfono Celular">
                               </div>
                             </div>
                           </div>
                         </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">card</i></div>
-                            <div class="item-inner">
-                              <div class="item-input">
-                                <input type="text" id="formreg_dni" placeholder="DNI">
-                              </div>
-                            </div>
-                          </div>
+                        <li style="text-align: center">
+                            <a href="#" onClick="reg_paso3b2()" class="button button-fill button-big"><lng>Siguiente</lng></a>
                         </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">person</i></div>
-                            <div class="item-inner">
-                              <div class="item-input">
-                                <select id="formreg_genero" placeholder="Género">
-                                	<option value="M">Masculino</option>
-                                	<option value="F">Femenino</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </li>                        
-                        <li>
-                          <div class="item-content item-input">
-                            <div class="item-inner">
-                              <div class="item-input-wrap">
-                                <input type="text" placeholder="Fecha de nacimiento" readonly id="calendar-nacimiento"/>
-                              </div>
-                            </div>
-                          </div>
+                </ul>
+                <ul id="reg_paso3b2" style="display: none; opacity: 0">
+                        <li>                          
+                            <span style="color: #ff6a2b; font-size: 14px;">Ingrese el código que ha recibido por SMS</span>
                         </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">world</i></div>
-                            <div class="item-inner">
-                              <div class="item-input">
-                                <select id="formreg_pais" placeholder="País">
-                                </select>
-                              </div>
-                            </div>
-                          </div>
+                        <li class="codigo">                          
+                            <input type="number" id="cod_item1" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item2').focus()">
+                            <input type="number" id="cod_item2" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item3').focus()">
+                            <input type="number" id="cod_item3" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item4').focus()">
+                            <input type="number" id="cod_item4" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item5').focus()">
+                            <input type="number" id="cod_item5" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item6').focus()">
+                            <input type="number" id="cod_item6" min="0" max="9" maxlength="1" placeholder="">
                         </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">world</i></div>
-                            <div class="item-inner">
-                              <div class="item-input">
-                                <select id="formreg_provincia" placeholder="Provincia">
-                                </select>
-                              </div>
-                            </div>
-                          </div>
+                        <li style="text-align: center">
+                            <a href="#" onClick="reg_paso3ba3()" class="button button-fill button-big"><lng>Siguiente</lng></a>
                         </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">phone</i></div>
-                            <div class="item-inner">
-                              <div class="item-input">
-                                <input type="text" id="formreg_tel" placeholder="Teléfono">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">email</i></div>
-                            <div class="item-inner">
-                              <div class="item-input">
-                                <input type="email" id="formreg_mail" placeholder="E-mail">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                     
-                        <!-- Select -->
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">lock</i></div>
-                            <div class="item-inner">
-                              <div class="item-input">
-                                <input type="password" id="formreg_pass" placeholder="Contraseña">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                          
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media" style="padding-left: 0">
-                                <label class="label-switch">
-                                  <input id="formreg_check" type="checkbox">
-                                  <div class="checkbox"></div>
-                                </label></div>
-                            <div class="item-inner" style="padding-left: 0">
-                              <div class="item-input">
-                                  Acepto los <a class="external link" target="_blank" href="https://iclientapp.com/terms-and-conditions/">Términos y Condiciones</a>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                   </ul>
-            	</div>
-                <div class="row">
-                  <div class="col-50">
-                    <a href="index.html" class="button button-fill button-big color-red"><lng>Cancelar</lng></a>
-                  </div>
-                  <div class="col-50">
-                    <a href="#" onClick="Registrarme()" class="button button-fill button-big button-green"><lng>Registrarme</lng></a>
-                  </div>
-                </div>   
+                </ul>
             </div>
         </div>
     </div>

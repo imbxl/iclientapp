@@ -1,0 +1,138 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="center sliding"><lng>Registrarse</lng></div>
+    </div>
+</div>
+<div class="pages">
+    <div data-page="registroform" class="page">
+        <div class="page-content">
+            <div class="content-block">                
+                	<div class="content-block-title"><lng>Ingrese sus datos</lng></div>
+                    <div class="list-block">
+                      <ul>
+                        <!-- Text inputs -->
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">person</i></div>
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <input type="text" id="formreg_name" placeholder="Nombre y Apellido">
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">card</i></div>
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <input type="text" id="formreg_dni" placeholder="DNI">
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">person</i></div>
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <select id="formreg_genero" placeholder="Género">
+                                	<option value="M">Masculino</option>
+                                	<option value="F">Femenino</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </li>                        
+                        <li>
+                          <div class="item-content item-input">
+                            <div class="item-inner">
+                              <div class="item-input-wrap">
+                                <input type="text" placeholder="Fecha de nacimiento" readonly id="calendar-nacimiento"/>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">world</i></div>
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <select id="formreg_pais" placeholder="País">
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">world</i></div>
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <select id="formreg_provincia" placeholder="Provincia">
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">phone</i></div>
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <input type="text" id="formreg_tel" placeholder="Teléfono">
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">email</i></div>
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <input type="email" id="formreg_mail" placeholder="E-mail">
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                     
+                        <!-- Select -->
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">lock</i></div>
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <input type="password" id="formreg_pass" placeholder="Contraseña">
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                          
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media" style="padding-left: 0">
+                                <label class="label-switch">
+                                  <input id="formreg_check" type="checkbox">
+                                  <div class="checkbox"></div>
+                                </label></div>
+                            <div class="item-inner" style="padding-left: 0">
+                              <div class="item-input">
+                                  Acepto los <a class="external link" target="_blank" href="https://iclientapp.com/terms-and-conditions/">Términos y Condiciones</a>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                   </ul>
+            	</div>
+                <div class="row">
+                  <div class="col-50">
+                    <a href="index.html" class="button button-fill button-big color-red"><lng>Cancelar</lng></a>
+                  </div>
+                  <div class="col-50">
+                    <a href="#" onClick="Registrarme()" class="button button-fill button-big button-green"><lng>Registrarme</lng></a>
+                  </div>
+                </div>   
+            </div>
+        </div>
+    </div>
+</div>

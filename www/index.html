@@ -554,9 +554,58 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
+        </div>        
     </div>
+    
+    
+    <script type="application/javascript">
+        function hideyshow(from, to){
+            $$(to).show();
+            var height = $$(to).height();
+            $$(to).hide();
+            $$(from).animate({'height': height+'px','opacity': 0},{'complete':function(){
+                $$(from).css({'display': 'none'});
+                $$(to).css({'display': 'block'}).animate({'opacity': 1},{'complete':function(){
+                    $$(to).find('input, select').eq(0).focus();
+                }});
+            }});
+        }
+        function reg_paso2(){
+            hideyshow('#reg_paso1', '#reg_paso2');
+        }
+        function reg_paso3(){
+            hideyshow('#reg_paso2', '#reg_paso3');
+        }
+        function reg_paso3b(){
+            if($$('#formreg_pais').val() == '1') $$('#pais_codigo').html('+54');
+            if($$('#formreg_pais').val() == '2') $$('#pais_codigo').html('+1');
+            if($$('#formreg_pais').val() == '3') $$('#pais_codigo').html('+34');
+            if($$('#formreg_pais').val() == '99') $$('#pais_codigo').html('+54');
+            hideyshow('#reg_paso2', '#reg_paso3b');
+        }
+        var SMSverificationId = '';
+        function reg_paso3b2(){
+            if($$('#formreg_tel').val().length < 3) return;
+            UserSMSVerificado = false;
+            hideyshow('#reg_paso3b', '#reg_paso3b2');
+            cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 60000).then(function(verificationId) {
+                if(UserSMSVerificado) return;                
+            });
+        }
+        function reg_paso3ba3(){
+            if($$('#cod_item1').val() == '') return;
+            if($$('#cod_item2').val() == '') return;
+            if($$('#cod_item3').val() == '') return;
+            if($$('#cod_item4').val() == '') return;
+            if($$('#cod_item5').val() == '') return;
+            if($$('#cod_item6').val() == '') return;
+            cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, 
+                $$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+
+                ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+''+$$('#cod_item6').val()
+            );
+            //hideyshow('#reg_paso3b2', '#reg_paso3');
+        }
+    </script>
     
     <div id="LoaderPrincipal" style="position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999999; display:none">
         <div style="position:fixed; top:50%; left:0; width:100%; text-align:center; color:#FFF; margin-top:-33px;">
