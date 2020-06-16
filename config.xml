@@ -118,6 +118,7 @@
 		</plugin>-->
     </platform>
     <preference name="DisallowOverscroll" value="true" />
+	<plugin name="cordova-support-google-services" spec="1.3.2" />
 	<plugin name="cordova-plugin-dialogs" />
 	<plugin name="cordova-plugin-console" />
 	<plugin name="cordova-plugin-statusbar" />
@@ -129,5 +130,5 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Se necesita acceso a la camara para leer QR" />
     </plugin>
 	<plugin name="cordova-plugin-geolocation" />
-    <!--<plugin name="cordova-plugin-firebase-authentication" spec="1.1.2" />-->
+    <plugin name="cordova-plugin-firebase-authentication" spec="1.1.2" />
 </widget>
