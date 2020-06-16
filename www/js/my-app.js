@@ -67,6 +67,7 @@ $$(document).on('deviceready', function() {
 	//$$('.tab-link').eq(0).trigger('click');
 });
 
+/*
 cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
     console.log("onAuthStateChanged");
     OcultarLoaderPrincipal();
@@ -81,6 +82,8 @@ cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
         // user was signed out
     }
 });
+*/
+
 
 var UserSMSVerificado = false;
 
@@ -1005,6 +1008,8 @@ function testLogin(){
 var push = false;
 var PushRegID = "";
 function ConfigPush(){
+    
+    return;
 	try{
 		 push = PushNotification.init({
 			"android": {

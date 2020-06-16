@@ -11,7 +11,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     
-    <!--<script src="https://assistenlinea.com:1337/vorlon.js"></script>-->
+    <script src="https://assistenlinea.com:1337/vorlon.js"></script>
     
     <!-- Your app title -->
     <title>iClient</title>
@@ -577,7 +577,6 @@
             hideyshow('#reg_paso2', '#reg_paso3');
         }
         function reg_paso3b(){
-            console.log("signInAnonymously");
             if($$('#formreg_pais').val() == '1') $$('#pais_codigo').html('+54');
             if($$('#formreg_pais').val() == '2') $$('#pais_codigo').html('+1');
             if($$('#formreg_pais').val() == '3') $$('#pais_codigo').html('+34');
@@ -587,14 +586,17 @@
         var SMSverificationId = '';
         function reg_paso3b2(){
             if($$('#formreg_tel').val().length < 3) return;
-            UserSMSVerificado = false;
-            hideyshow('#reg_paso3b', '#reg_paso3b2');
+            //UserSMSVerificado = false;
+            //hideyshow('#reg_paso3b', '#reg_paso3b2');
+            RegistrarNumero($$('#pais_codigo').html()+$$('#formreg_tel').val());
+            /*
                 console.log("verifyPhoneNumber: "+$$('#pais_codigo').html()+$$('#formreg_tel').val());
             cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 0).then(function(verificationId) {
                 console.log("verifyPhoneNumber-then");
                 console.log(verificationId);
                 if(UserSMSVerificado) return;                
             });
+            */
         }
         function reg_paso3ba3(){
             if($$('#cod_item1').val() == '') return;
@@ -604,12 +606,43 @@
             if($$('#cod_item5').val() == '') return;
             if($$('#cod_item6').val() == '') return;
             MostrarLoaderPrincipal();
-            cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, 
-                $$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+
-                ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+''+$$('#cod_item6').val()
-            );
+            var userEnteredCode = $$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+
+                ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+''+$$('#cod_item6').val();
+            
+            //cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, userEnteredCode);
+            UserSMSVerificado = true;
+            var credential = LastCredential;
+            credential.code = userEnteredCode; // set the user-entered verification code on the credential object
+            signInWithCredential(credential);
             //hideyshow('#reg_paso3b2', '#reg_paso3');
         }
+
+        var LastCredential = false;
+        function RegistrarNumero(number){
+            UserSMSVerificado = false;
+            FirebasePlugin.verifyPhoneNumber(function(credential) {
+                if(credential.instantVerification){
+                    if(!UserSMSVerificado){
+                        UserSMSVerificado = true;
+                        hideyshow('#reg_paso3b2', '#reg_paso3');
+                    }   
+                    signInWithCredential(credential);
+                }else{
+                    awaitingSms = true;
+                    hideyshow('#reg_paso3b', '#reg_paso3b2');
+                    LastCredential = credential;
+                }
+            }, function(error) {
+                console.error("Failed to verify phone number: " + JSON.stringify(error));
+            }, number);
+       }
+       function signInWithCredential(credential){
+            FirebasePlugin.signInWithCredential(credential, function() {
+                console.log("Successfully signed in");
+            }, function(error) {
+                console.error("Failed to sign in", error);
+            });
+       }
     </script>
     
     <div id="LoaderPrincipal" style="position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999999; display:none">
