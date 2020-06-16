@@ -41,8 +41,8 @@
 		<splash density="xhdpi" src="www/res/screen/android/splash-port-xhdpi.png"/>
 		<splash density="xxhdpi" src="www/res/screen/android/splash-port-xxhdpi.png"/>
 		<splash density="xxxhdpi" src="www/res/screen/android/splash-port-xxxhdpi.png"/>
-        <!--<preference name="android-minSdkVersion" value="21" />
-		<preference name="android-build-tool" value="gradle" />-->
+        <preference name="android-minSdkVersion" value="21" />
+		<preference name="android-build-tool" value="gradle" />
 		<resource-file src="google-services.json" target="app/google-services.json" />
         <allow-intent href="market:*" />
 		<plugin name="cordova-plugin-inappbrowser" />
@@ -122,7 +122,7 @@
 	<plugin name="cordova-plugin-console" />
 	<plugin name="cordova-plugin-statusbar" />
     <plugin name="cordova-plugin-screen-orientation" />
-    <plugin name="cordova-plugin-firebase-authentication" spec="2.0.1" />
+    <plugin name="cordova-plugin-firebase-authentication" spec="1.1.2" />
 	<plugin name="phonegap-plugin-push">
 		<variable name="SENDER_ID" value="1089320506180" />
 	</plugin>
