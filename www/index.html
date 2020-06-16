@@ -582,18 +582,36 @@
             if($$('#formreg_pais').val() == '3') $$('#pais_codigo').html('+34');
             if($$('#formreg_pais').val() == '99') $$('#pais_codigo').html('+54');
             hideyshow('#reg_paso2', '#reg_paso3b');
+            UserSMSVerificado = false;
+            cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
+                console.log("onAuthStateChanged");
+                OcultarLoaderPrincipal();
+                console.log(userInfo);
+                console.log(IniciadoSesion);
+                if(IniciadoSesion) return;
+                if (userInfo) {
+                    UserSMSVerificado = true;
+                    hideyshow('#reg_paso3b2', '#reg_paso3');
+                } else {
+                    showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
+                    // user was signed out
+                }
+            });
         }
         var SMSverificationId = '';
         function reg_paso3b2(){
             if($$('#formreg_tel').val().length < 3) return;
             UserSMSVerificado = false;
             hideyshow('#reg_paso3b', '#reg_paso3b2');
-                console.log("verifyPhoneNumber: "+$$('#pais_codigo').html()+$$('#formreg_tel').val());
+            try{
             cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 60000).then(function(verificationId) {
                 console.log("verifyPhoneNumber-then");
                 console.log(verificationId);
                 if(UserSMSVerificado) return;                
             });
+            }catch(e){
+                console.log(e);
+            }
         }
         function reg_paso3ba3(){
             if($$('#cod_item1').val() == '') return;
@@ -618,7 +636,7 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="cordova.js"></script>   
+    <script type="text/javascript" src="cordova.js"></script>    
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
     <script type="text/javascript" src="js/aes.js"></script>
     <script type="text/javascript" src="js/langs.js"></script>
