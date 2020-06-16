@@ -125,11 +125,13 @@
     <plugin name="cordova-plugin-screen-orientation" />
 	<plugin name="phonegap-plugin-push">
 		<variable name="SENDER_ID" value="1089320506180" />
-		<!--<variable name="FCM_VERSION" value="16.+.+" />-->
+		<variable name="FCM_VERSION" value="17.0.+" />
 	</plugin>
     <plugin name="phonegap-plugin-barcodescanner">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Se necesita acceso a la camara para leer QR" />
     </plugin>
-	<plugin name="cordova-plugin-geolocation" />
+	<plugin name="cordova-plugin-geolocation">
+		<variable name="FCM_VERSION" value="17.0.+" />
+	</plugin>
     <plugin name="cordova-plugin-firebase-authentication" spec="2.0.0" />
 </widget>
