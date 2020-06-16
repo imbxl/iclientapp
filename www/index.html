@@ -586,17 +586,14 @@
         var SMSverificationId = '';
         function reg_paso3b2(){
             if($$('#formreg_tel').val().length < 3) return;
-            //UserSMSVerificado = false;
-            //hideyshow('#reg_paso3b', '#reg_paso3b2');
-            RegistrarNumero($$('#pais_codigo').html()+$$('#formreg_tel').val());
-            /*
+            UserSMSVerificado = false;
+            hideyshow('#reg_paso3b', '#reg_paso3b2');
                 console.log("verifyPhoneNumber: "+$$('#pais_codigo').html()+$$('#formreg_tel').val());
-            cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 0).then(function(verificationId) {
+            cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 60000).then(function(verificationId) {
                 console.log("verifyPhoneNumber-then");
                 console.log(verificationId);
                 if(UserSMSVerificado) return;                
             });
-            */
         }
         function reg_paso3ba3(){
             if($$('#cod_item1').val() == '') return;
@@ -606,43 +603,12 @@
             if($$('#cod_item5').val() == '') return;
             if($$('#cod_item6').val() == '') return;
             MostrarLoaderPrincipal();
-            var userEnteredCode = $$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+
-                ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+''+$$('#cod_item6').val();
-            
-            //cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, userEnteredCode);
-            UserSMSVerificado = true;
-            var credential = LastCredential;
-            credential.code = userEnteredCode; // set the user-entered verification code on the credential object
-            signInWithCredential(credential);
+            cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, 
+                $$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+
+                ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+''+$$('#cod_item6').val()
+            );
             //hideyshow('#reg_paso3b2', '#reg_paso3');
         }
-
-        var LastCredential = false;
-        function RegistrarNumero(number){
-            UserSMSVerificado = false;
-            FirebasePlugin.verifyPhoneNumber(function(credential) {
-                if(credential.instantVerification){
-                    if(!UserSMSVerificado){
-                        UserSMSVerificado = true;
-                        hideyshow('#reg_paso3b2', '#reg_paso3');
-                    }   
-                    signInWithCredential(credential);
-                }else{
-                    awaitingSms = true;
-                    hideyshow('#reg_paso3b', '#reg_paso3b2');
-                    LastCredential = credential;
-                }
-            }, function(error) {
-                console.error("Failed to verify phone number: " + JSON.stringify(error));
-            }, number);
-       }
-       function signInWithCredential(credential){
-            FirebasePlugin.signInWithCredential(credential, function() {
-                console.log("Successfully signed in");
-            }, function(error) {
-                console.error("Failed to sign in", error);
-            });
-       }
     </script>
     
     <div id="LoaderPrincipal" style="position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999999; display:none">

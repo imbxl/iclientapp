@@ -47,6 +47,9 @@
         <allow-intent href="market:*" />
 		<plugin name="cordova-plugin-inappbrowser" />
 		<plugin name="cordova-plugin-whitelist" />
+		<plugin name="phonegap-plugin-push">
+			<variable name="SENDER_ID" value="1089320506180" />
+		</plugin>
 		<edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
 		  <application android:usesCleartextTraffic="true" />
 		</edit-config>
@@ -111,7 +114,10 @@
 		</edit-config>
 		<edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
 			<string>Se necesita acceso a la ubicacion, para buscar los descuentos cercanos.</string>
-		</edit-config><!--
+		</edit-config>
+		<plugin name="phonegap-plugin-push">
+			<variable name="SENDER_ID" value="1089320506180" />
+		</plugin><!--
 		<plugin name="cordova-plugin-mauron85-background-geolocation">
 		  <variable name="ALWAYS_USAGE_DESCRIPTION" value="This app requires constant access to your location in order to track your position and search discounts around you, even when the screen is off." />
 		  <variable name="MOTION_USAGE_DESCRIPTION" value="This app requires constant access to your motion sensors in order to track your position and search discounts around you, even when the screen is off." />
@@ -122,7 +128,7 @@
 	<plugin name="cordova-plugin-console" />
 	<plugin name="cordova-plugin-statusbar" />
     <plugin name="cordova-plugin-screen-orientation" />
-    <plugin name="cordova-plugin-firebase" />
+    <plugin name="cordova-plugin-firebase-authentication" />
     <plugin name="phonegap-plugin-barcodescanner">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Se necesita acceso a la camara para leer QR" />
     </plugin>
