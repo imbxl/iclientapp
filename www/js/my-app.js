@@ -65,16 +65,21 @@ $$(document).on('deviceready', function() {
 	}, false ); 
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
 	//$$('.tab-link').eq(0).trigger('click');
-    cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
-        if(IniciadoSesion) return;
-        if (userInfo) {
-            UserSMSVerificado = true;
-            hideyshow('#reg_paso3b2', '#reg_paso3');
-        } else {
-            showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
-            // user was signed out
-        }
-    });
+});
+
+cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
+    console.log("onAuthStateChanged");
+    OcultarLoaderPrincipal();
+    console.log(userInfo);
+    console.log(IniciadoSesion);
+    if(IniciadoSesion) return;
+    if (userInfo) {
+        UserSMSVerificado = true;
+        hideyshow('#reg_paso3b2', '#reg_paso3');
+    } else {
+        showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
+        // user was signed out
+    }
 });
 
 var UserSMSVerificado = false;
@@ -256,7 +261,7 @@ function MostrarLoaderPrincipal(){
     $$('#LoaderPrincipal').show();
     loaderprincipal_timeout = setTimeout(function(){
         $$( '#LoaderPrincipal' ).hide();
-    }, 10000);
+    }, 30000);
 }
 function OcultarLoaderPrincipal(){
     if(loaderprincipal_timeout) clearTimeout(loaderprincipal_timeout);

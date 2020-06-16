@@ -577,6 +577,7 @@
             hideyshow('#reg_paso2', '#reg_paso3');
         }
         function reg_paso3b(){
+            console.log("signInAnonymously");
             if($$('#formreg_pais').val() == '1') $$('#pais_codigo').html('+54');
             if($$('#formreg_pais').val() == '2') $$('#pais_codigo').html('+1');
             if($$('#formreg_pais').val() == '3') $$('#pais_codigo').html('+34');
@@ -588,7 +589,10 @@
             if($$('#formreg_tel').val().length < 3) return;
             UserSMSVerificado = false;
             hideyshow('#reg_paso3b', '#reg_paso3b2');
-            cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 60000).then(function(verificationId) {
+                console.log("verifyPhoneNumber: "+$$('#pais_codigo').html()+$$('#formreg_tel').val());
+            cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 0).then(function(verificationId) {
+                console.log("verifyPhoneNumber-then");
+                console.log(verificationId);
                 if(UserSMSVerificado) return;                
             });
         }
@@ -599,6 +603,7 @@
             if($$('#cod_item4').val() == '') return;
             if($$('#cod_item5').val() == '') return;
             if($$('#cod_item6').val() == '') return;
+            MostrarLoaderPrincipal();
             cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, 
                 $$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+
                 ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+''+$$('#cod_item6').val()
