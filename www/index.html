@@ -588,19 +588,6 @@
         var UserSMSEnEspera = false;
         var UserSMSAutoVerif = true;
         var SMSverificationId = '';
-            cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
-                console.log("onAuthStateChanged");
-                if(IniciadoSesion) return;
-                if(UserSMSEnEspera) return;
-                if (userInfo) {
-                    UserSMSVerificado = true;
-                    UserSMSEnEspera = false;
-                    hideyshow('#reg_paso3b2', '#reg_paso3');
-                } else {
-                    showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
-                }
-                OcultarLoaderPrincipal();     
-            });
         function reg_paso3b2(){
             if($$('#formreg_tel').val().length < 3) return;
             var numero = $$('#pais_codigo').html()+$$('#formreg_tel').val();
