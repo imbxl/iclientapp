@@ -585,38 +585,35 @@
             UserSMSVerificado = false;
         }
         var UserSMSVerificado = false;
+        var UserSMSEnEspera = false;
+        var UserSMSAutoVerif = true;
         var SMSverificationId = '';
-        function reg_paso3b2(){
-            if($$('#formreg_tel').val().length < 3) return;
-            UserSMSVerificado = false;
-            hideyshow('#reg_paso3b', '#reg_paso3b2');
-            var numero = $$('#pais_codigo').html()+$$('#formreg_tel').val();
-            verifyPhone("+1234567").then(function() {
-                showMessage("Verificado!!!", 'iClient', function(){});
-            }).catch(function(err) {
-                showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
-            })
-            /*
-            cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 60000).then(function(verificationId) {
-                console.log("verifyPhoneNumber-then");
-                console.log(verificationId);
-                if(UserSMSVerificado) return;                
-            });
             cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
                 console.log("onAuthStateChanged");
-                OcultarLoaderPrincipal();
-                console.log(userInfo);
-                console.log(IniciadoSesion);
                 if(IniciadoSesion) return;
+                if(UserSMSEnEspera) return;
                 if (userInfo) {
                     UserSMSVerificado = true;
+                    UserSMSEnEspera = false;
                     hideyshow('#reg_paso3b2', '#reg_paso3');
                 } else {
                     showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
-                    // user was signed out
                 }
+                OcultarLoaderPrincipal();     
             });
-            */
+        function reg_paso3b2(){
+            if($$('#formreg_tel').val().length < 3) return;
+            var numero = $$('#pais_codigo').html()+$$('#formreg_tel').val();
+            
+            hideyshow('#reg_paso3b', '#reg_paso3b2');              
+            MostrarLoaderPrincipal();
+            
+            UserSMSVerificado = false;
+            UserSMSEnEspera = true;
+            cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 60000).then(function(verificationId) {
+                SMSverificationId = verificationId;
+                OcultarLoaderPrincipal();             
+            });
         }
         function reg_paso3ba3(){
             if($$('#cod_item1').val() == '') return;
@@ -625,31 +622,9 @@
             if($$('#cod_item4').val() == '') return;
             if($$('#cod_item5').val() == '') return;
             if($$('#cod_item6').val() == '') return;
-            MostrarLoaderPrincipal();
-            /*
-            cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, 
-                $$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+
-                ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+''+$$('#cod_item6').val()
-            );
-            */
-            //hideyshow('#reg_paso3b2', '#reg_paso3');
-        }
-        function verifyPhone(phoneNumber) {
-            return new Promise(function(resolve, reject) {
-                const firebaseAuth = cordova.plugins.firebase.auth;
-                console.log('Se ejecuto promise');
-
-                firebaseAuth.onAuthStateChanged(resolve);
-
-                return firebaseAuth
-                    .verifyPhoneNumber(phoneNumber).then(function(verificationId) {
-                        console.log('Se ejecuto el puto THEN');
-                        const smsCode = prompt("Ingrese el código que recibió por SMS");
-
-                        return firebaseAuth
-                            .signInWithVerificationId(verificationId, smsCode);
-                    }).catch(reject);
-            });   
+            var codigo = ''+$$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+''+
+                         ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+$$('#cod_item6').val();
+            cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, codigo);
         }
     </script>
     
