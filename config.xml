@@ -127,7 +127,7 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Se necesita acceso a la camara para leer QR" />
     </plugin>
 	<plugin name="cordova-plugin-geolocation"/>
-	<plugin name="com.google.gms.google-services"/>
+	<plugin name="cordova-android-play-services-gradle-release"/>
 	<plugin name="cordova-plugin-firebase">
 		<preference name="FCM_VERSION" default="17.0.+"/>
 	</plugin>
