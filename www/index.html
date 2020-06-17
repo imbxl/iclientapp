@@ -595,12 +595,30 @@
             hideyshow('#reg_paso3b', '#reg_paso3b2');              
             MostrarLoaderPrincipal();
             
+            configSMSAuth();
             UserSMSVerificado = false;
             UserSMSEnEspera = true;
             cordova.plugins.firebase.auth.verifyPhoneNumber(numero, 60000).then(function(verificationId) {
                 console.log('Verificacion generada ID');
                 SMSverificationId = verificationId;
                 OcultarLoaderPrincipal();             
+            });
+        }
+        function configSMSAuth(){            
+            cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
+                console.log("onAuthStateChanged");
+                console.log(userInfo);
+                if(IniciadoSesion) return;
+                if (userInfo) {
+                    UserSMSVerificado = true;
+                    UserSMSEnEspera = false;
+                    hideyshow('#reg_paso3b2', '#reg_paso3');
+                } else {
+                    if(UserSMSEnEspera){
+                        showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
+                    }
+                }
+                OcultarLoaderPrincipal();     
             });
         }
         function reg_paso3ba3(){
