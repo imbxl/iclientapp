@@ -595,14 +595,16 @@
             hideyshow('#reg_paso3b', '#reg_paso3b2');              
             MostrarLoaderPrincipal();
             
-            configSMSAuth();
-            UserSMSVerificado = false;
-            UserSMSEnEspera = true;
-            cordova.plugins.firebase.auth.verifyPhoneNumber(numero, 60000).then(function(verificationId) {
-                console.log('Verificacion generada ID');
-                SMSverificationId = verificationId;
-                OcultarLoaderPrincipal();             
-            });
+            setTimeout(function(){
+                configSMSAuth();
+                UserSMSVerificado = false;
+                UserSMSEnEspera = true;
+                cordova.plugins.firebase.auth.verifyPhoneNumber(numero, 60000).then(function(verificationId) {
+                    console.log('Verificacion generada ID');
+                    SMSverificationId = verificationId;
+                    OcultarLoaderPrincipal();             
+                });
+            },800);
         }
         function configSMSAuth(){            
             cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
@@ -631,6 +633,61 @@
             var codigo = ''+$$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+''+
                          ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+$$('#cod_item6').val();
             cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, codigo);
+        }
+        function go_registro(){
+            if(document.getElementById('formreg_dni').value.trim() == ''){
+                showMessage(traducir('Debe completar su DNI'),function(){},'Registro');
+                return;
+            }
+            if(document.getElementById('calendar-nacimiento').value.trim() == ''){
+                showMessage(traducir('Debe completar su Fecha de Nacimiento'),function(){},'Registro');
+                return;
+            } 
+            $$.post( "http://iclient.com.ar/registro_usuario.php", {
+                    /*Nombre:document.getElementById('formreg_name').value,
+                    Genero:document.getElementById('formreg_genero').value,*/
+                    Pais:document.getElementById('formreg_pais').value,
+                    Provincia:document.getElementById('formreg_provincia').value,
+                    Nacimiento:document.getElementById('calendar-nacimiento').value,
+                    Tel:document.getElementById('formreg_tel').value,
+                    DNI:document.getElementById('formreg_dni').value,
+                    Email:document.getElementById('formreg_mail').value,
+                    Clave:document.getElementById('formreg_pass').value,
+                    Celu:(UserSMSVerificado ? 'Y' : 'N')
+                },
+                function( data ) {
+                    if (data == 'OK') {
+                        var userxx = document.getElementById('formreg_mail').value;
+                        var passxx = document.getElementById('formreg_pass').value;
+                        document.getElementById('formreg_name').value = '';
+                        document.getElementById('calendar-nacimiento').value = '';
+                        document.getElementById('formreg_tel').value = '';
+                        document.getElementById('formreg_dni').value = '';
+                        document.getElementById('formreg_mail').value = '';
+                        document.getElementById('formreg_pass').value = '';
+                        showMessage(traducir('Registro exitoso. Le enviamos un e-mail para verificar su cuenta (no olvide revisar su carpeta de SPAM).'),function(){},traducir('Registro'));
+                        mainView.router.back({url:'index.html'});
+                        MarcasYBanners();
+                        MostrarModalLogin("");
+                        //login(userxx, passxx);
+                        //mainView.router.load({url:'index.html', reload: true});
+                        //goToHome();
+                    }else if(data.slice(0,5) == 'CELU-'){
+                        document.getElementById('formreg_name').value = '';
+                        document.getElementById('calendar-nacimiento').value = '';
+                        document.getElementById('formreg_tel').value = '';
+                        document.getElementById('formreg_dni').value = '';
+                        document.getElementById('formreg_mail').value = '';
+                        document.getElementById('formreg_pass').value = '';
+				        window.localStorage.setItem("estrcelu", data.slice(5));
+                        mainView.router.back({url:'index.html'});
+                        MarcasYBanners();
+                        loginHash();
+                    }else{
+                        showMessage(data,function(){},traducir('Registro'));
+                    }
+                }
+            );        
         }
     </script>
     

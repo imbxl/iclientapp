@@ -820,9 +820,14 @@ function CrearCupon() {
 var IniciadoSesion = false;
 var TipoUsuario = false;
 var DatosUser = {};
-function login(strU, strP) {
+function loginHash() {
+	var estrcelu = window.localStorage.getItem("estrcelu");
+    login('', '', estrcelu);
+}
+function login(strU, strP, hash) {
+    var hash = hash || '';
     //verificamos conexion y servidores
-	$$.post( "http://iclient.com.ar/login.php", {Email:strU, Clave:strP},
+	$$.post( "http://iclient.com.ar/login.php", {Email:strU, Clave:strP, hash:hash},
 		function( data ) {
             if(data == 'NOVERIFICADO'){
 				MostrarModalLogin('Debe verificar su E-Mail, le enviamos un correo a su cuenta, no olvide revisar SPAM.<br/>');
@@ -977,6 +982,11 @@ function testLogin(){
 	if(IniciadoSesion) return;
 	var estru = window.localStorage.getItem("estru");
 	var estrp = window.localStorage.getItem("estrp");
+	var estrcelu = window.localStorage.getItem("estrcelu");
+    if(estrcelu != null){
+       loginHash();
+       return;
+    }
 	if ((estru != null && estru != '') && (estrp != null && estrp != '')) {
 		var dstru = CryptoJS.AES.decrypt(estru, "strU");
 		var dstrp = CryptoJS.AES.decrypt(estrp, "strP");
