@@ -583,6 +583,19 @@
             if($$('#formreg_pais').val() == '99') $$('#pais_codigo').html('+54');
             hideyshow('#reg_paso2', '#reg_paso3b');
             UserSMSVerificado = false;
+        }
+        var UserSMSVerificado = false;
+        var SMSverificationId = '';
+        function reg_paso3b2(){
+            if($$('#formreg_tel').val().length < 3) return;
+            UserSMSVerificado = false;
+            hideyshow('#reg_paso3b', '#reg_paso3b2');
+            
+            cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 60000).then(function(verificationId) {
+                console.log("verifyPhoneNumber-then");
+                console.log(verificationId);
+                if(UserSMSVerificado) return;                
+            });
             cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
                 console.log("onAuthStateChanged");
                 OcultarLoaderPrincipal();
@@ -597,21 +610,6 @@
                     // user was signed out
                 }
             });
-        }
-        var SMSverificationId = '';
-        function reg_paso3b2(){
-            if($$('#formreg_tel').val().length < 3) return;
-            UserSMSVerificado = false;
-            hideyshow('#reg_paso3b', '#reg_paso3b2');
-            try{
-            cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 60000).then(function(verificationId) {
-                console.log("verifyPhoneNumber-then");
-                console.log(verificationId);
-                if(UserSMSVerificado) return;                
-            });
-            }catch(e){
-                console.log(e);
-            }
         }
         function reg_paso3ba3(){
             if($$('#cod_item1').val() == '') return;

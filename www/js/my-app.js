@@ -67,9 +67,6 @@ $$(document).on('deviceready', function() {
 	//$$('.tab-link').eq(0).trigger('click');
 });
 
-
-var UserSMSVerificado = false;
-
 $$(document).on('page:back', function (e) {
 	var name = $$('.page-on-left').attr('data-page');
 	$$('.tab-link-active').removeClass('tab-link-active');
