@@ -637,11 +637,13 @@
         function verifyPhone(phoneNumber) {
             return new Promise(function(resolve, reject) {
                 const firebaseAuth = cordova.plugins.firebase.auth;
+                console.log('Se ejecuto promise');
 
                 firebaseAuth.onAuthStateChanged(resolve);
 
                 return firebaseAuth
                     .verifyPhoneNumber(phoneNumber).then(function(verificationId) {
+                        console.log('Se ejecuto el puto THEN');
                         const smsCode = prompt("Ingrese el código que recibió por SMS");
 
                         return firebaseAuth
