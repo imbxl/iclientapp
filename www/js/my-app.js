@@ -67,8 +67,9 @@ $$(document).on('deviceready', function() {
 	//$$('.tab-link').eq(0).trigger('click');
     cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
         console.log("onAuthStateChanged");
+        console.log(userInfo);
         if(IniciadoSesion) return;
-        if(UserSMSEnEspera) return;
+        if(!UserSMSEnEspera) return;
         if (userInfo) {
             UserSMSVerificado = true;
             UserSMSEnEspera = false;

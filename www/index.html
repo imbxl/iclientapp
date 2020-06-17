@@ -597,7 +597,8 @@
             
             UserSMSVerificado = false;
             UserSMSEnEspera = true;
-            cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 60000).then(function(verificationId) {
+            cordova.plugins.firebase.auth.verifyPhoneNumber(numero, 60000).then(function(verificationId) {
+                console.log('Verificacion generada ID');
                 SMSverificationId = verificationId;
                 OcultarLoaderPrincipal();             
             });
