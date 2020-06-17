@@ -590,7 +590,13 @@
             if($$('#formreg_tel').val().length < 3) return;
             UserSMSVerificado = false;
             hideyshow('#reg_paso3b', '#reg_paso3b2');
-            
+            var numero = $$('#pais_codigo').html()+$$('#formreg_tel').val();
+            verifyPhone("+1234567").then(function() {
+                showMessage("Verificado!!!", 'iClient', function(){});
+            }).catch(function(err) {
+                showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
+            })
+            /*
             cordova.plugins.firebase.auth.verifyPhoneNumber($$('#pais_codigo').html()+$$('#formreg_tel').val(), 60000).then(function(verificationId) {
                 console.log("verifyPhoneNumber-then");
                 console.log(verificationId);
@@ -610,6 +616,7 @@
                     // user was signed out
                 }
             });
+            */
         }
         function reg_paso3ba3(){
             if($$('#cod_item1').val() == '') return;
@@ -619,11 +626,28 @@
             if($$('#cod_item5').val() == '') return;
             if($$('#cod_item6').val() == '') return;
             MostrarLoaderPrincipal();
+            /*
             cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, 
                 $$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+
                 ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+''+$$('#cod_item6').val()
             );
+            */
             //hideyshow('#reg_paso3b2', '#reg_paso3');
+        }
+        function verifyPhone(phoneNumber) {
+            return new Promise(function(resolve, reject) {
+                const firebaseAuth = cordova.plugins.firebase.auth;
+
+                firebaseAuth.onAuthStateChanged(resolve);
+
+                return firebaseAuth
+                    .verifyPhoneNumber(phoneNumber).then(function(verificationId) {
+                        const smsCode = prompt("Ingrese el código que recibió por SMS");
+
+                        return firebaseAuth
+                            .signInWithVerificationId(verificationId, smsCode);
+                    }).catch(reject);
+            });   
         }
     </script>
     
