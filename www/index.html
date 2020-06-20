@@ -599,7 +599,7 @@
                 configSMSAuth();
                 UserSMSVerificado = false;
                 UserSMSEnEspera = true;
-                cordova.plugins.firebase.auth.verifyPhoneNumber(numero, 60000).then(function(verificationId) {
+                cordova.plugins.firebase.auth.verifyPhoneNumber(numero, 0).then(function(verificationId) {
                     console.log('Verificacion generada ID');
                     SMSverificationId = verificationId;
                     OcultarLoaderPrincipal();             
@@ -617,7 +617,7 @@
                     hideyshow('#reg_paso3b2', '#reg_paso3');
                 } else {
                     if(UserSMSEnEspera){
-                        showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
+                        //showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
                     }
                 }
                 OcultarLoaderPrincipal();     
