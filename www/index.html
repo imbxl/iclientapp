@@ -632,7 +632,7 @@
             if($$('#cod_item6').val() == '') return;
             var codigo = ''+$$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+''+
                          ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+$$('#cod_item6').val();
-            cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, codigo);
+            cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, codigo).then(function(e){ console.log(e); }).catch(function(e){ console.log(e); });;
         }
         function go_registro(){
             if(document.getElementById('formreg_dni').value.trim() == ''){
