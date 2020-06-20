@@ -612,9 +612,9 @@
                 console.log(userInfo);
                 if(IniciadoSesion) return;
                 if (userInfo) {
-                    UserSMSVerificado = true;
-                    UserSMSEnEspera = false;
-                    hideyshow('#reg_paso3b2', '#reg_paso3');
+                    //UserSMSVerificado = true;
+                    //UserSMSEnEspera = false;
+                    //hideyshow('#reg_paso3b2', '#reg_paso3');
                 } else {
                     if(UserSMSEnEspera){
                         //showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
@@ -630,9 +630,18 @@
             if($$('#cod_item4').val() == '') return;
             if($$('#cod_item5').val() == '') return;
             if($$('#cod_item6').val() == '') return;
-            var codigo = ''+$$('#cod_item1').val()+''+$$('#cod_item2').val()+''+$$('#cod_item3').val()+''+
-                         ''+$$('#cod_item4').val()+''+$$('#cod_item5').val()+$$('#cod_item6').val();
-            cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, codigo).then(function(e){ console.log(e); }).catch(function(e){ console.log(e); });;
+            var codigo = ''+$$('#cod_item1').val()+''+$$('#cod_item2').val()+
+                ''+$$('#cod_item3').val()+''+''+$$('#cod_item4').val()+
+                ''+$$('#cod_item5').val()+$$('#cod_item6').val();
+            cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, codigo).then(function(e){ 
+                console.log(e); 
+                UserSMSVerificado = true;
+                UserSMSEnEspera = false;
+                hideyshow('#reg_paso3b2', '#reg_paso3');                
+            }).catch(function(e){ 
+                console.log(e);
+                showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
+            });;
         }
         function go_registro(){
             if(document.getElementById('formreg_dni').value.trim() == ''){
