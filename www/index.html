@@ -11,7 +11,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     
-    <!--<script src="https://assistenlinea.com:1337/vorlon.js"></script>-->
+    <script src="https://assistenlinea.com:1337/vorlon.js"></script>
     
     <!-- Your app title -->
     <title>iClient</title>
@@ -603,7 +603,7 @@
                     console.log('Verificacion generada ID');
                     SMSverificationId = verificationId;
                     OcultarLoaderPrincipal();             
-                });
+                }).catch(function(e){ console.log(e); });
             },800);
         }
         function configSMSAuth(){            
