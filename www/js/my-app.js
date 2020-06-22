@@ -1465,7 +1465,7 @@ function GetHistorial(){
                 CONBOTON = false;
             }
             
-            if(typeof row.IPN !== 'undefined'){
+            if(typeof row.Aceptado !== 'undefined'){
                 if(row.Titulo == 'Pago con iClient') CODE = traducir('Pago PENDIENTE');
                 else CODE = traducir('Canje PENDIENTE');
                 CONBOTON = false;
@@ -1494,7 +1494,7 @@ function GetHistorial(){
                 	<a href="#" onclick="HistorialVerMas('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">'+traducir('Ver más')+'</span></a> \
             	</div>';
                }
-            if(typeof row.IPN !== 'undefined'){
+            if(typeof row.Aceptado !== 'undefined'){
                 html += '<div class="card-footer flex-row">\
                 	<a href="#" onclick="Aceptar_Canje('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">'+traducir('Confirmar')+'</span></a> \
                 	<a href="#" onclick="Cancelar_Canje('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">'+traducir('Cancelar')+'</span></a> \
