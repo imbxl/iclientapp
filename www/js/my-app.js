@@ -1484,6 +1484,7 @@ function GetHistorial(){
              html += '<div class="user flex-column">\
                         <div class="name">'+row.Titulo+'</div>\
                         <div class="time">'+CODE+'</div>\
+                        <div class="time" style="color: #ff9630;"><b>'+DatosUser['Moneda']+' '+row.Puntos+'</b></div>\
                     </div>\
                 </div>\
                 <div class="card-content">\
