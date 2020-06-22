@@ -612,7 +612,7 @@
         }
         function config_PhoneVerif(numero){
             setTimeout(function(){
-                //configSMSAuth();
+                configSMSAuth();
                 UserSMSVerificado = false;
                 UserSMSEnEspera = true;
                 cordova.plugins.firebase.auth.verifyPhoneNumber(numero, 0).then(function(verificationId) {
