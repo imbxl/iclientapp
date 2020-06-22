@@ -645,7 +645,8 @@
             if($$('#cod_item3').val() == '') return;
             if($$('#cod_item4').val() == '') return;
             if($$('#cod_item5').val() == '') return;
-            if($$('#cod_item6').val() == '') return;
+            if($$('#cod_item6').val() == '') return;         
+            MostrarLoaderPrincipal();
             var codigo = ''+$$('#cod_item1').val()+''+$$('#cod_item2').val()+
                 ''+$$('#cod_item3').val()+''+''+$$('#cod_item4').val()+
                 ''+$$('#cod_item5').val()+$$('#cod_item6').val();
@@ -653,9 +654,11 @@
                 console.log(e); 
                 UserSMSVerificado = true;
                 UserSMSEnEspera = false;
-                hideyshow('#reg_paso3b2', '#reg_paso3');                
+                hideyshow('#reg_paso3b2', '#reg_paso3'); 
+                            OcultarLoaderPrincipal();                  
             }).catch(function(e){ 
                 console.log(e);
+                            OcultarLoaderPrincipal();   
                 showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
             });;
         }
@@ -672,16 +675,19 @@
             cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, codigo).then(function(e){ 
                 console.log(e); 
                 UserSMSVerificado = true;
-                UserSMSEnEspera = false;
+                UserSMSEnEspera = false;         
+            MostrarLoaderPrincipal();
                 $$.post( "http://iclient.com.ar/registro_usuario.php", {
                         Tel:document.getElementById('formlog_tel').value
                     },
                     function( data ) {
                         if(data.slice(0,5) == 'CELU-'){
+                            OcultarLoaderPrincipal();   
                             window.localStorage.setItem("estrcelu", data.slice(5));
                             mainView.router.back({url:'index.html'});
                             MarcasYBanners();
                             loginHash();
+                            $$('#LoginPop').hide();
                         }
                     }
                 );             
