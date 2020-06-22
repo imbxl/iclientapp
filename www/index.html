@@ -11,7 +11,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     
-    <script src="https://assistenlinea.com:1337/vorlon.js"></script>
+    <!--<script src="https://assistenlinea.com:1337/vorlon.js"></script>-->
     
     <!-- Your app title -->
     <title>iClient</title>
@@ -595,8 +595,24 @@
             hideyshow('#reg_paso3b', '#reg_paso3b2');              
             MostrarLoaderPrincipal();
             
+            config_PhoneVerif(numero);
+        }
+        function log_sms(){
+            if($$('#formlog_tel').val().length < 3) return;
+            if($$('#formlog_pais').val() == '1') var codpais = '+54';
+            if($$('#formlog_pais').val() == '2') var codpais = '+1';
+            if($$('#formlog_pais').val() == '3') var codpais = '+34';
+            if($$('#formlog_pais').val() == '99') var codpais = '+54';
+            var numero = codpais+$$('#formlog_tel').val();
+            
+            hideyshow('#log_paso4', '#log_paso4b');              
+            MostrarLoaderPrincipal();
+            
+            config_PhoneVerif(numero);
+        }
+        function config_PhoneVerif(numero){
             setTimeout(function(){
-                configSMSAuth();
+                //configSMSAuth();
                 UserSMSVerificado = false;
                 UserSMSEnEspera = true;
                 cordova.plugins.firebase.auth.verifyPhoneNumber(numero, 0).then(function(verificationId) {
@@ -606,7 +622,7 @@
                 }).catch(function(e){ console.log(e); });
             },800);
         }
-        function configSMSAuth(){            
+        function configSMSAuth(){
             cordova.plugins.firebase.auth.onAuthStateChanged(function(userInfo) {
                 console.log("onAuthStateChanged");
                 console.log(userInfo);
@@ -638,6 +654,37 @@
                 UserSMSVerificado = true;
                 UserSMSEnEspera = false;
                 hideyshow('#reg_paso3b2', '#reg_paso3');                
+            }).catch(function(e){ 
+                console.log(e);
+                showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
+            });;
+        }
+        function log_sms_2(){
+            if($$('#cod_item1').val() == '') return;
+            if($$('#cod_item2').val() == '') return;
+            if($$('#cod_item3').val() == '') return;
+            if($$('#cod_item4').val() == '') return;
+            if($$('#cod_item5').val() == '') return;
+            if($$('#cod_item6').val() == '') return;
+            var codigo = ''+$$('#cod_item1').val()+''+$$('#cod_item2').val()+
+                ''+$$('#cod_item3').val()+''+''+$$('#cod_item4').val()+
+                ''+$$('#cod_item5').val()+$$('#cod_item6').val();
+            cordova.plugins.firebase.auth.signInWithVerificationId(SMSverificationId, codigo).then(function(e){ 
+                console.log(e); 
+                UserSMSVerificado = true;
+                UserSMSEnEspera = false;
+                $$.post( "http://iclient.com.ar/registro_usuario.php", {
+                        Tel:document.getElementById('formlog_tel').value
+                    },
+                    function( data ) {
+                        if(data.slice(0,5) == 'CELU-'){
+                            window.localStorage.setItem("estrcelu", data.slice(5));
+                            mainView.router.back({url:'index.html'});
+                            MarcasYBanners();
+                            loginHash();
+                        }
+                    }
+                );             
             }).catch(function(e){ 
                 console.log(e);
                 showMessage("Error: El código/número ingresado no es válido", 'iClient', function(){});
@@ -704,6 +751,117 @@
         <div style="position:fixed; top:50%; left:0; width:100%; text-align:center; color:#FFF; margin-top:-33px;">
             <lng>Espere</lng>...<br/>
             <span style="width:42px; height:42px" class="preloader preloader-white"></span>
+        </div>
+    </div>
+    
+    <div id="LoginPop" style="position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 5001;">
+        <div class="navbar" style="position: fixed;">
+            <div class="navbar-inner" style="background-color: #FFF; border: 0">
+                <div class="right">
+                    <a href="index.html" onClick="MostrarModalLogin()" class="link" style="color: #ff6a2b">
+                        <i class="f7-icons">multiply_circle</i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="pages">
+            <div data-page="registroform" class="page">
+                <div class="page-content">
+                    <div class="list-block">
+                        <ul id="log_paso1">
+                            <li>
+
+                    <div style="font-size: 22px; text-align: center; color: #ff6a2b; margin-bottom: 15px">Selecciona el país donde te encuentras.</div>
+                    <div style="font-size: 22px; text-align: center; color: #ff6a2b; margin-bottom: 10px">Select your country.</div>
+                              <div class="item-content">
+                                <div class="item-media"><i class="icon f7-icons">globe</i></div>
+                                <div class="item-inner">
+                                  <div class="item-input">
+                                    <select id="formlog_pais" placeholder="País">
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li style="text-align: center">
+                                <a href="#" onClick="hideyshow('#log_paso1', '#log_paso2')" class="button button-fill button-big"><lng>Siguiente</lng></a>
+                            </li>
+                        </ul>
+                        <ul id="log_paso2" style="display: none; opacity: 0">
+                            <li>
+                            <div style="font-size: 22px; text-align: center; color: #ff6a2b; margin-bottom: 15px"><lng>Iniciar Sesión</lng></div>
+                            <a href="#" onclick="hideyshow('#log_paso2', '#log_paso3')" class="button button-fill button-big" style="width: 100%; text-align: left; display: block;"><i class="icon f7-icons" style="font-size: 20px;">envelope_fill</i><lng>Ingresá con tu E-mail</lng></a>
+                            <a href="#" onClick="hideyshow('#log_paso2', '#log_paso4')" class="button button-fill button-big" style="background-color: #f4f08a; color: #666;display: block;width: 100%; text-align: left"><i class="icon f7-icons" style="font-size: 20px;">phone</i> <lng>Ingresá con SMS</lng></a>
+                            
+                            <div style="font-size: 22px; text-align: center; color: #ff6a2b; margin-top: 25px; margin-bottom: 5px"><lng>Si aún no te has registrado</lng></div>
+                            
+                            <div style="text-align: center">
+                            <a href="registro.html" onclick="RegistroForm();" class="button button-fill button-big" style="text-align: center;"><lng>Creá tu cuenta</lng></a>
+                            </div>
+                            </li>
+                        </ul>
+                        <ul id="log_paso3" style="display: none; opacity: 0">
+                            <li>
+                            <div style="font-size: 22px; text-align: center; color: #ff6a2b; margin-bottom: 15px"><lng>Iniciar Sesión</lng></div>
+                            </li>
+                            <li>
+                              <div class="item-content">
+                                <div class="item-media"><i class="icon f7-icons">envelope</i></div>
+                                <div class="item-inner">
+                                  <div class="item-input">
+                                    <input type="email" id="formlog_mail" placeholder="E-mail">
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="item-content">
+                                <div class="item-media"><i class="icon f7-icons">lock_open_fill</i></div>
+                                <div class="item-inner">
+                                  <div class="item-input">
+                                    <input type="password" id="formlog_pass" placeholder="Contraseña">
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li style="text-align: center">
+                                <a href="#" onClick="IniciarSesion()" class="button button-fill button-big"><lng>Siguiente</lng></a>
+                            </li>
+                        </ul>
+                        <ul id="log_paso4" style="display: none; opacity: 0">
+                            <li>
+                              <div class="item-content">
+                                <div class="item-media" style="margin-top: 3px;"><i class="icon f7-icons">device_phone_portrait</i><b id="pais_codigo">+54</b></div>
+                                <div class="item-inner" style="margin-left: 0">
+                                  <div class="item-input">
+                                    <input type="number" id="formlog_tel" placeholder="Teléfono Celular">
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li style="text-align: center">
+                                <a href="#" onClick="log_sms()" class="button button-fill button-big"><lng>Siguiente</lng></a>
+                            </li>
+                        </ul>
+                        <ul id="log_paso4b" style="display: none; opacity: 0">
+                            <li>                          
+                                <span style="color: #ff6a2b; font-size: 14px;"><lng>Ingrese el código que ha recibido por SMS</lng></span>
+                            </li>
+                            <li class="codigo">                          
+                                <input type="number" id="cod_item1" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item2').focus()">
+                                <input type="number" id="cod_item2" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item3').focus()">
+                                <input type="number" id="cod_item3" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item4').focus()">
+                                <input type="number" id="cod_item4" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item5').focus()">
+                                <input type="number" id="cod_item5" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item6').focus()">
+                                <input type="number" id="cod_item6" min="0" max="9" maxlength="1" placeholder="">
+                            </li>
+                            <li style="text-align: center">
+                                <a href="#" onClick="log_sms_2()" class="button button-fill button-big"><lng>Siguiente</lng></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

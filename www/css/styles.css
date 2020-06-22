@@ -399,3 +399,79 @@ input[name="modal-password"]{
 
 .icon_user .icon{	background-image: url("../img/iconos/Usuario.svg"); }
 .icon_user.tab-link-active .icon{	background-image: url("../img/iconos/active/Usuario.svg"); }
+
+
+.views! > .view-main[data-page="registroform"]{
+    z-index: 5002;
+}
+[data-page="registroform"] .navbar:after,
+#LoginPop .navbar:after{
+    display: none !important;
+}
+[data-page="registroform"] .page-content,
+#LoginPop .page-content{
+    overflow: visible;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: auto;
+    max-height: 100%;
+    width: 100%;
+}
+[data-page="registroform"] .page,
+#LoginPop .page{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+}
+[data-page="registroform"] .page .list-block ul:before,
+[data-page="registroform"] .page .list-block ul:after,
+[data-page="registroform"] .page .item-content .item-inner:after,
+#LoginPop .page .list-block ul:before,
+#LoginPop .page .list-block ul:after,
+#LoginPop .page .item-content .item-inner:after{
+    display: none !important;
+}
+[data-page="registroform"] .page .item-content,
+#LoginPop .page .item-content{
+    background-color: #fbb17e;
+    margin-bottom: 15px;
+    border-radius: 22px;
+}
+[data-page="registroform"] .page .item-media,
+#LoginPop .page .item-media{
+    color: #666;
+}
+[data-page="registroform"] .page .item-input *,
+#LoginPop .page .item-input *{
+    color: #666;
+}
+[data-page="registroform"] .page .list-block,
+#LoginPop .page .list-block{
+    margin: 30px;
+}
+[data-page="registroform"] .page .button,
+#LoginPop .page .button{
+    background-color: #fbb17e;
+    width: auto;
+    display: inline-block;
+    padding: 0 30px;
+    margin: 15px auto;
+    border-radius: 22px;
+    color: #666;
+    font-weight: normal;
+}
+.codigo{
+    display: flex;
+}
+.codigo input{
+    width: 15% !important;
+    margin: 0 0.833333% !important;
+    border-bottom: solid 2px #666 !important;
+    text-align: center !important;
+}

@@ -65,6 +65,22 @@ $$(document).on('deviceready', function() {
 	}, false ); 
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
 	//$$('.tab-link').eq(0).trigger('click');
+    
+	$$.getJSON( "http://iclient.com.ar/datos.php?tipo=paises", function( json ) {
+        var html = "";
+        $$.each(json, function (index, row) {
+            html += '<option value="'+row['id']+'">'+row['Nombre']+' ('+row['Moneda']+')</option>';
+        });
+        $$('#formlog_pais').html(html);
+        $$('#formlog_pais').off('change').on('change', function (e) {
+            if(document.getElementById('formlog_pais').value == '2'){
+                forceLang = 'EN';
+            }else{
+                forceLang = 'ES';
+            }
+            TraduceAllTexts();
+        });
+    });
 });
 
 $$(document).on('page:back', function (e) {
@@ -163,6 +179,9 @@ myApp.onPageAfterAnimation('index', function (page){
 	mainView.showToolbar(true);
 	$$('.tab-sup').remove();
 	$$('.tab-link-active').removeClass("tab-link-active");
+	if(!IniciadoSesion){
+		MostrarModalLogin('');
+    }
 })
 var slides = '';
 function TraerSlider(){		
@@ -840,11 +859,13 @@ function login(strU, strP, hash) {
 				window.localStorage.setItem("estru", estrU);
 				window.localStorage.setItem("estrp", estrP);
 				IniciadoSesion = true;
+                $$('#LoginPop').hide();
 				if(data == 'DATOS'){
 					showMessage(traducir('Se necesitan completar datos personales'),function(){},traducir('Mis datos'));
 					mainView.router.load({url:'cuenta.html', reload: true});
 				}else if(data == 'EMPRESA'){
 					IniciadoSesion = true;
+                $$('#LoginPop').hide();
 					//mainView.router.load({url:'index.html'}); 
 					goToHome();
 					$$('.only_user').hide();
@@ -853,6 +874,7 @@ function login(strU, strP, hash) {
 					$$('body').removeClass('nosidebar');
 				}else if(data == 'PERSONA_EMPRESA'){
 					IniciadoSesion = true;
+                $$('#LoginPop').hide();
 					//mainView.router.load({url:'index.html'}); 
 					goToHome();
 					$$('.only_user').show();
@@ -887,6 +909,8 @@ function login(strU, strP, hash) {
 		}
 	);
 }
+
+
 function Recuperar() {
 	myApp.closeModal('.modal');
     myApp.prompt('Ingrese su E-Mail', function (value) {		
@@ -903,15 +927,29 @@ function LogOut() {
 	IniciadoSesion = false;
 	//mainView.router.load({url:'index.html', reload: true});
 	goToHome();
+    MostrarModalLogin();
 }
 
 var LoginModal;
 function MostrarModalLogin(salida){
+    $$('#LoginPop').show();
+    
+    $$('#log_paso1').css({'display': 'block', 'opacity': '1', 'height': ''});
+    $$('#log_paso2').css({'display': 'none', 'opacity': '0', 'height': ''});
+    $$('#log_paso3').css({'display': 'none', 'opacity': '0', 'height': ''});
+    $$('#log_paso4').css({'display': 'none', 'opacity': '0', 'height': ''});
+    $$('#log_paso4b').css({'display': 'none', 'opacity': '0', 'height': ''});
+    /*
 	myApp.modalLogin(salida+'Si no está registrado puede registrarse haciendo click <a href="registro.html" onclick="RegistroForm();">AQUÍ</a>.<br/> <a href="index.html" onclick="Recuperar();" class="olvidehref">Olvide mi contraseña</a>', 'Iniciar sesión', function (username, password) {
 		login(username, password);
 	}, function(){ MostrarModalLogin(salida); });
+    */
+}
+function IniciarSesion() {
+    login($$('#formlog_mail').val(), $$('#formlog_pass').val());
 }
 function RegistroForm(){	
+    $$('#LoginPop').hide();
 	myApp.calendar({
 		input: '#calendar-nacimiento',
 		closeOnSelect: true,
@@ -933,6 +971,7 @@ function RegistroForm(){
                 html += '<option value="'+row['id']+'">'+row['Nombre']+' ('+row['Moneda']+')</option>';
             });
             $$('#formreg_pais').html(html);
+            $$('#formreg_pais').val($$('#formlog_pais').val());
             $$.getJSON( "http://iclient.com.ar/datos.php?tipo=provincias&pais="+document.getElementById('formreg_pais').value,
                 function( json2 ) {
                     var html = "";
@@ -995,6 +1034,18 @@ function testLogin(){
 		MostrarModalLogin('');
 	}
 }
+
+function Aceptar_Canje(id){
+    $$.get("http://iclient.com.ar/datos.php?tipo=pedidoCanjeCambio&id="+id+"&result=Y", function (data) { 
+        GetHistorial(); 
+    });    
+}
+function Cancelar_Canje(id){
+    $$.get("http://iclient.com.ar/datos.php?tipo=pedidoCanjeCambio&id="+id+"&result=C", function (data) { 
+        GetHistorial(); 
+    });
+}
+
 var push = false;
 var PushRegID = "";
 function ConfigPush(){
@@ -1414,6 +1465,12 @@ function GetHistorial(){
                 CONBOTON = false;
             }
             
+            if(typeof row.IPN !== 'undefined'){
+                if(row.Titulo == 'Pago con iClient') CODE = traducir('Pago PENDIENTE');
+                else CODE = traducir('Canje PENDIENTE');
+                CONBOTON = false;
+            }
+            
 			row.Titulo = traducir(row.Titulo);
                 
 			html += '<div id="histo_'+row.id+'">\
@@ -1437,6 +1494,12 @@ function GetHistorial(){
                 	<a href="#" onclick="HistorialVerMas('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">'+traducir('Ver más')+'</span></a> \
             	</div>';
                }
+            if(typeof row.IPN !== 'undefined'){
+                html += '<div class="card-footer flex-row">\
+                	<a href="#" onclick="Aceptar_Canje('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">'+traducir('Confirmar')+'</span></a> \
+                	<a href="#" onclick="Cancelar_Canje('+row.id+')" class="tool tool-border flex-rest-width link"><span class="text">'+traducir('Cancelar')+'</span></a> \
+            	</div>';
+            }
              html += '</div>\
             	<div class="descripcion_larga" style="display:none">'+row.Descripcion+'</div>\
 			</div>';			

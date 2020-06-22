@@ -4,6 +4,11 @@ langs['EN'] = {
     "Cerrar Sesión" : "Logout",
     "Contacto" : "Contact",
     "Guardar" : "Save",
+    "Creá tu cuenta" : "Create an account",
+    "Si aún no te has registrado" : "If you haven't register yet",
+    "Iniciar Sesión" : "Login",
+    "Ingresá con tu E-mail" : "Login with Email",
+    "Ingresá con SMS" : "Login with SMS",
     "Tu Saldo" : "Your balance",
     "Mi cuenta" : "My account",
     "Volver" : "Back",
@@ -34,6 +39,7 @@ langs['EN'] = {
     "Espere" : "Wait",
     "Monto" : "Amount",
     "DNI del Usuario" : "User Document",
+    "Confirmar" : "Confirm",
     "Aceptar" : "OK",
     "Cancelar" : "Cancel",
     "Confirmación con SMS" : "SMS Confirmation",
@@ -83,6 +89,8 @@ langs['EN'] = {
     "CODIGO" : "CODE",
     "Canje ya utilizado el " : "Exchange already used on",
     "Pago con iClient" : "iClient Payment",
+    "Pago PENDIENTE" : "PENDING Payment",
+    "Canje PENDIENTE" : "PENDING Exchange",
     "Carga de Saldo" : "Balance charge"
 };
 var forceLang = false;
