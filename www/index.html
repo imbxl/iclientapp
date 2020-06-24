@@ -697,6 +697,10 @@
             });;
         }
         function go_registro(){
+            if(document.getElementById('formreg_name').value.trim() == ''){
+                showMessage(traducir('Debe completar su nombre'),function(){},'Registro');
+                return;
+            }
             if(document.getElementById('formreg_dni').value.trim() == ''){
                 showMessage(traducir('Debe completar su DNI'),function(){},'Registro');
                 return;
@@ -705,9 +709,13 @@
                 showMessage(traducir('Debe completar su Fecha de Nacimiento'),function(){},'Registro');
                 return;
             } 
+            if(!$$('#formreg_check').is(':checked')){
+                showMessage(traducir('Debe aceptar los términos y condiciones del servicio'),function(){},'Registro');
+                return;
+            }
             $$.post( "http://iclient.com.ar/registro_usuario.php", {
-                    /*Nombre:document.getElementById('formreg_name').value,
-                    Genero:document.getElementById('formreg_genero').value,*/
+                    Nombre:document.getElementById('formreg_name').value,
+                    /*Genero:document.getElementById('formreg_genero').value,*/
                     Pais:document.getElementById('formreg_pais').value,
                     Provincia:document.getElementById('formreg_provincia').value,
                     Nacimiento:document.getElementById('calendar-nacimiento').value,
@@ -753,6 +761,7 @@
         }
         function AtrasLogin(){
             var id = jQuery('#LoginPop ul:visible').attr('id');
+            jQuery('#LoginPop ul').css('height','');
             //console.log(id);
             if(id == 'log_paso1'){ return; }
             if(id == 'log_paso2'){  hideyshow('#log_paso2', '#log_paso1'); }
@@ -762,16 +771,35 @@
         }
         function AtrasRegistro(){
             var id = jQuery('[data-page="registroform"] ul:visible').attr('id');
-            if(id == 'reg_paso1'){ 
+            jQuery('[data-page="registroform"] ul').css('height','');
+            if(id == 'reg_paso2'){ 
                 jQuery('#LoginPop').fadeIn(600, function(){
                     noLoginVAR = true;
                     mainView.router.back({url:'index.html'});
                 });
             }
-            if(id == 'reg_paso2'){  hideyshow('#reg_paso2', '#reg_paso1'); }
+            //if(id == 'reg_paso2'){  hideyshow('#reg_paso2', '#reg_paso1'); }
             if(id == 'reg_paso3'){  hideyshow('#reg_paso3', '#reg_paso2'); }
             if(id == 'reg_paso3b'){  hideyshow('#reg_paso3b', '#reg_paso2'); }
             if(id == 'reg_paso3b2'){  hideyshow('#reg_paso3b2', '#reg_paso3b'); }
+        }
+        function key_codigo_sms(item, e){
+            e.preventDefault();            
+            //console.log(e);
+            var keyCode = e.keyCode || e.which;
+            if (keyCode >= 96 && keyCode <= 105) {
+                jQuery(item).val(''+(keyCode-96));
+                jQuery(item).next().focus();
+            }else if (keyCode >= 48 && keyCode <= 57) {
+                jQuery(item).val(''+(keyCode-48));
+                jQuery(item).next().focus();
+            }else{                
+                if(keyCode == 8 || keyCode == 46){
+                    jQuery(item).val('');
+                    jQuery(item).prev().val('').focus();
+                }
+            }
+            return false;
         }
     </script>
     
@@ -791,7 +819,7 @@
                     </a>
                 </div>
                 <div class="right">
-                    <a href="index.html" onClick="MostrarModalLogin()" class="link" style="color: #ff6a2b">
+                    <a href="index.html" onClick="MostrarModalLogin('')" class="link" style="color: #ff6a2b">
                         <i class="f7-icons">multiply_circle</i></span>
                     </a>
                 </div>
@@ -863,8 +891,14 @@
                         </ul>
                         <ul id="log_paso4" style="display: none; opacity: 0">
                             <li>
+                            <div style="font-size: 22px; text-align: center; color: #ff6a2b; margin-bottom: 15px"><lng>Iniciar Sesión</lng></div>
+                            </li>
+                            <li>
+                            <div style="font-size: 14px; text-align: center; color: #ff6a2b; margin-bottom: 15px"><lng>Ingresa tu número de teléfono</lng></div>
+                            </li>
+                            <li>
                               <div class="item-content">
-                                <div class="item-media" style="margin-top: 3px;"><i class="icon f7-icons">device_phone_portrait</i><b id="pais_codigo">+54</b></div>
+                                <div class="item-media" style="margin-top: 2px;"><i class="icon f7-icons" style="color: #ff6a2b">phone</i><b id="pais_codigo" style="margin-left: 10px;">+54</b></div>
                                 <div class="item-inner" style="margin-left: 0">
                                   <div class="item-input">
                                     <input type="number" id="formlog_tel" placeholder="Teléfono Celular">
@@ -877,16 +911,19 @@
                             </li>
                         </ul>
                         <ul id="log_paso4b" style="display: none; opacity: 0">
-                            <li>                          
+                            <li>
+                            <div style="font-size: 22px; text-align: center; color: #ff6a2b; margin-bottom: 15px"><lng>Iniciar Sesión</lng></div>
+                            </li>
+                            <li style="text-align: center">                          
                                 <span style="color: #ff6a2b; font-size: 14px;"><lng>Ingrese el código que ha recibido por SMS</lng></span>
                             </li>
-                            <li class="codigo">                          
-                                <input type="number" id="cod_log_item1" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_log_item2').focus()">
-                                <input type="number" id="cod_log_item2" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_log_item3').focus()">
-                                <input type="number" id="cod_log_item3" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_log_item4').focus()">
-                                <input type="number" id="cod_log_item4" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_log_item5').focus()">
-                                <input type="number" id="cod_log_item5" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_log_item6').focus()">
-                                <input type="number" id="cod_log_item6" min="0" max="9" maxlength="1" placeholder="">
+                            <li class="codigo" style="padding: 10px 0;">                          
+                                <input type="number" id="cod_log_item1" min="0" max="9" maxlength="1" placeholder="" onKeyDown="key_codigo_sms(this, event)">
+                                <input type="number" id="cod_log_item2" min="0" max="9" maxlength="1" placeholder="" onKeyDown="key_codigo_sms(this, event)">
+                                <input type="number" id="cod_log_item3" min="0" max="9" maxlength="1" placeholder="" onKeyDown="key_codigo_sms(this, event)">
+                                <input type="number" id="cod_log_item4" min="0" max="9" maxlength="1" placeholder="" onKeyDown="key_codigo_sms(this, event)">
+                                <input type="number" id="cod_log_item5" min="0" max="9" maxlength="1" placeholder="" onKeyDown="key_codigo_sms(this, event)">
+                                <input type="number" id="cod_log_item6" min="0" max="9" maxlength="1" placeholder="" onKeyDown="key_codigo_sms(this, event)">
                             </li>
                             <li style="text-align: center">
                                 <a href="#" onClick="log_sms_2()" class="button button-fill button-big"><lng>Siguiente</lng></a>

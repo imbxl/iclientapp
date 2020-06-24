@@ -932,7 +932,7 @@ function LogOut() {
 	IniciadoSesion = false;
 	//mainView.router.load({url:'index.html', reload: true});
 	goToHome();
-    MostrarModalLogin();
+    MostrarModalLogin('');
 }
 
 var LoginModal;

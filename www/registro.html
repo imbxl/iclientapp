@@ -79,8 +79,8 @@
             </style>
             <div style="font-size: 22px; text-align: center; color: #ff6a2b"><lng>Registrarse</lng></div>
             <div class="list-block">
-                <ul id="reg_paso1">
-                    <li>
+                <ul id="reg_paso1" style="display: none; opacity: 0">
+                    <li style="display: none">
                       <div class="item-content">
                         <div class="item-media"><i class="icon f7-icons">globe</i></div>
                         <div class="item-inner">
@@ -91,22 +91,17 @@
                         </div>
                       </div>
                     </li>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><i class="icon f7-icons">map</i></div>
-                        <div class="item-inner">
-                          <div class="item-input">
-                            <select id="formreg_provincia" placeholder="Provincia">
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
                     <li style="text-align: center">
                         <a href="#" onClick="reg_paso2()" class="button button-fill button-big"><lng>Siguiente</lng></a>
                     </li>
                 </ul>
-                <ul id="reg_paso2" style="display: none; opacity: 0">
+                <ul id="reg_paso2">
+                    <li style="text-align: center">
+                        <a href="#" onClick="reg_paso3b()" class="button button-fill button-big" style="background-color: #f4f08a; color: #666;display: block;"><i class="icon f7-icons" style="font-size: 20px;">envelope_fill</i> <lng>Registro con SMS</lng></a>
+                    </li>
+                    <li style="text-align: center">
+                        <div style="color: #ff6a2b; font-size: 14px; line-height: 40px; margin-top: 20px;"><lng>o registrate con</lng></div>
+                    </li>
                     <li>
                       <div class="item-content">
                         <div class="item-media"><i class="icon f7-icons">envelope</i></div>
@@ -138,14 +133,20 @@
                       </div>
                     </li>
                     <li style="text-align: center">
-                        <a href="#" onClick="reg_paso3()" class="button button-fill button-big"><lng>Siguiente</lng></a><br/>
-                        <span style="color: #ff6a2b; font-size: 14px;"><lng>o registrate con</lng></span>
-                    </li>
-                    <li style="text-align: center">
-                        <a href="#" onClick="reg_paso3b()" class="button button-fill button-big" style="background-color: #f4f08a; color: #666;display: block;"><i class="icon f7-icons" style="font-size: 20px;">envelope_fill</i> <lng>Confirmación con SMS</lng></a>
+                        <a href="#" onClick="reg_paso3()" class="button button-fill button-big"><lng>Siguiente</lng></a>
                     </li>
                 </ul>
                 <ul id="reg_paso3" style="display: none; opacity: 0">
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><i class="icon f7-icons">person</i></div>
+                        <div class="item-inner">
+                          <div class="item-input">
+                            <input type="text" id="formreg_name" placeholder="Nombre y Apellido">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
                     <li>
                       <div class="item-content">
                         <div class="item-media"><i class="icon f7-icons">person_crop_rectangle</i></div>
@@ -166,40 +167,74 @@
                         </div>
                       </div>
                     </li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><i class="icon f7-icons">map</i></div>
+                        <div class="item-inner">
+                          <div class="item-input">
+                            <select id="formreg_provincia" placeholder="Provincia">
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item-content" style="background-color: #FFF;">
+                        <div class="item-media" style="padding-left: 0">
+                            <label class="label-switch">
+                              <input id="formreg_check" type="checkbox">
+                              <div class="checkbox"></div>
+                            </label></div>
+                        <div class="item-inner" style="padding-left: 0">
+                          <div class="item-input">
+                              <lng>Acepto los</lng> <a class="external link" target="_blank" href="https://iclientapp.com/terms-and-conditions/" style="color: #ff6a2b;"><lng style="color: #ff6a2b;">Términos y Condiciones</lng></a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
                     <li style="text-align: center">
                         <a href="#" onClick="go_registro()" class="button button-fill button-big"><lng>Registrarme</lng></a>
                     </li>
                 </ul>
                 <ul id="reg_paso3b" style="display: none; opacity: 0">
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media" style="margin-top: 3px;"><i class="icon f7-icons">device_phone_portrait</i><b id="pais_codigo">+54</b></div>
-                            <div class="item-inner" style="margin-left: 0">
-                              <div class="item-input">
-                                <input type="number" id="formreg_tel" placeholder="Teléfono Celular">
-                              </div>
-                            </div>
+                    <li>
+                    <div style="font-size: 14px; text-align: center; color: #ff6a2b; margin-bottom: 15px"><lng>Ingresa tu número de teléfono</lng></div>
+                    </li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media" style="margin-top: 2px;"><i class="icon f7-icons" style="color: #ff6a2b">phone</i><b id="pais_codigo" style="margin-left: 10px;">+54</b></div>
+                        <div class="item-inner" style="margin-left: 0">
+                          <div class="item-input">
+                            <input type="number" id="formreg_tel" placeholder="Teléfono Celular">
                           </div>
-                        </li>
-                        <li style="text-align: center">
-                            <a href="#" onClick="reg_paso3b2()" class="button button-fill button-big"><lng>Siguiente</lng></a>
-                        </li>
+                        </div>
+                      </div>
+                    </li>
+                    <li style="text-align: center">
+                        <a href="#" onClick="reg_paso3b2()" class="button button-fill button-big"><lng>Siguiente</lng></a>
+                    </li>
                 </ul>
                 <ul id="reg_paso3b2" style="display: none; opacity: 0">
-                        <li>                          
-                            <span style="color: #ff6a2b; font-size: 14px;"><lng>Ingrese el código que ha recibido por SMS</lng></span>
-                        </li>
-                        <li class="codigo">                          
-                            <input type="number" id="cod_item1" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item2').focus()">
-                            <input type="number" id="cod_item2" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item3').focus()">
-                            <input type="number" id="cod_item3" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item4').focus()">
-                            <input type="number" id="cod_item4" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item5').focus()">
-                            <input type="number" id="cod_item5" min="0" max="9" maxlength="1" placeholder="" onKeyUp="document.getElementById('cod_item6').focus()">
-                            <input type="number" id="cod_item6" min="0" max="9" maxlength="1" placeholder="">
-                        </li>
-                        <li style="text-align: center">
-                            <a href="#" onClick="reg_paso3ba3()" class="button button-fill button-big"><lng>Siguiente</lng></a>
-                        </li>
+                    <li style="text-align: center">                          
+                        <span style="color: #ff6a2b; font-size: 14px;"><lng>Ingrese el código que ha recibido por SMS</lng></span>
+                    </li>
+                    <li class="codigo" style="padding: 10px 0;">                          
+                        <input type="number" id="cod_item1" min="0" max="9" maxlength="1" placeholder=""
+                        onKeyDown="key_codigo_sms(this, event)">
+                        <input type="number" id="cod_item2" min="0" max="9" maxlength="1" placeholder="" 
+                        onKeyDown="key_codigo_sms(this, event))">
+                        <input type="number" id="cod_item3" min="0" max="9" maxlength="1" placeholder="" 
+                        onKeyDown="key_codigo_sms(this, event)">
+                        <input type="number" id="cod_item4" min="0" max="9" maxlength="1" placeholder="" 
+                        onKeyDown="key_codigo_sms(this, event)">
+                        <input type="number" id="cod_item5" min="0" max="9" maxlength="1" placeholder="" 
+                        onKeyDown="key_codigo_sms(this, event)">
+                        <input type="number" id="cod_item6" min="0" max="9" maxlength="1" placeholder=""
+                        onKeyDown="key_codigo_sms(this, event)">
+                    </li>
+                    <li style="text-align: center">
+                        <a href="#" onClick="reg_paso3ba3()" class="button button-fill button-big"><lng>Siguiente</lng></a>
+                    </li>
                 </ul>
             </div>
         </div>
