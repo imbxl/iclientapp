@@ -175,12 +175,16 @@ myApp.onPageInit('registro', function (page) {
 	myApp.closePanel();
 })
 
+var noLoginVAR = false;
 myApp.onPageAfterAnimation('index', function (page){
 	mainView.showToolbar(true);
 	$$('.tab-sup').remove();
 	$$('.tab-link-active').removeClass("tab-link-active");
 	if(!IniciadoSesion){
-		MostrarModalLogin('');
+        if(!noLoginVAR){
+		  MostrarModalLogin('');
+        }
+        noLoginVAR = false;
     }
 })
 var slides = '';
@@ -848,6 +852,7 @@ function login(strU, strP, hash) {
     //verificamos conexion y servidores
 	$$.post( "http://iclient.com.ar/login.php", {Email:strU, Clave:strP, hash:hash},
 		function( data ) {
+            OcultarLoaderPrincipal();
             if(data == 'NOVERIFICADO'){
 				MostrarModalLogin('Debe verificar su E-Mail, le enviamos un correo a su cuenta, no olvide revisar SPAM.<br/>');
 				$$('.olvidehref').css('margin-top', '18px');
@@ -934,11 +939,20 @@ var LoginModal;
 function MostrarModalLogin(salida){
     $$('#LoginPop').show();
     
-    $$('#log_paso1').css({'display': 'block', 'opacity': '1', 'height': ''});
+    if(salida == '') $$('#log_paso1').css({'display': 'block', 'opacity': '1', 'height': ''});
+    else $$('#log_paso1').css({'display': 'none', 'opacity': '0', 'height': ''});
+    
     $$('#log_paso2').css({'display': 'none', 'opacity': '0', 'height': ''});
-    $$('#log_paso3').css({'display': 'none', 'opacity': '0', 'height': ''});
+    
+    if(salida == '') $$('#log_paso3').css({'display': 'none', 'opacity': '0', 'height': ''});
+    else $$('#log_paso3').css({'display': 'block', 'opacity': '1', 'height': ''});
+    
     $$('#log_paso4').css({'display': 'none', 'opacity': '0', 'height': ''});
     $$('#log_paso4b').css({'display': 'none', 'opacity': '0', 'height': ''});
+    
+    if(salida != ''){
+        showMessage(salida,'iClient',function(){});
+    }
     /*
 	myApp.modalLogin(salida+'Si no está registrado puede registrarse haciendo click <a href="registro.html" onclick="RegistroForm();">AQUÍ</a>.<br/> <a href="index.html" onclick="Recuperar();" class="olvidehref">Olvide mi contraseña</a>', 'Iniciar sesión', function (username, password) {
 		login(username, password);
@@ -946,6 +960,7 @@ function MostrarModalLogin(salida){
     */
 }
 function IniciarSesion() {
+	MostrarLoaderPrincipal();
     login($$('#formlog_mail').val(), $$('#formlog_pass').val());
 }
 function RegistroForm(){	

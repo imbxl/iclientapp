@@ -751,6 +751,28 @@
                 }
             );        
         }
+        function AtrasLogin(){
+            var id = jQuery('#LoginPop ul:visible').attr('id');
+            //console.log(id);
+            if(id == 'log_paso1'){ return; }
+            if(id == 'log_paso2'){  hideyshow('#log_paso2', '#log_paso1'); }
+            if(id == 'log_paso3'){  hideyshow('#log_paso3', '#log_paso2'); }
+            if(id == 'log_paso4'){  hideyshow('#log_paso4', '#log_paso2'); }
+            if(id == 'log_paso4b'){ hideyshow('#log_paso4b', '#log_paso4'); }
+        }
+        function AtrasRegistro(){
+            var id = jQuery('[data-page="registroform"] ul:visible').attr('id');
+            if(id == 'reg_paso1'){ 
+                jQuery('#LoginPop').fadeIn(600, function(){
+                    noLoginVAR = true;
+                    mainView.router.back({url:'index.html'});
+                });
+            }
+            if(id == 'reg_paso2'){  hideyshow('#reg_paso2', '#reg_paso1'); }
+            if(id == 'reg_paso3'){  hideyshow('#reg_paso3', '#reg_paso2'); }
+            if(id == 'reg_paso3b'){  hideyshow('#reg_paso3b', '#reg_paso2'); }
+            if(id == 'reg_paso3b2'){  hideyshow('#reg_paso3b2', '#reg_paso3b'); }
+        }
     </script>
     
     <div id="LoaderPrincipal" style="position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 999999; display:none">
@@ -763,6 +785,11 @@
     <div id="LoginPop" style="position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 5001;">
         <div class="navbar" style="position: fixed;">
             <div class="navbar-inner" style="background-color: #FFF; border: 0">
+                <div class="left">
+                    <a href="#" onClick="AtrasLogin()" class="link" style="color: #ff6a2b">
+                        <i class="f7-icons">arrowtriangle_left</i></span>
+                    </a>
+                </div>
                 <div class="right">
                     <a href="index.html" onClick="MostrarModalLogin()" class="link" style="color: #ff6a2b">
                         <i class="f7-icons">multiply_circle</i></span>
@@ -872,6 +899,7 @@
     </div>
 
     <script type="text/javascript" src="cordova.js"></script>    
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js">$.noConflict();</script>    
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
     <script type="text/javascript" src="js/aes.js"></script>
     <script type="text/javascript" src="js/langs.js"></script>
