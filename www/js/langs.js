@@ -45,6 +45,7 @@ langs['EN'] = {
     "Confirmar" : "Confirm",
     "Aceptar" : "OK",
     "Cancelar" : "Cancel",
+    "Las contraseñas deben coincidir" : "Passwords must match",
     "Confirmación con SMS" : "SMS Confirmation",
     "Debe aceptar los términos y condiciones del servicio" : "You must accept the terms and conditions of the service",
     "Registro con SMS" : "Register with SMS",

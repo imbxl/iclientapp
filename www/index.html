@@ -577,6 +577,22 @@
             hideyshow('#reg_paso2', '#reg_paso3');
         }
         function reg_paso3b(){
+            if(document.getElementById('formreg_mail').value.trim() == ''){
+                showMessage(traducir('Debe completar su E-mail'),function(){},'Registro');
+                return;
+            }
+            if(!ValidateEmail(document.getElementById('formreg_mail').value.trim())){
+                showMessage(traducir('Debe ingresar un E-mail válido'),function(){},'Registro');
+                return;
+            }
+            if(document.getElementById('formreg_pass').value.trim() == ''){
+                showMessage(traducir('Debe completar su Contraseña'),function(){},'Registro');
+                return;
+            }
+            if(document.getElementById('formreg_pass').value == document.getElementById('formreg_pass2').value){
+                showMessage(traducir('Las contraseñas deben coincidir'),function(){},'Registro');
+                return;
+            }
             if($$('#formreg_pais').val() == '1') $$('#pais_codigo').html('+54');
             if($$('#formreg_pais').val() == '2') $$('#pais_codigo').html('+1');
             if($$('#formreg_pais').val() == '3') $$('#pais_codigo').html('+34');
