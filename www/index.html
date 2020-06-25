@@ -586,7 +586,7 @@
                 showMessage(traducir('Debe completar su Contraseña'),function(){},'Registro');
                 return;
             }
-            if(document.getElementById('formreg_pass').value == document.getElementById('formreg_pass2').value){
+            if(document.getElementById('formreg_pass').value != document.getElementById('formreg_pass2').value){
                 showMessage(traducir('Las contraseñas deben coincidir'),function(){},'Registro');
                 return;
             }
