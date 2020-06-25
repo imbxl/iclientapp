@@ -574,9 +574,6 @@
             hideyshow('#reg_paso1', '#reg_paso2');
         }
         function reg_paso3(){
-            hideyshow('#reg_paso2', '#reg_paso3');
-        }
-        function reg_paso3b(){
             if(document.getElementById('formreg_mail').value.trim() == ''){
                 showMessage(traducir('Debe completar su E-mail'),function(){},'Registro');
                 return;
@@ -593,6 +590,9 @@
                 showMessage(traducir('Las contraseñas deben coincidir'),function(){},'Registro');
                 return;
             }
+            hideyshow('#reg_paso2', '#reg_paso3');
+        }
+        function reg_paso3b(){
             if($$('#formreg_pais').val() == '1') $$('#pais_codigo').html('+54');
             if($$('#formreg_pais').val() == '2') $$('#pais_codigo').html('+1');
             if($$('#formreg_pais').val() == '3') $$('#pais_codigo').html('+34');
