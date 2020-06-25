@@ -799,22 +799,23 @@
             if(id == 'reg_paso3b2'){  hideyshow('#reg_paso3b2', '#reg_paso3b'); }
         }
         function key_codigo_sms(item, e){
-            e.preventDefault();            
-            //console.log(e);
             var keyCode = e.keyCode || e.which;
-            if (keyCode >= 96 && keyCode <= 105) {
-                jQuery(item).val(''+(keyCode-96));
-                jQuery(item).next().focus();
-            }else if (keyCode >= 48 && keyCode <= 57) {
-                jQuery(item).val(''+(keyCode-48));
-                jQuery(item).next().focus();
-            }else{                
-                if(keyCode == 8 || keyCode == 46){
-                    jQuery(item).val('');
-                    jQuery(item).prev().val('').focus();
-                }
+            jQuery(item).val('');
+            
+            if(keyCode == 8 || keyCode == 46){
+                e.preventDefault();
+                jQuery(item).prev().val('').focus();
+                return false;
+            }else{
+                setTimeout(function(){ jQuery(item).next().focus(); },10);
             }
-            return false;
+        }
+        function log_paso2(){
+            if($$('#formlog_pais').val() == '1') $$('#pais_log_codigo').html('+54');
+            if($$('#formlog_pais').val() == '2') $$('#pais_log_codigo').html('+1');
+            if($$('#formlog_pais').val() == '3') $$('#pais_log_codigo').html('+34');
+            if($$('#formlog_pais').val() == '99') $$('#pais_log_codigo').html('+54');
+            hideyshow('#log_paso1', '#log_paso2');
         }
     </script>
     
@@ -855,7 +856,7 @@
                               </div>
                             </li>
                             <li style="text-align: center">
-                                <a href="#" onClick="hideyshow('#log_paso1', '#log_paso2')" class="button button-fill button-big"><lng>Siguiente</lng></a>
+                                <a href="#" onClick="log_paso2();" class="button button-fill button-big"><lng>Siguiente</lng></a>
                             </li>
                         </ul>
                         <ul id="log_paso2" style="display: none; opacity: 0">
@@ -908,7 +909,7 @@
                             </li>
                             <li>
                               <div class="item-content">
-                                <div class="item-media" style="margin-top: 2px;"><i class="icon f7-icons" style="color: #ff6a2b">phone</i><b id="pais_codigo" style="margin-left: 10px;">+54</b></div>
+                                <div class="item-media" style="margin-top: 2px;"><i class="icon f7-icons" style="color: #ff6a2b">phone</i><b id="pais_log_codigo" style="margin-left: 10px;">+54</b></div>
                                 <div class="item-inner" style="margin-left: 0">
                                   <div class="item-input">
                                     <input type="number" id="formlog_tel" placeholder="Teléfono Celular">

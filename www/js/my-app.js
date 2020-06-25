@@ -42,6 +42,10 @@ function showConfirm(message, title, callbackOk, callbackCancel){
 
 var monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto' , 'Septiembre' , 'Octubre', 'Noviembre', 'Diciembre'];
 var dayNamesShort = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
+
+var monthNames_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
+var dayNamesShort_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 var monthPickerTemplate = '<div class="picker-calendar-month-picker"><a href="#" class="link icon-only picker-calendar-prev-month"><i class="f7-icons">chevron_left</i></a><span class="current-month-value"></span><a href="#" class="link icon-only picker-calendar-next-month"><i class="f7-icons">chevron_right</i></a></div>';
 var yearPickerTemplate = '<div class="picker-calendar-year-picker"><a href="#" class="link icon-only picker-calendar-prev-year"><i class="f7-icons">chevron_left</i></a><span class="current-year-value"></span><a href="#" class="link icon-only picker-calendar-next-year"><i class="f7-icons">chevron_right</i></a></div>';
 
@@ -951,6 +955,10 @@ function MostrarModalLogin(salida){
     if(salida != ''){
         showMessage(salida,'iClient',function(){});
     }
+    
+    $$('#log_paso1').css({'display': 'none', 'opacity': '0', 'height': ''});
+    $$('#log_paso4b').css({'display': 'block', 'opacity': '1', 'height': ''});
+    $$('#log_paso4b').find('input, select').eq(0).focus();
     /*
 	myApp.modalLogin(salida+'Si no está registrado puede registrarse haciendo click <a href="registro.html" onclick="RegistroForm();">AQUÍ</a>.<br/> <a href="index.html" onclick="Recuperar();" class="olvidehref">Olvide mi contraseña</a>', 'Iniciar sesión', function (username, password) {
 		login(username, password);
@@ -966,8 +974,8 @@ function RegistroForm(){
 	myApp.calendar({
 		input: '#calendar-nacimiento',
 		closeOnSelect: true,
-		monthNames: monthNames,
-		dayNamesShort: dayNamesShort,
+		monthNames: (forceLang == 'EN' ? monthNames_EN : monthNames),
+		dayNamesShort: (forceLang == 'EN' ? dayNamesShort_EN : dayNamesShort),
 		monthPickerTemplate: monthPickerTemplate,
 		yearPickerTemplate: yearPickerTemplate
 	});   

@@ -29,6 +29,7 @@ langs['EN'] = {
     "Provincia" : "State",
     "Teléfono" : "Phone",
     "Menú Empresas" : "Company Menu",
+    "Nombre y Apellido" : "Full Name",
     "Crear Cupon" : "Create a Coupon",
     "Cupones generados" : "Generated Coupons",
     "Canjes realizados a mi" : "Exchanges made to me",
