@@ -956,9 +956,10 @@ function MostrarModalLogin(salida){
         showMessage(salida,'iClient',function(){});
     }
     
+    /*
     $$('#log_paso1').css({'display': 'none', 'opacity': '0', 'height': ''});
     $$('#log_paso4b').css({'display': 'block', 'opacity': '1', 'height': ''});
-    $$('#log_paso4b').find('input, select').eq(0).focus();
+    $$('#log_paso4b').find('input, select').eq(0).focus();*/
     /*
 	myApp.modalLogin(salida+'Si no está registrado puede registrarse haciendo click <a href="registro.html" onclick="RegistroForm();">AQUÍ</a>.<br/> <a href="index.html" onclick="Recuperar();" class="olvidehref">Olvide mi contraseña</a>', 'Iniciar sesión', function (username, password) {
 		login(username, password);
