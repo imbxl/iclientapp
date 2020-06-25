@@ -774,7 +774,6 @@
             jQuery('[data-page="registroform"] ul').css('height','');
             if(id == 'reg_paso2'){ 
                 jQuery('#LoginPop').fadeIn(600, function(){
-                    noLoginVAR = true;
                     mainView.router.back({url:'index.html'});
                 });
             }
@@ -816,11 +815,6 @@
                 <div class="left">
                     <a href="#" onClick="AtrasLogin()" class="link" style="color: #ff6a2b">
                         <i class="f7-icons">arrowtriangle_left</i></span>
-                    </a>
-                </div>
-                <div class="right">
-                    <a href="index.html" onClick="MostrarModalLogin('')" class="link" style="color: #ff6a2b">
-                        <i class="f7-icons">multiply_circle</i></span>
                     </a>
                 </div>
             </div>

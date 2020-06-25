@@ -175,16 +175,12 @@ myApp.onPageInit('registro', function (page) {
 	myApp.closePanel();
 })
 
-var noLoginVAR = false;
 myApp.onPageAfterAnimation('index', function (page){
 	mainView.showToolbar(true);
 	$$('.tab-sup').remove();
 	$$('.tab-link-active').removeClass("tab-link-active");
 	if(!IniciadoSesion){
-        if(!noLoginVAR){
-		  MostrarModalLogin('');
-        }
-        noLoginVAR = false;
+        MostrarModalLogin('');
     }
 })
 var slides = '';
@@ -937,18 +933,20 @@ function LogOut() {
 
 var LoginModal;
 function MostrarModalLogin(salida){
-    $$('#LoginPop').show();
-    
-    if(salida == '') $$('#log_paso1').css({'display': 'block', 'opacity': '1', 'height': ''});
-    else $$('#log_paso1').css({'display': 'none', 'opacity': '0', 'height': ''});
-    
-    $$('#log_paso2').css({'display': 'none', 'opacity': '0', 'height': ''});
-    
-    if(salida == '') $$('#log_paso3').css({'display': 'none', 'opacity': '0', 'height': ''});
-    else $$('#log_paso3').css({'display': 'block', 'opacity': '1', 'height': ''});
-    
-    $$('#log_paso4').css({'display': 'none', 'opacity': '0', 'height': ''});
-    $$('#log_paso4b').css({'display': 'none', 'opacity': '0', 'height': ''});
+    if(!jQuery('#LoginPop').is(':visible')){
+        $$('#LoginPop').show();
+
+        if(salida == '') $$('#log_paso1').css({'display': 'block', 'opacity': '1', 'height': ''});
+        else $$('#log_paso1').css({'display': 'none', 'opacity': '0', 'height': ''});
+
+        $$('#log_paso2').css({'display': 'none', 'opacity': '0', 'height': ''});
+
+        if(salida == '') $$('#log_paso3').css({'display': 'none', 'opacity': '0', 'height': ''});
+        else $$('#log_paso3').css({'display': 'block', 'opacity': '1', 'height': ''});
+
+        $$('#log_paso4').css({'display': 'none', 'opacity': '0', 'height': ''});
+        $$('#log_paso4b').css({'display': 'none', 'opacity': '0', 'height': ''});
+    }
     
     if(salida != ''){
         showMessage(salida,'iClient',function(){});
