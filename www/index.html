@@ -705,6 +705,11 @@
                             loginHash();
                             $$('#LoginPop').hide();
                         }
+                        console.log(data); 
+                    },
+                    function( data ) {
+                        console.log("Error: POST: registro_usuario"); 
+                        console.log(e); 
                     }
                 );             
             }).catch(function(e){ 
