@@ -694,7 +694,8 @@
                 UserSMSEnEspera = false;         
             MostrarLoaderPrincipal();
                 $$.post( "http://iclient.com.ar/registro_usuario.php", {
-                        Tel:document.getElementById('formlog_tel').value
+                        Tel:document.getElementById('formlog_tel').value,
+                        Celu:'Y'
                     },
                     function( data ) {
                         if(data.slice(0,5) == 'CELU-'){
