@@ -694,8 +694,7 @@
                 UserSMSEnEspera = false;         
             MostrarLoaderPrincipal();
                 $$.post( "http://iclient.com.ar/registro_usuario.php", {
-                        Tel:document.getElementById('formlog_tel').value,
-                        Celu:'Y'
+                        Tel:document.getElementById('formlog_tel').value
                     },
                     function( data ) {
                         if(data.slice(0,5) == 'CELU-'){
@@ -705,8 +704,9 @@
                             MarcasYBanners();
                             loginHash();
                             $$('#LoginPop').hide();
+                        }else{
+                            showMessage(traducir('Teléfono no registrado, haga click en "Creá tu cuenta" y luego "Registro con SMS"'),function(){},'Registro');
                         }
-                        console.log(data); 
                     },
                     function( data ) {
                         console.log("Error: POST: registro_usuario"); 

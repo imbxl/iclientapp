@@ -5,6 +5,7 @@ langs['EN'] = {
     "Contacto" : "Contact",
     "Guardar" : "Save",
     "Creá tu cuenta" : "Create an account",
+    'Teléfono no registrado, haga click en "Creá tu cuenta" y luego "Registro con SMS"' : 'Phone, please click on "Create an account" and then  on "Register with SMS"',
     "Si aún no te has registrado" : "If you haven't register yet",
     "Iniciar Sesión" : "Login",
     "Ingresá con tu E-mail" : "Login with Email",
