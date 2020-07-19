@@ -705,7 +705,9 @@
                             loginHash();
                             $$('#LoginPop').hide();
                         }else{
-                            showMessage(traducir('Teléfono no registrado, haga click en "Creá tu cuenta" y luego "Registro con SMS"'),function(){},'Registro');
+                            hideyshow('#log_paso4b', '#log_paso2');  
+                            OcultarLoaderPrincipal();
+                            showMessage(traducir('Teléfono no registrado, haga click en "Creá tu cuenta" y luego "Registro con SMS"'),function(){},'Login');
                         }
                     },
                     function( data ) {
