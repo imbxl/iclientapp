@@ -26,6 +26,9 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
 	
+	<framework src="Firebase/Core" type="podspec" spec="~> 5.0"/>
+	<framework src="Firebase/Messaging" type="podspec" spec="~> 5.0"/>
+	
     <platform name="android">
 		<preference name="SplashMaintainAspectRatio" value="true"/>
 		<preference name="SplashShowOnlyFirstTime" value="true"/>
@@ -52,6 +55,11 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="BackupWebStorage" value="none" />
+        <preference name="WKWebViewOnly" value="true" />
+        <feature name="CDVWKWebViewEngine">
+            <param name="ios-package" value="CDVWKWebViewEngine" />
+        </feature>
+        <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
 		<resource-file src="GoogleService-Info.plist" />
 		<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
 			<string>Se necesita acceso a la camara para leer QR</string>
@@ -70,23 +78,14 @@
     <preference name="DisallowOverscroll" value="true" />
 	<plugin name="cordova-support-google-services" spec="1.3.2" />
 	<plugin name="cordova-plugin-dialogs" />
-	<plugin name="cordova-plugin-console" />
 	<plugin name="cordova-plugin-statusbar" />
     <plugin name="cordova-plugin-screen-orientation" />
-	<plugin name="phonegap-plugin-push">
-		<variable name="SENDER_ID" value="1089320506180" />
-		<variable name="FCM_VERSION" value="17.+" />
-		<variable name="FIREBASE_AUTH_VERSION" value="17.+" />
-	</plugin>
     <plugin name="phonegap-plugin-barcodescanner">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Se necesita acceso a la camara para leer QR" />
     </plugin>
-	<plugin name="cordova-plugin-geolocation">
-		<variable name="FCM_VERSION" value="17.+" />
-		<variable name="FIREBASE_AUTH_VERSION" value="17.+" />
+	<plugin name="phonegap-plugin-push">
+		<variable name="SENDER_ID" value="1089320506180" />
 	</plugin>
-    <plugin name="cordova-plugin-firebase-authentication" spec="2.0.0">
-		<variable name="FCM_VERSION" value="17.+" />
-		<variable name="FIREBASE_AUTH_VERSION" value="17.+" />
-	</plugin>
+	<plugin name="cordova-plugin-geolocation" />
+    <plugin name="cordova-plugin-firebase-authentication" />
 </widget>
