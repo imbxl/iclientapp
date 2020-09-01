@@ -18,6 +18,7 @@
     <access launch-external="yes" origin="mailto:*" />
     <access launch-external="yes" origin="sms:*" />
     <access launch-external="yes" origin="market:*" />
+    <access launch-external="yes" origin="iclientapp:*" />
 	<allow-navigation href="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -25,6 +26,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-intent href="iclientapp:*" />
 	
     <platform name="android">
 		<preference name="SplashMaintainAspectRatio" value="true"/>
