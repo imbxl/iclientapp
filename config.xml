@@ -104,10 +104,16 @@
     <plugin name="phonegap-plugin-barcodescanner">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Se necesita acceso a la camara para leer QR" />
     </plugin>
-	<plugin name="cordova-plugin-inappbrowser" />		
+	<plugin name="cordova-plugin-inappbrowser" />
+	<plugin name="cordova-plugin-customurlscheme" source="npm">
+		<param name="URL_SCHEME" value="iclientapp" />
+	</plugin>
+	
+	<!--	
 	<plugin name="phonegap-plugin-push">
 		<variable name="SENDER_ID" value="1089320506180" />
 	</plugin>
 	<plugin name="cordova-plugin-geolocation" />
 	<plugin name="cordova-plugin-firebase-authentication" spec="2.0.1" />
+	-->
 </widget>
