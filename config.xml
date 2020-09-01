@@ -108,12 +108,9 @@
     </plugin>
 	<plugin name="cordova-plugin-inappbrowser" />
 	
-	
-	<!--
 	<plugin name="cordova-plugin-customurlscheme" source="npm">
 		<param name="URL_SCHEME" value="iclientapp" />
 	</plugin>
-	-->
 	
 	
 	
