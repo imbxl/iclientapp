@@ -107,9 +107,15 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Se necesita acceso a la camara para leer QR" />
     </plugin>
 	<plugin name="cordova-plugin-inappbrowser" />
+	
+	
+	<!--
 	<plugin name="cordova-plugin-customurlscheme" source="npm">
 		<param name="URL_SCHEME" value="iclientapp" />
 	</plugin>
+	-->
+	
+	
 	
 	<!--	
 	<plugin name="phonegap-plugin-push">
