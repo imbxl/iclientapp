@@ -323,6 +323,9 @@ $$(document).on('pageInit', function (e) {
 			$$('#Datos_Puntos').html(DatosUser['Moneda']+' '+(saldo.toFixed(2)+''));
 			$$('#Datos_Tel').val(json['Telefono']);
 			$$('#Datos_Genero').val(json['Genero']);
+            if(json['Anonimo'] == 'Y'){
+                jQuery('#Datos_Anonimidad').prop('checked', true);
+            }
             
 			//$$('#Datos_Provincia').val();
             MostrarLoaderPrincipal();
@@ -631,6 +634,7 @@ function GuardarDatos() {
 		return;
 	}
 	$$.post( "http://iclient.com.ar/datos.php?tipo=update_datos", {
+			Anonimo:jQuery('#Datos_Anonimidad').prop('checked') ? 'Y' : 'N',
 			Genero:document.getElementById('Datos_Genero').value,
 			Pais:document.getElementById('Datos_Pais').value,
 			Provincia:document.getElementById('Datos_Provincia').value,
