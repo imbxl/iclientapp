@@ -475,4 +475,5 @@ input[name="modal-password"]{
     margin: 0 1vw !important;
     border-bottom: solid 2px #666 !important;
     text-align: center !important;
+    height: 12vw !important;
 }
