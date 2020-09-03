@@ -468,10 +468,11 @@ input[name="modal-password"]{
 }
 .codigo{
     display: flex;
+    overflow: hidden;
 }
 .codigo input{
     width: 15% !important;
-    margin: 0 0.833333% !important;
+    margin: 0 1vw !important;
     border-bottom: solid 2px #666 !important;
     text-align: center !important;
 }
