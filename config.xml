@@ -155,5 +155,5 @@
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
     <plugin name="cordova-plugin-geolocation" />
-    <plugin name="cordova-plugin-firebase-authentication" />
+    <plugin name="cordova-plugin-firebase-authentication" spec="2.0.1" />
 </widget>
