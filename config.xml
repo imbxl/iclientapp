@@ -140,6 +140,7 @@
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
     <preference name="DisallowOverscroll" value="true" />
+	<preference name="WKWebViewOnly" value="true" />
     <plugin name="cordova-plugin-dialogs" />
     <plugin name="cordova-plugin-statusbar" />
     <plugin name="cordova-plugin-screen-orientation" />
