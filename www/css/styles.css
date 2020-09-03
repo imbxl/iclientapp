@@ -476,4 +476,10 @@ input[name="modal-password"]{
     border-bottom: solid 2px #666 !important;
     text-align: center !important;
     height: 12vw !important;
+    -moz-appearance: textfield !important;
+}
+.codigo input::-webkit-outer-spin-button,
+.codigo input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
 }
