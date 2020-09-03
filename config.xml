@@ -149,6 +149,7 @@
     <plugin name="cordova-plugin-inappbrowser" />
     <plugin name="cordova-plugin-customurlscheme" source="npm">
         <param name="URL_SCHEME" value="iclientapp" />
+        <variable name="URL_SCHEME" value="iclientapp" />
     </plugin>
     <plugin name="phonegap-plugin-push" spec="https://github.com/imbxl/phonegap-plugin-push.git">
         <variable name="SENDER_ID" value="1089320506180" />
