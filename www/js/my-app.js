@@ -69,22 +69,6 @@ $$(document).on('deviceready', function() {
 	}, false ); 
 	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
 	//$$('.tab-link').eq(0).trigger('click');
-    
-	$$.getJSON( "http://iclient.com.ar/datos.php?tipo=paises", function( json ) {
-        var html = "";
-        $$.each(json, function (index, row) {
-            html += '<option value="'+row['id']+'">'+row['Nombre']+' ('+row['Moneda']+')</option>';
-        });
-        $$('#formlog_pais').html(html);
-        $$('#formlog_pais').off('change').on('change', function (e) {
-            if(document.getElementById('formlog_pais').value == '2'){
-                forceLang = 'EN';
-            }else{
-                forceLang = 'ES';
-            }
-            TraduceAllTexts();
-        });
-    });
 });
 
 $$(document).on('page:back', function (e) {
@@ -185,7 +169,22 @@ myApp.onPageAfterAnimation('index', function (page){
 	$$('.tab-link-active').removeClass("tab-link-active");
 	if(!IniciadoSesion){
         MostrarModalLogin('');
-    }
+    }    
+	$$.getJSON( "http://iclient.com.ar/datos.php?tipo=paises", function( json ) {
+        var html = "";
+        $$.each(json, function (index, row) {
+            html += '<option value="'+row['id']+'">'+row['Nombre']+' ('+row['Moneda']+')</option>';
+        });
+        $$('#formlog_pais').html(html);
+        $$('#formlog_pais').off('change').on('change', function (e) {
+            if(document.getElementById('formlog_pais').value == '2'){
+                forceLang = 'EN';
+            }else{
+                forceLang = 'ES';
+            }
+            TraduceAllTexts();
+        });
+    });
 })
 var slides = '';
 function TraerSlider(){		
