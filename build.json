@@ -1,0 +1,14 @@
+{
+  "ios": {
+    "debug": {
+      "codeSignIdentity": "iPhone Developer",
+      "developmentTeam": "9H39C27MW3",
+      "packageType": "development"
+    },
+    "release": {
+      "codeSignIdentity": "iPhone Distribution",
+      "developmentTeam": "9H39C27MW3",
+      "packageType": "app-store"
+    }
+  }
+}
