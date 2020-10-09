@@ -67,7 +67,9 @@ $$(document).on('deviceready', function() {
 		mainView.router.back();
 		return false;
 	}, false ); 
-	testLogin();//Make sure to get at least one GPS coordinate in the foreground before starting background services
+    setTimeout(function(){
+	   testLogin();
+    },500);
 	//$$('.tab-link').eq(0).trigger('click');
 });
 
