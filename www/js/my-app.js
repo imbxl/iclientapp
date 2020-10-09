@@ -68,6 +68,21 @@ $$(document).on('deviceready', function() {
 		return false;
 	}, false ); 
     setTimeout(function(){
+       jQuery.getJSON( "http://iclient.com.ar/datos.php?tipo=paises", function( json ) {
+            var html = "";
+            jQuery.each(json, function (index, row) {
+                html += '<option value="'+row['id']+'">'+row['Nombre']+' ('+row['Moneda']+')</option>';
+            });
+            jQuery('#formlog_pais').html(html);
+            jQuery('#formlog_pais').off('change').on('change', function (e) {
+                if(document.getElementById('formlog_pais').value == '2'){
+                    forceLang = 'EN';
+                }else{
+                    forceLang = 'ES';
+                }
+                TraduceAllTexts();
+            });
+       });
 	   testLogin();
     },500);
 	//$$('.tab-link').eq(0).trigger('click');
@@ -929,22 +944,6 @@ var LoginModal;
 function MostrarModalLogin(salida){
     if(!jQuery('#LoginPop').is(':visible')){
         $$('#LoginPop').show();
-        
-        jQuery.getJSON( "http://iclient.com.ar/datos.php?tipo=paises", function( json ) {
-            var html = "";
-            jQuery.each(json, function (index, row) {
-                html += '<option value="'+row['id']+'">'+row['Nombre']+' ('+row['Moneda']+')</option>';
-            });
-            jQuery('#formlog_pais').html(html);
-            jQuery('#formlog_pais').off('change').on('change', function (e) {
-                if(document.getElementById('formlog_pais').value == '2'){
-                    forceLang = 'EN';
-                }else{
-                    forceLang = 'ES';
-                }
-                TraduceAllTexts();
-            });
-        });
 
         if(salida == '') $$('#log_paso1').css({'display': 'block', 'opacity': '1', 'height': ''});
         else $$('#log_paso1').css({'display': 'none', 'opacity': '0', 'height': ''});
