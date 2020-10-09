@@ -142,6 +142,9 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
 		
+		<preference name="AllowUntrustedCerts" value="on" />
+		<preference name="InterceptRemoteRequests" value="all" />
+		<preference name="NativeXHRLogging" value="full" />
 		<preference name="DisallowOverscroll" value="true" />
 		<preference name="WKWebViewOnly" value="true" />
 		<plugin name="phonegap-plugin-push" spec="https://github.com/imbxl/phonegap-plugin-push.git">
@@ -149,5 +152,6 @@
 		</plugin>
 		<plugin name="cordova-plugin-geolocation" />
 		<plugin name="cordova-plugin-firebase-authentication"/>
+		<plugin name="cordova-plugin-wkwebview-file-xhr" />
     </platform>
 </widget>
