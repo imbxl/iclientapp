@@ -146,6 +146,9 @@
         <preference name="NativeXHRLogging" value="full" />
         <preference name="DisallowOverscroll" value="true" />
         <preference name="WKWebViewOnly" value="true" />
+		<preference name="StatusBarOverlaysWebView" value="false" />
+		<preference name="StatusBarBackgroundColor" value="#000000" />
+		<preference name="StatusBarStyle" value="lightcontent" />
         <plugin name="phonegap-plugin-push" spec="https://github.com/imbxl/phonegap-plugin-push.git">
             <variable name="SENDER_ID" value="1089320506180" />
         </plugin>
@@ -164,12 +167,9 @@
 		</dict>
 	</array>
 	</config-file>
-    <plugin name="phonegap-plugin-push" spec="https://github.com/imbxl/phonegap-plugin-push.git">
+    <plugin name="phonegap-plugin-push" spec="https://github.com/imbxl/phonegap-plugin-push.git" source="git">
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
-	<preference name="StatusBarOverlaysWebView" value="false" />
-	<preference name="StatusBarBackgroundColor" value="#000000" />
-	<preference name="StatusBarStyle" value="lightcontent" />
 	<plugin spec="https://github.com/apache/cordova-plugin-statusbar.git" source="git" />
     <plugin name="cordova-plugin-firebase-authentication" />
     <plugin name="cordova-plugin-geolocation" />
