@@ -167,7 +167,10 @@
     <plugin name="phonegap-plugin-push" spec="https://github.com/imbxl/phonegap-plugin-push.git">
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
-	<plugin name="cordova-plugin-statusbar" />
+	<preference name="StatusBarOverlaysWebView" value="false" />
+	<preference name="StatusBarBackgroundColor" value="#000000" />
+	<preference name="StatusBarStyle" value="lightcontent" />
+	<plugin spec="https://github.com/apache/cordova-plugin-statusbar.git" source="git" />
     <plugin name="cordova-plugin-firebase-authentication" />
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-wkwebview-file-xhr" />
