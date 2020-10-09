@@ -42,7 +42,8 @@
         "IOS_FIREBASE_AUTH_VERSION": "~> 6.32.2"
       },
       "cordova-plugin-geolocation": {},
-      "cordova-plugin-wkwebview-file-xhr": {}
+      "cordova-plugin-wkwebview-file-xhr": {},
+      "cordova-plugin-statusbar": {}
     },
     "platforms": [
       "ios"
