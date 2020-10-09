@@ -156,6 +156,7 @@
     <plugin name="phonegap-plugin-push" spec="https://github.com/imbxl/phonegap-plugin-push.git">
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
+	<plugin name="cordova-plugin-statusbar" />
     <plugin name="cordova-plugin-firebase-authentication" />
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-wkwebview-file-xhr" />
