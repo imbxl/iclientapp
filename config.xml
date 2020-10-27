@@ -9,31 +9,14 @@
     <author email="info@dia8publicidad.com.ar" href="http://dia8publicidad.com.ar">
 		Dia8Publicidad
     </author>
-    <content src="index.html" />	
+    <content src="index.html" />
+    <access origin="http://*/*" />
+    <access origin="https://*/*" />
+    <access origin="*" />
     <access origin="http://iclient.com.ar/*" />
     <access origin="https://iclient.com.ar/*" />
     <access origin="http://www.iclient.com.ar/*" />
     <access origin="https://www.iclient.com.ar/*" />
-    <access origin="*" />
-    <access launch-external="yes" origin="tel:*" />
-    <access launch-external="yes" origin="geo:*" />
-    <access launch-external="yes" origin="mailto:*" />
-    <access launch-external="yes" origin="sms:*" />
-    <access launch-external="yes" origin="market:*" />
-    <allow-navigation href="*" />
-    <allow-navigation origin="http://iclient.com.ar/*" />
-    <allow-navigation origin="https://iclient.com.ar/*" />
-    <allow-navigation origin="http://*iclient.com.ar/*" />
-    <allow-navigation origin="https://*iclient.com.ar/*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent origin="http://iclient.com.ar/*" />
-    <allow-intent origin="https://iclient.com.ar/*" />
-    <allow-intent origin="http://*iclient.com.ar/*" />
-    <allow-intent origin="https://*iclient.com.ar/*" />
-    <access origin="http://*/*" />
-    <access origin="https://*/*" />
-    <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
     <access launch-external="yes" origin="geo:*" />
     <access launch-external="yes" origin="mailto:*" />
@@ -65,7 +48,6 @@
         <preference name="android-build-tool" value="gradle" />
         <resource-file src="google-services.json" target="app/google-services.json" />
         <allow-intent href="market:*" />
-        <plugin name="cordova-plugin-whitelist" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:usesCleartextTraffic="true" />
         </edit-config>
@@ -188,6 +170,7 @@
 		</dict>
 	</array>
 	</config-file>
+    <plugin name="cordova-plugin-whitelist" />
     <plugin name="phonegap-plugin-push" spec="https://github.com/havesource/cordova-plugin-push.git" source="git">
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
