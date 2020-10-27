@@ -167,7 +167,7 @@
 		</dict>
 	</array>
 	</config-file>
-    <plugin name="phonegap-plugin-push" spec="https://github.com/imbxl/phonegap-plugin-push.git" source="git">
+    <plugin name="phonegap-plugin-push" spec="https://github.com/havesource/cordova-plugin-push.git" source="git">
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
 	<plugin name="cordova-plugin-statusbar" spec="https://github.com/apache/cordova-plugin-statusbar.git" source="git" />
