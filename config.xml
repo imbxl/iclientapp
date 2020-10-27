@@ -171,7 +171,7 @@
         <variable name="SENDER_ID" value="1089320506180" />
     </plugin>
 	<plugin name="cordova-plugin-statusbar" spec="https://github.com/apache/cordova-plugin-statusbar.git" source="git" />
-    <plugin name="cordova-plugin-firebase-authentication" />
+    <plugin name="cordova-plugin-firebase-authentication" spec="3.4.0" />
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-wkwebview-file-xhr" />
 </widget>
