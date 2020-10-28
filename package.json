@@ -12,15 +12,18 @@
     "unorm": "^1.6.0"
   },
   "devDependencies": {
+    "@havesource/cordova-plugin-push": "git+https://github.com/havesource/cordova-plugin-push.git",
+    "cordova-ios": "^6.1.1",
     "cordova-plugin-customurlscheme": "^5.0.2",
     "cordova-plugin-dialogs": "^2.0.2",
-    "cordova-plugin-firebase-authentication": "^3.6.0",
+    "cordova-plugin-firebase-authentication": "git+https://github.com/imbxl/cordova-plugin-firebase-authentication.git",
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-inappbrowser": "^4.0.0",
     "cordova-plugin-screen-orientation": "^3.0.2",
+    "cordova-plugin-statusbar": "git+https://github.com/apache/cordova-plugin-statusbar.git",
     "cordova-plugin-wkwebview-file-xhr": "^3.0.0",
     "phonegap-plugin-barcodescanner": "^8.1.0",
-    "phonegap-plugin-push": "git+https://github.com/imbxl/phonegap-plugin-push.git"
+    "phonegap-plugin-push": "https://github.com/havesource/cordova-plugin-push.git"
   },
   "cordova": {
     "plugins": {
@@ -34,16 +37,21 @@
         "CAMERA_USAGE_DESCRIPTION": "Se necesita acceso a la camara para leer QR"
       },
       "phonegap-plugin-push": {
-        "SENDER_ID": "1089320506180",
-        "IOS_FIREBASE_MESSAGING_VERSION": "~> 6.32.2"
+        "SENDER_ID": "1089320506180"
       },
+      "cordova-plugin-statusbar": {},
       "cordova-plugin-firebase-authentication": {
-        "IOS_FIREBASE_AUTH_VERSION": "~> 6.32.2"
+        "IOS_FIREBASE_AUTH_VERSION": "~> 7.0"
       },
       "cordova-plugin-geolocation": {},
       "cordova-plugin-wkwebview-file-xhr": {},
-      "cordova-plugin-statusbar": {}
+      "havesource-cordova-plugin-push": {
+        "SENDER_ID": "1089320506180"
+      },
+      "cordova-plugin-whitelist": {}
     },
-    "platforms": []
+    "platforms": [
+      "ios"
+    ]
   }
 }
